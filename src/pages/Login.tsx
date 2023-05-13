@@ -9,13 +9,10 @@ export async function action({ request }: any) {
     const email = formData.get('email');
     const password = formData.get('password');
 
-
     try {
         const data = await signInWithEmailAndPassword(auth, email, password);
         console.log('user logged in', email, password);
         console.log(data.user);
-        // <Navigate to={`dashboard/${data.user.uid}`} replace={true} />
-
         return redirect('/dashboard')
 
     } catch (err: any) {
@@ -28,22 +25,6 @@ export async function action({ request }: any) {
 }
 
 const Login = () => {
-    // const navigate = useNavigate();
-    // const data = useActionData();
-    // const location = useLocation();
-    // const navigate = useNavigate();
-
-    // const from = location.state?.from || `/${data.user.uid}`;
-
-    // useEffect(() => {
-    //     console.log(data)
-    //     if (data?.user) {
-    //         navigate(from)
-    //     }
-
-    // }, [data])
-
-    // navigate(`/dashboard/${data.user.uid}`)
 
     return (
 
@@ -86,4 +67,3 @@ const Login = () => {
 }
 export default Login
 
-// border-r-2 border-b-2 border-black

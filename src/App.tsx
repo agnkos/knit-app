@@ -28,9 +28,6 @@ const router = createBrowserRouter(createRoutesFromElements(
 export default function App() {
   return (
     <React.StrictMode>
-      {/* <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1> */}
       <RouterProvider router={router} />
     </React.StrictMode>
   )
