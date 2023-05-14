@@ -7,3 +7,5 @@ export default function Layout() {
         </>
     )
 }
+
+{/* <div className='min-h-screen flex flex-col justify-between' */ }

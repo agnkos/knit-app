@@ -7,6 +7,7 @@ type Toggle = {
     toggle: boolean,
 }
 
+
 const Menu = ({ toggle }: Toggle) => {
 
     const navigate = useNavigate();
@@ -18,9 +19,10 @@ const Menu = ({ toggle }: Toggle) => {
     }
 
     return (
-        <ul className={`absolute right-0 py-6 max-w-min max-h-min bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000' : 'transition duration-1000'}`}>
+        // <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000' : 'transition duration-1000'}`}>
+        <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000 overflow-hidden' : ' transition duration-1000'}`}>
             <li className="py-4 px-12 font-bold">{auth?.currentUser?.email}</li>
-            <li ><NavLink to="projects"
+            <li ><NavLink to="/dashboard"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer"
             >Projects</NavLink></li>
             <li ><NavLink to="queue"

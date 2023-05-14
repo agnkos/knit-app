@@ -17,7 +17,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="signup" element={<Signup />} action={signupAction} />
 
     <Route path="dashboard" element={<Dashboard />}>
-      <Route path="projects" element={<Projects />} />
+      <Route index element={<Projects />} />
       <Route path="queue" element={<Queue />} />
       <Route path="stash" element={<Stash />} />
       <Route path="notes" element={<Notes />} />
