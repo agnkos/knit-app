@@ -20,7 +20,7 @@ const Menu = ({ toggle }: Toggle) => {
 
     return (
         // <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000' : 'transition duration-1000'}`}>
-        <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000 overflow-hidden' : ' transition duration-1000'}`}>
+        <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500'}`}>
             <li className="py-4 px-12 font-bold">{auth?.currentUser?.email}</li>
             <li ><NavLink to="/dashboard"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer"
