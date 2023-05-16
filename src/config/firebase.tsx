@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { ref, getDatabase, push } from "firebase/database";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyCBXa8wPg2Mjig2yDbna6K2ikWYG9y3XTQ",
@@ -14,19 +15,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getDatabase(app);
-const usersRef = ref(db, 'users');
+export const db = getFirestore(app);
+export const usersRef = collection(db, "users");
 
-type Project = {
-    name: string, 
-}
 
-type User = {
-    username: string,
-    userid: string,
-    projects?: Project[],
-}
+// type Project = {
+//     name: string,
+// }
 
-export const addUser = (user: User) => {
-    push(usersRef, user);
+// type User = {
+//     username: string,
+//     userid: string,
+//     projects: Project[],
+// }
+
+export async function getProjects() {
+    const q = query(collection(db, "user"), where("userId", "==", `${auth?.currentUser?.uid}`));
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }))
+    console.log(dataArr)
+
+    return dataArr;
 }

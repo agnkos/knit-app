@@ -1,7 +1,8 @@
 import { Form, redirect } from 'react-router-dom';
 import knitLogo from "../img/art-and-design.png";
-import { auth, addUser } from '../config/firebase';
+import { auth, db } from '../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 
 export async function action({ request }: any) {
@@ -9,15 +10,16 @@ export async function action({ request }: any) {
     const formData = await request.formData();
     const email = formData.get('email');
     const password = formData.get('password');
+    const username = formData.get('username');
 
     try {
         const data = await createUserWithEmailAndPassword(auth, email, password);
         console.log('user created', email, password)
         console.log(data.user)
-        addUser({
-            username: email,
-            userid: data.user.uid,
-            projects: [],
+        await setDoc(doc(db, "users", `${data.user.uid}`), {
+            username: username,
+            useremail: email,
+            userId: data.user.uid,
         })
         return redirect('/dashboard')
 
@@ -40,6 +42,13 @@ const Signup = () => {
                 <img src={knitLogo}
                     alt="Wool icon created by Darius Dan - Flaticon"
                     className='w-40'
+                />
+                <input
+                    name="username"
+                    type="text"
+                    required
+                    placeholder='Username'
+                    className='px-3 py-1'
                 />
                 <input
                     name="email"
