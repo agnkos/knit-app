@@ -13,7 +13,7 @@ export async function action({ request }: any) {
         const data = await signInWithEmailAndPassword(auth, email, password);
         console.log('user logged in', email, password);
         console.log(data.user);
-        return redirect('/dashboard')
+        return redirect('/projects')
 
     } catch (err: any) {
         console.log(err)

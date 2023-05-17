@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import { doc, collection, getDoc, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -30,13 +30,22 @@ export const usersRef = collection(db, "users");
 // }
 
 export async function getProjects() {
-    const q = query(collection(db, "user"), where("userId", "==", `${auth?.currentUser?.uid}`));
+    const q = collection(db, "users", `${auth?.currentUser?.uid}`, "projects")
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
     }))
-    console.log(dataArr)
-
+    // console.log(dataArr)
     return dataArr;
 }
+
+export async function getProjectDetail(id: string) {
+    const q = doc(db, "users", `${auth?.currentUser?.uid}`,"projects", id);
+    const projectSnapshot = await getDoc(q);
+    console.log(projectSnapshot.data())
+    return projectSnapshot.data()
+}
+
+
+// "LnFRjZkhoF4KuCDJK7eA"

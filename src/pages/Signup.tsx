@@ -21,7 +21,7 @@ export async function action({ request }: any) {
             useremail: email,
             userId: data.user.uid,
         })
-        return redirect('/dashboard')
+        return redirect('/projects')
 
     } catch (err: any) {
         console.log(err)

@@ -1,18 +1,59 @@
-import { useNavigate } from 'react-router-dom';
+import { Suspense } from 'react';
+import { useLoaderData, useNavigate, defer, Await } from 'react-router-dom';
 import knittingImg from '../../img/knitting.png';
 import { getProjects } from '../../config/firebase';
+import knitPlaceholder from '../../img/knit-black.png';
+import { Link } from 'react-router-dom';
 
 export function loader() {
-  // console.log(projects)
-  return { projects: getProjects() }
+  // const projects = getProjects()
+  // console.log({projects : getProjects()})
+  // return { projects: getProjects() }
+  return defer({ projects: getProjects() })
 }
 
-const Projects = () => {
+// export async function loader() {
+//   const contacts = await getContacts();
+//   return { contacts };
+// }
 
+const Projects = () => {
   const navigate = useNavigate();
+  const loaderData = useLoaderData();
+  // console.log(loaderData)
 
   const addProject = () => {
     navigate('/dashboard/addproject')
+  }
+
+  type Project = {
+    name: string,
+    needles: string,
+    pattern: string,
+    projectId: string,
+    size: string,
+    yarn: string
+  }
+
+  function renderProjects(projects: Project[]) {
+    const projectsElements = projects.map(project => (
+      <Link to={`${project.projectId}`} key={project.projectId}>
+        <div
+          className='flex flex-col items-center gap-2 mb-4'>
+          <p className='text-lg'>{project.name}</p>
+          <div className='p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] w-10/12'>
+            <img src={knitPlaceholder}
+              className=' opacity-30'
+            /></div>
+        </div>
+      </Link>
+    ))
+
+    return (
+      <div className='p-4 flex flex-col sm:flex-row sm:gap-6'>
+        {projectsElements}
+      </div>
+    )
   }
 
   return (
@@ -32,15 +73,23 @@ const Projects = () => {
         </button>
       </div>
 
-      <div className=" bg-pink-300 grow flex flex-col items-center justify-center">
-        <div>
-          <img src={knittingImg}
-            className='ml-auto mr-auto'
-            alt="Knitting icon created by iconixar - Flaticon"
-          />
-          <p className='text-xl'>Time to knit some projects!</p>
+      {loaderData.projects.length === 0 && (
+        <div className=" bg-pink-300 grow flex flex-col items-center justify-center">
+          <div>
+            <img src={knittingImg}
+              className='ml-auto mr-auto'
+              alt="Knitting icon created by iconixar - Flaticon"
+            />
+            <p className='text-xl'>Time to knit some projects!</p>
+          </div>
         </div>
-      </div>
+      )}
+      <Suspense fallback={<h3>Loading...</h3>}>
+        <Await resolve={loaderData.projects}>
+          {renderProjects}
+        </Await>
+      </Suspense>
+
     </div>
   )
 }
