@@ -23,7 +23,7 @@ export async function action({ request }: any) {
             needles: needles
         })
 
-        return redirect('/dashboard')
+        return redirect('/projects')
 
     } catch (err: any) {
         return {
@@ -38,7 +38,7 @@ const AddProject = () => {
     return (
         <div>
             <h1 className="text-2xl font-bold">New Project</h1>
-            <Form action="/dashboard/addproject" method="post">
+            <Form action="/addproject" method="post">
                 <div className="my-2">
                     <label>Project name</label>
                     <input

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { useLoaderData, useNavigate, defer, Await } from 'react-router-dom';
 import knittingImg from '../../img/knitting.png';
 import { getProjects } from '../../config/firebase';
-import knitPlaceholder from '../../img/knit-black.png';
+import imgPlaceholder from '../../img/knit-black.png';
 import { Link } from 'react-router-dom';
 
 export function loader() {
@@ -23,7 +23,7 @@ const Projects = () => {
   // console.log(loaderData)
 
   const addProject = () => {
-    navigate('/dashboard/addproject')
+    navigate('/addproject')
   }
 
   type Project = {
@@ -42,8 +42,9 @@ const Projects = () => {
           className='flex flex-col items-center gap-2 mb-4'>
           <p className='text-lg'>{project.name}</p>
           <div className='p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] w-10/12'>
-            <img src={knitPlaceholder}
-              className=' opacity-30'
+            <img src={imgPlaceholder}
+              alt="Wool icon created by Darius Dan - Flaticon"
+              className='opacity-30'
             /></div>
         </div>
       </Link>
