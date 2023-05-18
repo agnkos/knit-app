@@ -9,8 +9,9 @@ import Projects, { loader as projectsLoader } from './pages/User/Projects';
 import Queue from './pages/User/Queue';
 import Stash from './pages/User/Stash';
 import Notes from './pages/User/Notes';
-import AddProject, { action as addProjectAction } from './pages/User/AddProject';
-import ProjectDetail, {loader as projectDetailLoader} from './pages/User/ProjectDetail';
+import AddProject, { action as addProjectAction } from './pages/AddProject';
+import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
+import EditProject, {action as editAction} from './pages/EditProject';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<Layout />}>
@@ -25,6 +26,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="notes" element={<Notes />} />
       <Route path="addproject" element={<AddProject />} action={addProjectAction} />
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
+      <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editAction} />
     </Route>
   </Route>
 ))

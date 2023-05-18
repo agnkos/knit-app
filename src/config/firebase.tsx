@@ -43,7 +43,7 @@ export async function getProjects() {
 export async function getProjectDetail(id: string) {
     const q = doc(db, "users", `${auth?.currentUser?.uid}`,"projects", id);
     const projectSnapshot = await getDoc(q);
-    console.log(projectSnapshot.data())
+    // console.log(projectSnapshot.data())
     return projectSnapshot.data()
 }
 
