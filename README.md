@@ -1,0 +1,27 @@
+### still working on refactoring the code and adding funcionalities
+
+# Knit app
+
+#### Project description:
+- app for storing info about current and finished knitting projects, project queue, yarn stash
+- login with email and password (firebase authentication)
+- design ispired by [ravelry.com](https://www.ravelry.com/)
+- knitting icons: created by Darius Dan and by iconixar - Flaticon
+- built with: 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+
+#### Project screenshots:
+
+<img src='./img/Screenshot1.png' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
+<img src='./img/Screenshot2.png' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
+<img src='./img/Screenshot3.png' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
+<img src='./img/Screenshot4.png' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
+
+
+#### Completed:
+- login and signup page
+- all projects page
+- adding and editing projects
