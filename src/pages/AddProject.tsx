@@ -1,10 +1,12 @@
 import { redirect } from "react-router-dom";
-import { doc, addDoc, collection, setDoc } from "firebase/firestore";
+import { doc, collection, setDoc } from "firebase/firestore";
 import { Form } from "react-router-dom";
 import { auth, db } from "../config/firebase";
 
 
-export async function action({ request }: any) {
+export async function action({ request }: any): Promise<Response | {
+    error: any;
+}> {
     const formData = await request.formData();
     const name = formData.get('name');
     const pattern = formData.get('pattern');

@@ -4,35 +4,23 @@ import knittingImg from '../../img/knitting.png';
 import { getProjects } from '../../config/firebase';
 import imgPlaceholder from '../../img/knit-black.png';
 import { Link } from 'react-router-dom';
+import { AllProjects, Project } from '../../types';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
 export function loader() {
-  // const projects = getProjects()
-  // console.log({projects : getProjects()})
-  // return { projects: getProjects() }
   return defer({ projects: getProjects() })
 }
 
-// export async function loader() {
-//   const contacts = await getContacts();
-//   return { contacts };
-// }
+type LoaderData = {
+  projects: AllProjects
+}
 
 const Projects = () => {
   const navigate = useNavigate();
-  const loaderData = useLoaderData();
-  // console.log(loaderData)
+  const loaderData = useLoaderData() as LoaderData;
 
   const addProject = () => {
     navigate('/addproject')
-  }
-
-  type Project = {
-    name: string,
-    needles: string,
-    pattern: string,
-    projectId: string,
-    size: string,
-    yarn: string
   }
 
   function renderProjects(projects: Project[]) {
@@ -65,10 +53,11 @@ const Projects = () => {
           className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
           onClick={addProject}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+          {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span className="">
+          </svg> */}
+          <PlusCircleIcon className="w-4 h-4" />
+          <span>
             new project
           </span>
         </button>

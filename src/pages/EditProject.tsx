@@ -4,6 +4,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { redirect } from "react-router-dom";
 import { Suspense } from "react";
 import imgPlaceholder from '../img/knit-black.png';
+import { Project } from "../types";
 
 export async function action({ params, request }: any) {
     const formData = await request.formData();
@@ -15,7 +16,6 @@ export async function action({ params, request }: any) {
     const notes = formData.get('notes');
 
     try {
-        // const projectRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "projects"))
         const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${params.id}`)
         await updateDoc(projectRef, {
             projectId: projectRef.id,
@@ -36,9 +36,13 @@ export async function action({ params, request }: any) {
     }
 }
 
+type LoaderData = {
+    projectDetail: Project
+}
+
 const EditProject = () => {
 
-    const data = useLoaderData();
+    const data = useLoaderData() as LoaderData;
 
     return (
         <div>
