@@ -15,10 +15,10 @@
 
 #### Project screenshots:
 
-<img src='./public/Screenshot1.jpg' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
-<img src='./public/Screenshot2.jpg' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
-<img src='./public/Screenshot3.jpg' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
-<img src='./public/Screenshot4.jpg' alt="app screenshot" title="app screenshot" style='width: 300px; margin: 0 auto;'> 
+<img src='./public/Screenshot1.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot2.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot3.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot4.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
 
 
 #### Completed:
