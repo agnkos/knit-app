@@ -1,16 +1,30 @@
+import { useRef, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
-import { NavLink } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 type Toggle = {
     toggle: boolean,
+    closeMenu: () => void;
 }
 
-
-const Menu = ({ toggle }: Toggle) => {
-
+const Menu = ({ toggle, closeMenu }: Toggle) => {
     const navigate = useNavigate();
+    const ref = useRef<HTMLUListElement>(null);
+
+    useEffect(() => {
+        const closeOnClickOutside = (e: MouseEvent) => {
+            if (toggle && ref.current && !ref.current.contains(e.target as Element)) {
+                closeMenu()
+            }
+        }
+
+        document.addEventListener("mousedown", closeOnClickOutside)
+
+        return () => {
+            document.removeEventListener("mousedown", closeOnClickOutside)
+        }
+    }, [toggle])
 
     const logout = () => {
         console.log('log out')
@@ -19,17 +33,19 @@ const Menu = ({ toggle }: Toggle) => {
     }
 
     return (
-        // <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 ${toggle ? 'translate-x-full transition duration-1000' : 'transition duration-1000'}`}>
-        <ul className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500 hidden'}`}>
+        <ul
+            className={`absolute right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500 hidden'}`}
+            ref={ref}
+        >
             <li className="py-4 px-12 font-bold">{auth?.currentUser?.email}</li>
-            <li ><NavLink to="projects"
+            <li onClick={closeMenu}><NavLink to="projects"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer"
             >Projects</NavLink></li>
-            <li ><NavLink to="queue"
+            <li onClick={closeMenu}><NavLink to="queue"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer">Queue</NavLink></li>
-            <li ><NavLink to="stash"
+            <li onClick={closeMenu}><NavLink to="stash"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer">Stash</NavLink></li>
-            <li ><NavLink to="notes"
+            <li onClick={closeMenu}><NavLink to="notes"
                 className="block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer">Notes</NavLink></li>
             <li className="py-4 px-12">
                 <button

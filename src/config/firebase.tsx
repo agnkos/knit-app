@@ -18,17 +18,6 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const usersRef = collection(db, "users");
 
-
-// type Project = {
-//     name: string,
-// }
-
-// type User = {
-//     username: string,
-//     userid: string,
-//     projects: Project[],
-// }
-
 export async function getProjects() {
     const q = collection(db, "users", `${auth?.currentUser?.uid}`, "projects")
     const querySnapshot = await getDocs(q);
@@ -46,6 +35,3 @@ export async function getProjectDetail(id: string) {
     // console.log(projectSnapshot.data())
     return projectSnapshot.data()
 }
-
-
-// "LnFRjZkhoF4KuCDJK7eA"

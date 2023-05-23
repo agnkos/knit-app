@@ -21,13 +21,11 @@ export async function action({ request }: any) {
             error: err.message
         }
     }
-
 }
 
 const Login = () => {
 
     return (
-
         <div className='flex flex-col justify-center items-center gap-4 h-screen bg-teal-50'>
             <Form action="/" method="post"
                 className='flex flex-col items-center max-w-sm bg-zinc-100 py-6 px-8 gap-4 shadow-[3px_3px_0_0] shadow-zinc-800'>
@@ -59,10 +57,8 @@ const Login = () => {
                     <NavLink to="/signup"
                         className="text-teal-500 hover:text-teal-700"
                     > sign up.</NavLink></p>
-
             </Form>
         </div>
-
     )
 }
 export default Login

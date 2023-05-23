@@ -53,9 +53,6 @@ const Projects = () => {
           className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
           onClick={addProject}
         >
-          {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg> */}
           <PlusCircleIcon className="w-4 h-4" />
           <span>
             new project
@@ -84,5 +81,3 @@ const Projects = () => {
   )
 }
 export default Projects
-
-// flex items-center gap-1 py-1 px-2 bg-teal-200 hover:bg-teal-400 outline outline-1 outline-offset-2 outline-teal-200 text-sm font-semibold text-zinc-700"
