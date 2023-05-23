@@ -1,8 +1,9 @@
-import { Form, useLoaderData, Await } from "react-router-dom";
+import { Form, useLoaderData, Await, redirect } from "react-router-dom";
+import { useState, Suspense, ChangeEvent } from "react";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { redirect } from "react-router-dom";
-import { Suspense } from "react";
+import { ref, uploadBytes } from 'firebase/storage';
+import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { Project } from "../types";
 
@@ -41,8 +42,30 @@ type LoaderData = {
 }
 
 const EditProject = () => {
-
+    const [imageUpload, setImageUpload] = useState<File | undefined>()
     const data = useLoaderData() as LoaderData;
+
+    const uploadImage = async (id: string) => {
+        if (!imageUpload) return;
+        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+        console.log(imageFolderRef)
+        // uploadBytes(imageFolderRef, imageUpload);
+        try {
+            await uploadBytes(imageFolderRef, imageUpload);
+            console.log('file added')
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    // data.projectDetail.projectId
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files?.[0];
+        console.log('file added')
+        setImageUpload(file);
+    }
+
+    console.log(imageUpload)
 
     return (
         <div>
@@ -53,11 +76,27 @@ const EditProject = () => {
                         project => (
                             <Form action={`/projects/${project.projectId}/edit`} method="post">
                                 <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
-                                    <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                        <img src={imgPlaceholder}
-                                            alt="Wool icon created by Darius Dan - Flaticon"
-                                            className=' opacity-30'
-                                        />
+                                    <div>
+                                        <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
+                                            <img src={imgPlaceholder}
+                                                alt="Wool icon created by Darius Dan - Flaticon"
+                                                className='opacity-30'
+                                            />
+                                        </div>
+                                        <div>
+                                            <input
+                                                type="file"
+                                                id="addImg-btn"
+                                                // className="hidden"
+                                                onChange={handleChange}
+                                            ></input>
+                                            <label htmlFor="addImg-btn">
+                                                <button
+                                                    onClick={() => uploadImage(project.projectId)}
+                                                    className='my-4 ml-auto block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
+                                                >Add Photo</button>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div className="max-w-[500px] sm:grow">
                                         <p className='text-2xl font-bold'>
@@ -121,10 +160,10 @@ const EditProject = () => {
                                             className='mt-1 mb-4 px-3 py-1 border block resie-none w-full'
                                             defaultValue={project.notes}
                                         />
+                                        <button
+                                            className='mt-1 ml-auto block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
+                                        >Save</button>
                                     </div>
-                                    <button
-                                        className='mt-1 ml-auto block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
-                                    >Save</button>
                                 </div>
                             </Form>
                         )
