@@ -32,12 +32,22 @@ const ProjectDetail = () => {
                 <Await resolve={loaderData.projectDetail}>
                     {project => (
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
-                            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                <img src={imgPlaceholder}
-                                    alt="Wool icon created by Darius Dan - Flaticon"
-                                    className=' opacity-30'
-                                />
-                            </div>
+                            {project.imageUrl ? (
+                                <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
+                                    <img src={project.imageUrl}
+                                        alt={`project photo`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            ) : (
+                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
+                                    <img src={imgPlaceholder}
+                                        alt="Wool icon created by Darius Dan - Flaticon"
+                                        className=' opacity-30'
+                                    />
+                                </div>
+                            )
+                            }
                             <div className="max-w-[500px] sm:grow">
                                 <div className="mb-3 flex justify-between items-center">
                                     <p className='text-2xl font-bold'>{project.name}</p>

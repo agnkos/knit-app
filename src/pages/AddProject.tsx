@@ -22,7 +22,8 @@ export async function action({ request }: any): Promise<Response | {
             pattern: pattern,
             size: size,
             yarn: yarn,
-            needles: needles
+            needles: needles,
+            imageUrl: ""
         })
 
         return redirect('/projects')

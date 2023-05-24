@@ -1,8 +1,8 @@
 import { Form, useLoaderData, Await, redirect } from "react-router-dom";
-import { useState, Suspense, ChangeEvent } from "react";
+import { useState, Suspense, useEffect } from "react";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes } from 'firebase/storage';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { Project } from "../types";
@@ -27,6 +27,7 @@ export async function action({ params, request }: any) {
             needles: needles,
             notes: notes
         })
+        console.log('file added')
 
         return redirect(`/projects/${projectRef.id}`)
 
@@ -42,22 +43,32 @@ type LoaderData = {
 }
 
 const EditProject = () => {
-    const [imageUpload, setImageUpload] = useState<File | undefined>()
+    const [imageUpload, setImageUpload] = useState<File | undefined>();
+    const [imageUrl, setImageUrl] = useState<string | undefined>();
+    const [deletedImg, setDeletedImg] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData;
 
     const uploadImage = async (id: string) => {
         if (!imageUpload) return;
+        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`)
         const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
-        console.log(imageFolderRef)
-        // uploadBytes(imageFolderRef, imageUpload);
         try {
-            await uploadBytes(imageFolderRef, imageUpload);
+            await uploadBytes(imageFolderRef, imageUpload)
+                .then(snapshot => {
+                    getDownloadURL(snapshot.ref).then(url => {
+                        console.log(url)
+                        setImageUrl(url)
+                        updateDoc(projectRef, {
+                            imageUrl: url
+                        })
+                    })
+                })
             console.log('file added')
         } catch (err) {
             console.log(err);
         }
     }
-    // data.projectDetail.projectId
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
         const file = target.files?.[0];
@@ -65,7 +76,23 @@ const EditProject = () => {
         setImageUpload(file);
     }
 
-    console.log(imageUpload)
+    const deleteImage = (id: string) => {
+        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
+        deleteObject(imageFolderRef);
+        updateDoc(projectRef, {
+            imageUrl: ""
+        })
+        setImageUrl(undefined)
+        setDeletedImg(true)
+    }
+    useEffect(() => {
+
+        console.log('img url', imageUrl)
+
+
+    }, [imageUrl])
+
 
     return (
         <div>
@@ -77,25 +104,40 @@ const EditProject = () => {
                             <Form action={`/projects/${project.projectId}/edit`} method="post">
                                 <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                                     <div>
-                                        <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                            <img src={imgPlaceholder}
-                                                alt="Wool icon created by Darius Dan - Flaticon"
-                                                className='opacity-30'
-                                            />
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="file"
-                                                id="addImg-btn"
-                                                // className="hidden"
-                                                onChange={handleChange}
-                                            ></input>
-                                            <label htmlFor="addImg-btn">
-                                                <button
-                                                    onClick={() => uploadImage(project.projectId)}
-                                                    className='my-4 ml-auto block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
-                                                >Add Photo</button>
-                                            </label>
+                                        {project.imageUrl === "" || deletedImg ? (
+                                            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
+                                                <img src={imgPlaceholder}
+                                                    alt="Wool icon created by Darius Dan - Flaticon"
+                                                    className=' opacity-30'
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
+                                                <img src={imageUrl === undefined ? project.imageUrl : imageUrl}
+                                                    alt={`project photo`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        )
+                                        }
+                                        <input
+                                            type="file"
+                                            id="file"
+                                            className='my-1 p-1 border sm:max-w-[250px]'
+                                            onChange={handleChange}
+                                        // hidden
+                                        />
+                                        {/* <label htmlFor="file"> */}
+                                        <div className="flex justify-end gap-4 sm:max-w-[250px]">
+                                            <div
+                                                onClick={() => uploadImage(project.projectId)}
+                                                className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+                                            >Add Photo</div>
+                                            <div
+                                                onClick={() => deleteImage(project.projectId)}
+                                                className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+                                            >Remove Photo</div>
+                                            {/* </label> */}
                                         </div>
                                     </div>
                                     <div className="max-w-[500px] sm:grow">
