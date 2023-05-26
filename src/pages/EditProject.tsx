@@ -1,4 +1,4 @@
-import { Form, useLoaderData, Await, redirect } from "react-router-dom";
+import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
 import { useState, Suspense, useEffect } from "react";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
@@ -27,7 +27,7 @@ export async function action({ params, request }: any) {
             needles: needles,
             notes: notes
         })
-        console.log('file added')
+        console.log('refresh: file added')
 
         return redirect(`/projects/${projectRef.id}`)
 
@@ -44,9 +44,10 @@ type LoaderData = {
 
 const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
-    const [imageUrl, setImageUrl] = useState<string | undefined>();
-    const [deletedImg, setDeletedImg] = useState<boolean>(false);
+    // const [imageUrl, setImageUrl] = useState<string | undefined>();
+    // const [deletedImg, setDeletedImg] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData;
+    const navigate = useNavigate()
 
     const uploadImage = async (id: string) => {
         if (!imageUpload) return;
@@ -57,16 +58,17 @@ const EditProject = () => {
                 .then(snapshot => {
                     getDownloadURL(snapshot.ref).then(url => {
                         console.log(url)
-                        setImageUrl(url)
+                        // setImageUrl(url)
                         updateDoc(projectRef, {
                             imageUrl: url
                         })
                     })
                 })
-            console.log('file added')
+            console.log('url updated');
         } catch (err) {
             console.log(err);
         }
+        navigate(`/projects/${id}/edit`);
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,15 +85,16 @@ const EditProject = () => {
         updateDoc(projectRef, {
             imageUrl: ""
         })
-        setImageUrl(undefined)
-        setDeletedImg(true)
+        navigate(`/projects/${id}/edit`);
+        // setImageUrl(undefined)
+        // setDeletedImg(true)
     }
-    useEffect(() => {
+    // useEffect(() => {
 
-        console.log('img url', imageUrl)
+    //     console.log('img url', imageUrl)
 
 
-    }, [imageUrl])
+    // }, [imageUrl])
 
 
     return (
@@ -101,113 +104,121 @@ const EditProject = () => {
                 <Await resolve={data.projectDetail}>
                     {
                         project => (
-                            <Form action={`/projects/${project.projectId}/edit`} method="post">
-                                <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
-                                    <div>
-                                        {project.imageUrl === "" || deletedImg ? (
-                                            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
-                                                <img src={imgPlaceholder}
-                                                    alt="Wool icon created by Darius Dan - Flaticon"
-                                                    className=' opacity-30'
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                                                <img src={imageUrl === undefined ? project.imageUrl : imageUrl}
-                                                    alt={`project photo`}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
-                                        )
-                                        }
-                                        <input
-                                            type="file"
-                                            id="file"
-                                            className='my-1 p-1 border sm:max-w-[250px]'
-                                            onChange={handleChange}
-                                        // hidden
-                                        />
-                                        {/* <label htmlFor="file"> */}
-                                        <div className="flex justify-end gap-4 sm:max-w-[250px]">
-                                            <div
-                                                onClick={() => uploadImage(project.projectId)}
-                                                className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
-                                            >Add Photo</div>
-                                            <div
-                                                onClick={() => deleteImage(project.projectId)}
-                                                className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
-                                            >Remove Photo</div>
-                                            {/* </label> */}
-                                        </div>
-                                    </div>
-                                    <div className="max-w-[500px] sm:grow">
-                                        <p className='text-2xl font-bold'>
+                            <>
+                                <Form action={`/projects/${project.projectId}/edit`} method="post">
+                                    <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
+                                        <div>
+                                            {project.imageUrl === "" && (
+                                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
+                                                    <img src={imgPlaceholder}
+                                                        alt="Wool icon created by Darius Dan - Flaticon"
+                                                        className=' opacity-30'
+                                                    />
+                                                </div>)
+                                            }
+                                            {project.imageUrl && (
+                                                <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
+                                                    <img src={project.imageUrl}
+                                                        alt={`project photo`}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            )
+                                            }
                                             <input
-                                                required
-                                                type="text"
-                                                name="name"
-                                                className='my-1 px-3 py-1 border block w-full'
-                                                defaultValue={project.name}
-                                            /></p>
-                                        <p className="text-lg font-bold">Project info</p>
-                                        <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                            <p className="col-start-1 text-zinc-700 ">Pattern</p>
-                                            <p className="col-start-2 col-span-3">
-                                                <input
-                                                    type="text"
-                                                    name="pattern"
-                                                    className='my-1 px-3 py-1 border block'
-                                                    defaultValue={project.pattern}
-                                                />
-                                            </p>
+                                                type="file"
+                                                id="file"
+                                                className='my-1 p-1 border sm:max-w-[250px]'
+                                                onChange={handleChange}
+                                            // hidden
+                                            />
+                                            {/* <label htmlFor="file"> */}
+                                            <div className="flex justify-end gap-4 sm:max-w-[250px]">
+                                                <div
+                                                    onClick={() => uploadImage(project.projectId)}
+                                                    className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+                                                >Add Photo</div>
+                                                <div
+                                                    onClick={() => deleteImage(project.projectId)}
+                                                    className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+                                                >Remove Photo</div>
+                                                {/* </label> */}
+                                            </div>
                                         </div>
-                                        <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                            <p className="col-start-1 text-zinc-700">Size</p>
-                                            <p className="col-start-2 col-span-3">
+                                        <div className="max-w-[500px] sm:grow">
+                                            <p className='text-2xl font-bold'>
                                                 <input
+                                                    required
                                                     type="text"
-                                                    name="size"
-                                                    className='my-1 px-3 py-1 border block'
-                                                    defaultValue={project.size}
-                                                />
-                                            </p>
-                                        </div>
+                                                    name="name"
+                                                    className='my-1 px-3 py-1 border block w-full'
+                                                    defaultValue={project.name}
+                                                /></p>
+                                            <p className="text-lg font-bold">Project info</p>
+                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
+                                                <p className="col-start-1 text-zinc-700 ">Pattern</p>
+                                                <p className="col-start-2 col-span-3">
+                                                    <input
+                                                        type="text"
+                                                        name="pattern"
+                                                        className='my-1 px-3 py-1 border block'
+                                                        defaultValue={project.pattern}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
+                                                <p className="col-start-1 text-zinc-700">Size</p>
+                                                <p className="col-start-2 col-span-3">
+                                                    <input
+                                                        type="text"
+                                                        name="size"
+                                                        className='my-1 px-3 py-1 border block'
+                                                        defaultValue={project.size}
+                                                    />
+                                                </p>
+                                            </div>
 
-                                        <p className="text-lg font-bold">Needles & yarn</p>
-                                        <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                            <p className="col-start-1 text-zinc-700">Needle</p>
-                                            <p className="col-start-2 col-span-3">
-                                                <input
-                                                    type="text"
-                                                    name="needles"
-                                                    className='my-1 px-3 py-1 border block'
-                                                    defaultValue={project.needles}
-                                                />
-                                            </p>
+                                            <p className="text-lg font-bold">Needles & yarn</p>
+                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
+                                                <p className="col-start-1 text-zinc-700">Needle</p>
+                                                <p className="col-start-2 col-span-3">
+                                                    <input
+                                                        type="text"
+                                                        name="needles"
+                                                        className='my-1 px-3 py-1 border block'
+                                                        defaultValue={project.needles}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
+                                                <p className="col-start-1 text-zinc-700 ">Yarn</p>
+                                                <p className="col-start-2 col-span-3">
+                                                    <input
+                                                        type="text"
+                                                        name="yarn"
+                                                        className='my-1 px-3 py-1 border block'
+                                                        defaultValue={project.yarn}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <p className="text-lg font-bold">Notes</p>
+                                            <textarea
+                                                name="notes"
+                                                className='mt-1 mb-4 px-3 py-1 border block resie-none w-full'
+                                                defaultValue={project.notes}
+                                            />
+                                            <div className="flex gap-4 items-center justify-end">
+                                                <div
+                                                    className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
+                                                >Delete Project</div>
+                                                <button
+                                                    className='block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
+                                                >Save</button>
+                                            </div>
                                         </div>
-                                        <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                            <p className="col-start-1 text-zinc-700 ">Yarn</p>
-                                            <p className="col-start-2 col-span-3">
-                                                <input
-                                                    type="text"
-                                                    name="yarn"
-                                                    className='my-1 px-3 py-1 border block'
-                                                    defaultValue={project.yarn}
-                                                />
-                                            </p>
-                                        </div>
-                                        <p className="text-lg font-bold">Notes</p>
-                                        <textarea
-                                            name="notes"
-                                            className='mt-1 mb-4 px-3 py-1 border block resie-none w-full'
-                                            defaultValue={project.notes}
-                                        />
-                                        <button
-                                            className='mt-1 ml-auto block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
-                                        >Save</button>
                                     </div>
-                                </div>
-                            </Form>
+                                </Form>
+                            </>
                         )
                     }
                 </Await>

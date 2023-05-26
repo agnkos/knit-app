@@ -16,6 +16,7 @@ export async function action({ request }: any) {
         const data = await createUserWithEmailAndPassword(auth, email, password);
         console.log('user created', email, password)
         console.log(data.user)
+        localStorage.setItem('loggedUser', JSON.stringify(data.user.uid))
         await setDoc(doc(db, "users", `${data.user.uid}`), {
             username: username,
             useremail: email,

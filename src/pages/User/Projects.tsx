@@ -6,8 +6,15 @@ import imgPlaceholder from '../../img/knit-black.png';
 import { Link } from 'react-router-dom';
 import { AllProjects, Project } from '../../types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { auth } from "../../config/firebase";
+import { onAuthStateChanged } from 'firebase/auth';
 
 export function loader() {
+  //  onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       return defer({ projects: getProjects() })
+  //     }
+  //   })
   return defer({ projects: getProjects() })
 }
 
@@ -55,6 +62,12 @@ const Projects = () => {
       </div>
     )
   }
+
+
+  // onAuthStateChanged(auth, (user) => {
+  //   console.log('user status changed', user)
+  //   console.log(auth?.currentUser?.uid)
+  // })
 
   return (
     <div className="flex flex-col grow">

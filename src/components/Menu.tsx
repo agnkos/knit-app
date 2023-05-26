@@ -28,6 +28,7 @@ const Menu = ({ toggle, closeMenu }: Toggle) => {
 
     const logout = () => {
         console.log('log out')
+        localStorage.setItem('loggedUser', "")
         signOut(auth);
         navigate('/')
     }

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { doc, collection, getDoc, getDocs, getFirestore, query, where } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -19,20 +19,31 @@ export const db = getFirestore(app);
 export const usersRef = collection(db, "users");
 export const storage = getStorage(app);
 
+// setPersistence(auth, browserLocalPersistence); 
+
 export async function getProjects() {
-    const q = collection(db, "users", `${auth?.currentUser?.uid}`, "projects")
+    let userId = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser'))
+    console.log('userid:', userId)
+
+    const q = collection(db, "users", `${userId}`, "projects")
+    console.log(q)
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
     }))
-    // console.log(dataArr)
+
+    console.log(dataArr)
+    console.log('user', auth?.currentUser?.uid)
     return dataArr;
 }
 
+
 export async function getProjectDetail(id: string) {
-    const q = doc(db, "users", `${auth?.currentUser?.uid}`,"projects", id);
+    let userId = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser'))
+    const q = doc(db, "users", `${userId}`, "projects", id);
     const projectSnapshot = await getDoc(q);
     // console.log(projectSnapshot.data())
     return projectSnapshot.data()
 }
+
