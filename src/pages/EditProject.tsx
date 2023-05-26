@@ -1,5 +1,5 @@
 import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
-import { useState, Suspense, useEffect } from "react";
+import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -89,13 +89,6 @@ const EditProject = () => {
         // setImageUrl(undefined)
         // setDeletedImg(true)
     }
-    // useEffect(() => {
-
-    //     console.log('img url', imageUrl)
-
-
-    // }, [imageUrl])
-
 
     return (
         <div>

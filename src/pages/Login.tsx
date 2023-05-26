@@ -1,8 +1,7 @@
-import { Form, NavLink, json, redirect } from 'react-router-dom';
+import { Form, NavLink, redirect } from 'react-router-dom';
 import knitLogo from "../img/art-and-design.png";
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 
 export async function action({ request }: any) {
     console.log(request)

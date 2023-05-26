@@ -6,21 +6,22 @@ import { Link } from "react-router-dom";
 import { Project } from "../../types";
 import { PencilIcon } from "@heroicons/react/24/outline";
 
+
 type LoaderData = {
     projectDetail: Project
 }
 // Partial<Project> ?
 
-type Object = {
-    params: Params
-}
+// type Object = {
+//     params: Params
+// }
 
-type Params = {
-    id: string
-}
+// type Params = {
+//     id: string
+// }
 
-export function loader(obj: Object) {
-    return defer({ projectDetail: getProjectDetail(obj.params.id) })
+export function loader({ params }: any) {
+    return defer({ projectDetail: getProjectDetail(params.id) })
 }
 
 const ProjectDetail = () => {
