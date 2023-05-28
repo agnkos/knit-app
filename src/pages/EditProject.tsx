@@ -6,6 +6,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { Project } from "../types";
+import DeleteModal from "../components/DeleteModal";
 
 export async function action({ params, request }: any) {
     const formData = await request.formData();
@@ -46,6 +47,7 @@ const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     // const [imageUrl, setImageUrl] = useState<string | undefined>();
     // const [deletedImg, setDeletedImg] = useState<boolean>(false);
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData;
     const navigate = useNavigate()
 
@@ -88,6 +90,14 @@ const EditProject = () => {
         navigate(`/projects/${id}/edit`);
         // setImageUrl(undefined)
         // setDeletedImg(true)
+    }
+
+    const showModal = () => {
+        setShowDeleteModal(true);
+    }
+
+    const closeModal = () => {
+        setShowDeleteModal(false);
     }
 
     return (
@@ -197,11 +207,12 @@ const EditProject = () => {
                                             <p className="text-lg font-bold">Notes</p>
                                             <textarea
                                                 name="notes"
-                                                className='mt-1 mb-4 px-3 py-1 border block resie-none w-full'
+                                                className='mt-1 mb-4 px-3 py-1 border block resize-none w-full'
                                                 defaultValue={project.notes}
                                             />
                                             <div className="flex gap-4 items-center justify-end">
                                                 <div
+                                                    onClick={showModal}
                                                     className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Delete Project</div>
                                                 <button
@@ -216,6 +227,7 @@ const EditProject = () => {
                     }
                 </Await>
             </Suspense>
+            {showDeleteModal && <DeleteModal closeModal={closeModal} />}
         </div>
     )
 }

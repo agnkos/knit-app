@@ -7,7 +7,9 @@ const Dashboard = () => {
     const [toggle, setToggle] = useState(false);
 
     const toggleMenu = () => {
-        setToggle(!toggle);
+        setToggle(!toggle)
+        // if (toggle) return;
+        // setToggle(true);
     }
 
     const closeMenu = () => {
@@ -16,8 +18,8 @@ const Dashboard = () => {
 
     return (
         <div className='min-h-screen flex flex-col '>
-            <Navbar toggleMenu={toggleMenu}/>
-            <Menu toggle={toggle} closeMenu={closeMenu}/>
+            <Navbar toggleMenu={toggleMenu} />
+            <Menu toggle={toggle} closeMenu={closeMenu} />
             <div className='p-4 flex flex-col grow'>
                 <Outlet />
             </div>

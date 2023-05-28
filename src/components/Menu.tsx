@@ -14,15 +14,15 @@ const Menu = ({ toggle, closeMenu }: Toggle) => {
 
     useEffect(() => {
         const closeOnClickOutside = (e: MouseEvent) => {
-            if (toggle && ref.current && !ref.current.contains(e.target as Element)) {
+            if (toggle && ref.current && !ref.current.contains(e.target as Element) && !(e.target as Element).classList.contains("burger-btn")) {
                 closeMenu()
+                console.log(e.target)
             }
         }
-
-        document.addEventListener("mousedown", closeOnClickOutside)
+        document.addEventListener("click", closeOnClickOutside)
 
         return () => {
-            document.removeEventListener("mousedown", closeOnClickOutside)
+            document.removeEventListener("click", closeOnClickOutside)
         }
     }, [toggle])
 
@@ -32,6 +32,10 @@ const Menu = ({ toggle, closeMenu }: Toggle) => {
         signOut(auth);
         navigate('/')
     }
+
+    useEffect(() => {
+        console.log('toggle:', toggle)
+    }, [toggle])
 
     return (
         <ul

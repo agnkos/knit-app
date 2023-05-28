@@ -34,7 +34,7 @@ const ProjectDetail = () => {
                     {project => (
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                             {project.imageUrl ? (
-                                <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
+                                <div className="my-2 border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
                                     <img src={project.imageUrl}
                                         alt={`project photo`}
                                         className="w-full h-full object-cover"
