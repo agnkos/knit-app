@@ -1,7 +1,7 @@
 import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
-import { deleteDoc, doc, updateDoc, deleteField } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
