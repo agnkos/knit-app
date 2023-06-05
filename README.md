@@ -25,3 +25,4 @@
 - login and signup page
 - all projects page
 - adding and editing projects
+- adding and deleting project photo
