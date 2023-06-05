@@ -5,7 +5,7 @@ type ToggleMenu = {
 const Navbar = ({ toggleMenu }: ToggleMenu) => {
 
     return (
-        <div className=" py-2 px-4 flex  justify-between bg-zinc-100 border-zinc-900 border-b-2">
+        <div className="fixed w-full z-50 py-2 px-4 flex  justify-between bg-zinc-100 border-zinc-900 border-b-2">
             <p className='m-2 text-2xl text-rose-500 font-logo'>Knit.app</p>
             <button
                 className="burger-btn"

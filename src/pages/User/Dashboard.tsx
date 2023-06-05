@@ -20,7 +20,7 @@ const Dashboard = () => {
         <div className='min-h-screen flex flex-col '>
             <Navbar toggleMenu={toggleMenu} />
             <Menu toggle={toggle} closeMenu={closeMenu} />
-            <div className='p-4 flex flex-col grow'>
+            <div className='mt-16 p-4 flex flex-col grow'>
                 <Outlet />
             </div>
         </div>

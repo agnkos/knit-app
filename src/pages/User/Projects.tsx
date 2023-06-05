@@ -64,8 +64,8 @@ const Projects = () => {
 
   return (
     <div className="flex flex-col grow">
-      <div className="flex gap-3 items-center mb-4">
-        <h1 className="text-4xl font-bold">Projects</h1>
+      <div className="flex gap-3 items-center my-4">
+        <h1 className="px-4 text-4xl font-bold">Projects</h1>
         <button
           className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
           onClick={addProject}
