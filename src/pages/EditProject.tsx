@@ -1,7 +1,7 @@
 import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc, deleteField } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
@@ -66,7 +66,6 @@ const EditProject = () => {
                         })
                     })
                 })
-            console.log('url updated');
         } catch (err) {
             console.log(err);
         }
@@ -94,10 +93,23 @@ const EditProject = () => {
 
     const showModal = () => {
         setShowDeleteModal(true);
+        console.log('delete project?', data.projectDetail.projectId)
     }
 
     const closeModal = () => {
         setShowDeleteModal(false);
+    }
+
+    const deleteProject = (id: string, url: string) => {
+        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
+        deleteDoc(projectRef);
+        if (url) {
+            const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+            deleteObject(imageFolderRef);
+        }
+        console.log('project deleted', id)
+        closeModal();
+        navigate('/projects');
     }
 
     return (
@@ -222,12 +234,12 @@ const EditProject = () => {
                                         </div>
                                     </div>
                                 </Form>
+                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteProject={() => deleteProject(project.projectId, project.imageUrl)} />}
                             </>
                         )
                     }
                 </Await>
             </Suspense>
-            {showDeleteModal && <DeleteModal closeModal={closeModal} />}
         </div>
     )
 }
