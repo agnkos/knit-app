@@ -22,22 +22,21 @@ export const storage = getStorage(app);
 // setPersistence(auth, browserLocalPersistence); 
 
 export async function getProjects() {
-    let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}')
+    let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
     console.log('userid:', userId)
 
-    const q = collection(db, "users", `${userId}`, "projects")
+    const q = collection(db, "users", `${userId}`, "projects");
     console.log(q)
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
-    }))
+    }));
 
     console.log(dataArr)
     console.log('user', auth?.currentUser?.uid)
     return dataArr;
 }
-
 
 export async function getProjectDetail(id: string) {
     let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}')
@@ -47,3 +46,16 @@ export async function getProjectDetail(id: string) {
     return projectSnapshot.data()
 }
 
+export async function getQueuedItems() {
+    let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const q = collection(db, "users", `${userId}`, "queue");
+    console.log(q)
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        // id: doc.id
+    }));
+    console.log(dataArr)
+    return dataArr;
+
+}

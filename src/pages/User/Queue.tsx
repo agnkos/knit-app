@@ -1,6 +1,86 @@
+// import { useState } from 'react';
+import { Suspense } from "react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import knittingImg from '../../img/knitting.png';
+// import QueueModal from '../../components/QueueModal';
+import { Await, Link, Outlet, defer, useLoaderData } from 'react-router-dom';
+import { getQueuedItems } from "../../config/firebase";
+
+export function loader() {
+    return defer({ queuedItems: getQueuedItems() })
+}
+
+type queuedItem = {
+    name: string,
+    notes: string,
+    queuedItemId: string
+}
+
+type LoaderData = {
+    queuedItems: queuedItem[]
+}
+
 const Queue = () => {
+    const loaderData = useLoaderData() as LoaderData;
+    // const [showQueueModal, setShowQueueModal] = useState<boolean>(false);
+
+    // const openQueueModal = () => {
+    //     setShowQueueModal(true);
+    // }
+
+    // const closeQueueModal = () => {
+    //     setShowQueueModal(false);
+    // }
+    console.log(loaderData.queuedItems)
+
     return (
-        <div>Queue</div>
+        <div className="flex flex-col grow">
+            <div className="flex gap-3 items-center my-4">
+                <h1 className="px-4 text-4xl font-bold">Queue</h1>
+                <Link
+                    to="add"
+                    state={{ background: location }}
+                    className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
+                // onClick={openQueueModal}
+                >
+                    <PlusCircleIcon className="w-4 h-4" />
+                    <span>
+                        add to queue
+                    </span>
+                </Link>
+            </div>
+
+            {loaderData.queuedItems.length === 0 && <div className="grow flex flex-col items-center justify-center">
+                <div>
+                    <img src={knittingImg}
+                        className='ml-auto mr-auto'
+                        alt="Knitting icon created by iconixar - Flaticon"
+                    />
+                    <p className='text-xl'>Time to plan some projects!</p>
+                </div>
+            </div>}
+            <Outlet />
+            <Suspense fallback={<h3>Loading queue...</h3>}>
+                <Await resolve={loaderData.queuedItems}>
+                    {
+                        (queuedItems) => {
+                            const itemsHtml = queuedItems.map((item: queuedItem) => (
+                                <div key={item.queuedItemId}>
+                                    <p>{item.name}</p>
+                                    <p>{item.notes}</p>
+                                </div>
+                            ));
+                            return (
+                                <>
+                                    {itemsHtml}
+                                </>
+                            )
+                        }
+                    }
+                </Await>
+            </Suspense>
+            {/* {showQueueModal && <QueueModal closeQueueModal={closeQueueModal} />} */}
+        </div>
     )
 }
 export default Queue

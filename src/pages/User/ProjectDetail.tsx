@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import imgPlaceholder from '../../img/knit-black.png';
 import { Link } from "react-router-dom";
 import { Project } from "../../types";
-import { PencilIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 
 type LoaderData = {
@@ -29,6 +29,7 @@ const ProjectDetail = () => {
 
     return (
         <>
+            <Link to="/projects" className="flex gap-2 items-center"><ArrowLeftCircleIcon className="w-5 h-5" /><p>Back to projects</p></Link>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={loaderData.projectDetail}>
                     {project => (
