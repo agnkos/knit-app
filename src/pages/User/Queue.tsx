@@ -5,19 +5,15 @@ import knittingImg from '../../img/knitting.png';
 // import QueueModal from '../../components/QueueModal';
 import { Await, Link, Outlet, defer, useLoaderData } from 'react-router-dom';
 import { getQueuedItems } from "../../config/firebase";
+import QueuedItem from "../../components/QueuedItem";
+import { QueuedItemType } from "../../types"
 
 export function loader() {
     return defer({ queuedItems: getQueuedItems() })
 }
 
-type queuedItem = {
-    name: string,
-    notes: string,
-    queuedItemId: string
-}
-
 type LoaderData = {
-    queuedItems: queuedItem[]
+    queuedItems: QueuedItemType[]
 }
 
 const Queue = () => {
@@ -31,17 +27,28 @@ const Queue = () => {
     // const closeQueueModal = () => {
     //     setShowQueueModal(false);
     // }
-    console.log(loaderData.queuedItems)
+    // console.log(loaderData.queuedItems)
+
+    function renderQueuedItems(queuedItems: QueuedItemType[]) {
+        const queuedItemsElements = queuedItems.map((item, index: number) => (
+            <QueuedItem item={item} index={index} key={item.queuedItemId} />
+        ))
+
+        return (
+            <div>
+                {queuedItemsElements}
+            </div>
+        )
+    }
 
     return (
         <div className="flex flex-col grow">
             <div className="flex gap-3 items-center my-4">
-                <h1 className="px-4 text-4xl font-bold">Queue</h1>
+                <h1 className="px-4 text-4xl font-bold max-[325px]:text-3xl">Queue</h1>
                 <Link
                     to="add"
-                    state={{ background: location }}
+                    state={{ button: "" }}
                     className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
-                // onClick={openQueueModal}
                 >
                     <PlusCircleIcon className="w-4 h-4" />
                     <span>
@@ -62,21 +69,7 @@ const Queue = () => {
             <Outlet />
             <Suspense fallback={<h3>Loading queue...</h3>}>
                 <Await resolve={loaderData.queuedItems}>
-                    {
-                        (queuedItems) => {
-                            const itemsHtml = queuedItems.map((item: queuedItem) => (
-                                <div key={item.queuedItemId}>
-                                    <p>{item.name}</p>
-                                    <p>{item.notes}</p>
-                                </div>
-                            ));
-                            return (
-                                <>
-                                    {itemsHtml}
-                                </>
-                            )
-                        }
-                    }
+                    {renderQueuedItems}
                 </Await>
             </Suspense>
             {/* {showQueueModal && <QueueModal closeQueueModal={closeQueueModal} />} */}
