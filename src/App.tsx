@@ -6,12 +6,13 @@ import Signup, { action as signupAction } from "./pages/Signup";
 // import UserLayout from './components/UserLayout';
 import Dashboard from './pages/User/Dashboard';
 import Projects, { loader as projectsLoader } from './pages/User/Projects';
-import Queue from './pages/User/Queue';
+import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';
 import Stash from './pages/User/Stash';
 import Notes from './pages/User/Notes';
 import AddProject, { action as addProjectAction } from './pages/AddProject';
 import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
-import EditProject, {action as editAction} from './pages/EditProject';
+import EditProject, { action as editAction } from './pages/EditProject';
+import QueueModal, { action as addToQueueAction } from './components/QueueModal';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<Layout />}>
@@ -21,7 +22,9 @@ const router = createBrowserRouter(createRoutesFromElements(
 
     <Route element={<Dashboard />}>
       <Route path="projects" index element={<Projects />} loader={projectsLoader} />
-      <Route path="queue" element={<Queue />} />
+      <Route path="queue" element={<Queue />} loader={queuedItemsLoader}>
+        <Route path="add" element={<QueueModal />} action={addToQueueAction} />
+      </Route>
       <Route path="stash" element={<Stash />} />
       <Route path="notes" element={<Notes />} />
       <Route path="addproject" element={<AddProject />} action={addProjectAction} />
