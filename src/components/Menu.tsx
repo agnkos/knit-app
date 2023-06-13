@@ -33,9 +33,9 @@ const Menu = ({ toggle, closeMenu }: Toggle) => {
         navigate('/')
     }
 
-    useEffect(() => {
-        console.log('toggle:', toggle)
-    }, [toggle])
+    // useEffect(() => {
+    //     console.log('toggle:', toggle)
+    // }, [toggle])
 
     return (
         <ul

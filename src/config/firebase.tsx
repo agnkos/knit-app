@@ -49,13 +49,13 @@ export async function getProjectDetail(id: string) {
 export async function getQueuedItems() {
     let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
     const q = collection(db, "users", `${userId}`, "queue");
-    console.log(q)
+    // console.log(q)
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         // id: doc.id
     }));
-    console.log(dataArr)
+    // console.log(dataArr)
     return dataArr;
 
 }

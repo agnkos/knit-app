@@ -8,24 +8,30 @@ export async function action({ request }: any) {
     const name = formData.get('name');
     const notes = formData.get('notes');
     const id = formData.get('id')
-
+    console.log('edit id', id)
     try {
-        if (!id) {
+        if (id !== "") {
+            console.log('edit id is', id)
+            const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", id);
+            await updateDoc(itemRef, {
+                name: name,
+                notes: notes
+            })
+        } else {
+            // const itemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue", id));
+            // await updateDoc(itemRef, {
+            //     name: name,
+            //     notes: notes
+            // })
             const queueItemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue"));
             await setDoc(queueItemRef, {
                 queuedItemId: queueItemRef.id,
                 name: name,
                 notes: notes
             });
-        } else {
-            const itemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue", id));
-            await updateDoc(itemRef, {
-                name: name,
-                notes: notes
-            })
         }
-        console.log('added new item to queue')
-        console.log('edit id', id)
+        // console.log('added new item to queue')
+        // console.log('edit id', id)
         return redirect('/queue');
     } catch (err: any) {
         return { error: err.message };
