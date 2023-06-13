@@ -1,5 +1,5 @@
 import { XCircleIcon } from "@heroicons/react/24/outline";
-import { doc, collection, setDoc, updateDoc } from "firebase/firestore";
+import { doc, collection, setDoc, updateDoc, getDocs } from "firebase/firestore";
 import { Form, redirect, useLocation, useNavigate } from "react-router-dom";
 import { auth, db } from "../config/firebase";
 
@@ -8,24 +8,33 @@ export async function action({ request }: any) {
     const name = formData.get('name');
     const notes = formData.get('notes');
     const id = formData.get('id')
-
+    console.log('edit id', id)
     try {
-        if (!id) {
-            const queueItemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue"));
-            await setDoc(queueItemRef, {
-                queuedItemId: queueItemRef.id,
-                name: name,
-                notes: notes
-            });
-        } else {
-            const itemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue", id));
+        if (id !== "") {
+            console.log('edit id is', id)
+            const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", id);
             await updateDoc(itemRef, {
                 name: name,
                 notes: notes
             })
+        } else {
+            const queueItemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue"));
+            const q = collection(db, "users", `${auth?.currentUser?.uid}`, "queue");
+            const querySnapshot = await getDocs(q);
+            const dataArr = querySnapshot.docs.map(doc => ({
+                ...doc.data(),
+            }));
+            // console.log('dataarr length', dataArr.length)
+            await setDoc(queueItemRef, {
+                queuedItemId: queueItemRef.id,
+                name: name,
+                notes: notes,
+                createdAt: Date.now(),
+                position: dataArr.length + 1
+            });
         }
-        console.log('added new item to queue')
-        console.log('edit id', id)
+        // console.log('added new item to queue')
+        // console.log('edit id', id)
         return redirect('/queue');
     } catch (err: any) {
         return { error: err.message };
