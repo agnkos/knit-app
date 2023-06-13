@@ -1,4 +1,4 @@
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../config/firebase";
 import { QueuedItemType } from "../types";
 import { TrashIcon, PencilIcon, ArrowDownCircleIcon, ArrowUpCircleIcon } from "@heroicons/react/24/outline";
@@ -21,12 +21,33 @@ const QueuedItem = ({ item, index }: QueuedItemProps) => {
         navigate('/queue');
     }
 
+    const positionUp = async (id: string, prevPosition: number) => {
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", `${id}`);
+        await updateDoc(itemRef, {
+            position: prevPosition - 1
+        })
+        console.log('item up')
+        navigate('/queue');
+    }
+    const positionDown = async (id: string, prevPosition: number) => {
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", `${id}`);
+        await updateDoc(itemRef, {
+            position: prevPosition + 1
+        })
+        console.log('item down')
+        navigate('/queue');
+    }
+
     return (
         <div className="mb-4 flex gap-4 items-start" >
             <div className="flex gap-1">
-                {/* <ArrowUpCircleIcon className="w-6 h-6" /> */}
+                <ArrowUpCircleIcon className="w-6 h-6"
+                    onClick={() => positionUp(item.queuedItemId, item.position)}
+                />
                 <p className="px-2 border">{index + 1}</p>
-                {/* <ArrowDownCircleIcon className="w-6 h-6" /> */}
+                <ArrowDownCircleIcon className="w-6 h-6"
+                    onClick={() => positionDown(item.queuedItemId, item.position)}
+                />
             </div>
             <div className="w-full">
                 <div className="flex items-center">

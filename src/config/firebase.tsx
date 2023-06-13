@@ -51,11 +51,14 @@ export async function getQueuedItems() {
     const q = collection(db, "users", `${userId}`, "queue");
     // console.log(q)
     const querySnapshot = await getDocs(q);
-    const dataArr = querySnapshot.docs.map(doc => ({
+    const dataArr = querySnapshot.docs.map((doc, i) => ({
         ...doc.data(),
         // id: doc.id
     }));
+    // const dataArrSorted = dataArr.sort((a, b) => a.createdAt - b.createdAt).map((item, i) => ({ ...item, position: i + 1 })).sort((a, b) => a.position - b.position)
+    const dataArrSorted = dataArr.sort((a, b) => a.position - b.position)
+    console.log(dataArrSorted)
     // console.log(dataArr)
-    return dataArr;
+    return dataArrSorted;
 
 }
