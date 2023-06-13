@@ -21,7 +21,7 @@ export async function action({ request }: any) {
             const queueItemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "queue"));
             const q = collection(db, "users", `${auth?.currentUser?.uid}`, "queue");
             const querySnapshot = await getDocs(q);
-            const dataArr = querySnapshot.docs.map((doc, i) => ({
+            const dataArr = querySnapshot.docs.map(doc => ({
                 ...doc.data(),
             }));
             // console.log('dataarr length', dataArr.length)

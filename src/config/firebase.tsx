@@ -51,7 +51,7 @@ export async function getQueuedItems() {
     const q = collection(db, "users", `${userId}`, "queue");
     // console.log(q)
     const querySnapshot = await getDocs(q);
-    const dataArr = querySnapshot.docs.map((doc, i) => ({
+    const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         // id: doc.id
     }));
