@@ -12,14 +12,15 @@ import AddProject, { action as addProjectAction } from './pages/AddProject';
 import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
 import EditProject, { action as editAction } from './pages/EditProject';
 import QueueModal, { action as addToQueueAction } from './components/QueueModal';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route element={<Layout />}>
+  <Route element={<Layout />} errorElement={<ErrorPage />}>
     <Route path="/" element={<Login />} action={loginAction} />
     <Route path="signup" element={<Signup />} action={signupAction} />
-    <Route element={<Dashboard />}>
+    <Route element={<Dashboard />} errorElement={<ErrorPage />}>
       <Route path="projects" index element={<Projects />} loader={projectsLoader} />
-      <Route path="queue" element={<Queue />} loader={queuedItemsLoader}>
+      <Route path="queue" element={<Queue />} loader={queuedItemsLoader} >
         <Route path="add" element={<QueueModal />} action={addToQueueAction} />
       </Route>
       <Route path="stash" element={<Stash />} />
@@ -28,6 +29,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
       <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editAction} />
     </Route>
+    <Route path="*" element={<ErrorPage />} />
   </Route>
 ))
 
