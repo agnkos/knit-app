@@ -8,8 +8,6 @@ const Dashboard = () => {
 
     const toggleMenu = () => {
         setToggle(!toggle)
-        // if (toggle) return;
-        // setToggle(true);
     }
 
     const closeMenu = () => {

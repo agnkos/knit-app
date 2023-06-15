@@ -28,12 +28,10 @@ const QueuedItem = ({ item, index }: QueuedItemProps) => {
         const dataArr = querySnapshot.docs.map(doc => ({
             ...doc.data(),
         }));
-        console.log('data arr', dataArr)
         const prevItem = dataArr.filter(item => item.position === prevPosition - 1);
 
         if (action === "up") {
             if (prevPosition === 1) return;
-            console.log('prev', prevItem)
             const prevItemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", `${prevItem[0].queuedItemId}`);
             await updateDoc(itemRef, {
                 position: prevPosition - 1
@@ -45,7 +43,6 @@ const QueuedItem = ({ item, index }: QueuedItemProps) => {
         if (action === "down") {
             if (prevPosition === dataArr.length) return;
             const nextItem = dataArr.filter(item => item.position === prevPosition + 1);
-            console.log('next', nextItem)
             const nextItemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", `${nextItem[0].queuedItemId}`);
             await updateDoc(itemRef, {
                 position: prevPosition + 1

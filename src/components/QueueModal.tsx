@@ -11,7 +11,6 @@ export async function action({ request }: any) {
 
     try {
         if (id !== "") {
-            console.log('edit id is', id)
             const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "queue", id);
             await updateDoc(itemRef, {
                 name: name,
@@ -39,10 +38,6 @@ export async function action({ request }: any) {
         return { error: err.message };
     }
 }
-
-// type QueueModalProps = {
-//     closeQueueModal: () => void;
-// }
 
 const QueueModal = () => {
     const navigate = useNavigate();

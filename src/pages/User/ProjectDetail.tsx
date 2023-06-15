@@ -10,15 +10,6 @@ import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 type LoaderData = {
     projectDetail: Project
 }
-// Partial<Project> ?
-
-// type Object = {
-//     params: Params
-// }
-
-// type Params = {
-//     id: string
-// }
 
 export function loader({ params }: any) {
     return defer({ projectDetail: getProjectDetail(params.id) })

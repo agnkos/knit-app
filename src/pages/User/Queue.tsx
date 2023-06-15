@@ -1,8 +1,6 @@
-// import { useState } from 'react';
 import { Suspense } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import knittingImg from '../../img/knitting.png';
-// import QueueModal from '../../components/QueueModal';
 import { Await, Link, Outlet, defer, useLoaderData } from 'react-router-dom';
 import { getQueuedItems } from "../../config/firebase";
 import QueuedItem from "../../components/QueuedItem";
@@ -18,16 +16,6 @@ type LoaderData = {
 
 const Queue = () => {
     const loaderData = useLoaderData() as LoaderData;
-    // const [showQueueModal, setShowQueueModal] = useState<boolean>(false);
-
-    // const openQueueModal = () => {
-    //     setShowQueueModal(true);
-    // }
-
-    // const closeQueueModal = () => {
-    //     setShowQueueModal(false);
-    // }
-    // console.log(loaderData.queuedItems)
 
     function renderQueuedItems(queuedItems: QueuedItemType[]) {
         const queuedItemsElements = queuedItems.map((item, index: number) => (
@@ -72,7 +60,6 @@ const Queue = () => {
                     {renderQueuedItems}
                 </Await>
             </Suspense>
-            {/* {showQueueModal && <QueueModal closeQueueModal={closeQueueModal} />} */}
         </div>
     )
 }

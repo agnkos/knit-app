@@ -2,9 +2,16 @@
 
 # Knit app
 
+[Link to the app](https://knit-app.netlify.app/)
+To test the app use email: tester@email.com and password: testapp123
+(projects and queue sections are ready)
+
 #### Project description:
 - app for storing info about current and finished knitting projects, project queue, yarn stash
 - login with email and password (firebase authentication)
+- data stored in Firebase Storage and Firestore Database
+- navigation built with React Router 6 (actions, loaders)
+- styled with Tailwind CSS
 - design ispired by [ravelry.com](https://www.ravelry.com/)
 - knitting icons: created by Darius Dan and by iconixar - Flaticon
 - built with: 

@@ -19,22 +19,14 @@ export const db = getFirestore(app);
 export const usersRef = collection(db, "users");
 export const storage = getStorage(app);
 
-// setPersistence(auth, browserLocalPersistence); 
-
 export async function getProjects() {
     let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
-    console.log('userid:', userId)
-
     const q = collection(db, "users", `${userId}`, "projects");
-    console.log(q)
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id
     }));
-
-    console.log(dataArr)
-    console.log('user', auth?.currentUser?.uid)
     return dataArr;
 }
 
@@ -42,23 +34,17 @@ export async function getProjectDetail(id: string) {
     let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}')
     const q = doc(db, "users", `${userId}`, "projects", id);
     const projectSnapshot = await getDoc(q);
-    // console.log(projectSnapshot.data())
     return projectSnapshot.data()
 }
 
 export async function getQueuedItems() {
     let userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
     const q = collection(db, "users", `${userId}`, "queue");
-    // console.log(q)
     const querySnapshot = await getDocs(q);
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
-        // id: doc.id
     }));
-    // const dataArrSorted = dataArr.sort((a, b) => a.createdAt - b.createdAt).map((item, i) => ({ ...item, position: i + 1 })).sort((a, b) => a.position - b.position)
     const dataArrSorted = dataArr.sort((a, b) => a.position - b.position)
-    console.log(dataArrSorted)
-    // console.log(dataArr)
     return dataArrSorted;
 
 }

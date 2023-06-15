@@ -45,8 +45,6 @@ type LoaderData = {
 
 const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
-    // const [imageUrl, setImageUrl] = useState<string | undefined>();
-    // const [deletedImg, setDeletedImg] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData;
     const navigate = useNavigate()
@@ -87,8 +85,6 @@ const EditProject = () => {
             imageUrl: ""
         })
         navigate(`/projects/${id}/edit`);
-        // setImageUrl(undefined)
-        // setDeletedImg(true)
     }
 
     const showModal = () => {

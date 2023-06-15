@@ -12,8 +12,6 @@ export async function action({ request }: any) {
     try {
         const data = await signInWithEmailAndPassword(auth, email, password);
         localStorage.setItem('loggedUser', JSON.stringify(data.user.uid))
-        console.log('user logged in', email, password);
-        // console.log(data.user);
         return redirect('/projects')
 
     } catch (err: any) {

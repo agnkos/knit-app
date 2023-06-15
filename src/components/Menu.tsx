@@ -3,20 +3,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
 
-type Toggle = {
+type ToggleProps = {
     toggle: boolean,
     closeMenu: () => void;
 }
 
-const Menu = ({ toggle, closeMenu }: Toggle) => {
+const Menu = ({ toggle, closeMenu }: ToggleProps) => {
     const navigate = useNavigate();
     const ref = useRef<HTMLUListElement>(null);
 
     useEffect(() => {
         const closeOnClickOutside = (e: MouseEvent) => {
             if (toggle && ref.current && !ref.current.contains(e.target as Element) && !(e.target as Element).classList.contains("burger-btn")) {
-                closeMenu()
-                console.log(e.target)
+                closeMenu();
             }
         }
         document.addEventListener("click", closeOnClickOutside)
@@ -27,15 +26,10 @@ const Menu = ({ toggle, closeMenu }: Toggle) => {
     }, [toggle])
 
     const logout = () => {
-        console.log('log out')
         localStorage.setItem('loggedUser', "")
         signOut(auth);
         navigate('/')
     }
-
-    // useEffect(() => {
-    //     console.log('toggle:', toggle)
-    // }, [toggle])
 
     return (
         <ul
