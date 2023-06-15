@@ -50,7 +50,7 @@ const Projects = () => {
     ))
 
     return (
-      <div className='p-4 flex flex-col sm:flex-row sm:gap-6'>
+      <div className='p-4 flex flex-col sm:flex-wrap sm:flex-row sm:gap-6'>
         {projectsElements}
       </div>
     )

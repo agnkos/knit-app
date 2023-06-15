@@ -6,9 +6,9 @@ const Navbar = ({ toggleMenu }: ToggleMenu) => {
 
     return (
         <div className="fixed w-full z-50 py-2 px-4 flex  justify-between bg-zinc-100 border-zinc-900 border-b-2">
-            <p className='m-2 text-2xl text-rose-500 font-logo'>Knit.app</p>
+            <p className='m-2 text-2xl text-rose-500 font-logo md:ml-8'>Knit.app</p>
             <button
-                className="burger-btn"
+                className="burger-btn md:hidden"
                 onClick={toggleMenu}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 burger-btn"

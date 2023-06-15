@@ -8,7 +8,7 @@ export async function action({ request }: any) {
     const name = formData.get('name');
     const notes = formData.get('notes');
     const id = formData.get('id')
-    console.log('edit id', id)
+
     try {
         if (id !== "") {
             console.log('edit id is', id)
@@ -24,7 +24,7 @@ export async function action({ request }: any) {
             const dataArr = querySnapshot.docs.map(doc => ({
                 ...doc.data(),
             }));
-            // console.log('dataarr length', dataArr.length)
+
             await setDoc(queueItemRef, {
                 queuedItemId: queueItemRef.id,
                 name: name,
@@ -33,8 +33,7 @@ export async function action({ request }: any) {
                 position: dataArr.length + 1
             });
         }
-        // console.log('added new item to queue')
-        // console.log('edit id', id)
+
         return redirect('/queue');
     } catch (err: any) {
         return { error: err.message };
