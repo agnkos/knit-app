@@ -1,4 +1,4 @@
-### still working on refactoring the code and adding funcionalities
+### (still working on refactoring the code and adding funcionalities)
 
 # Knit app
 
@@ -26,3 +26,5 @@
 - all projects page
 - adding and editing projects
 - adding and deleting project photo
+- queue: adding, deleting, editing items
+- queue: changing item position
