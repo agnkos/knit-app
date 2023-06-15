@@ -2,8 +2,8 @@
 
 # Knit app
 
-[Link to the app](https://knit-app.netlify.app/)
-To test the app use email: tester@email.com and password: testapp123
+[Link to the deployed app](https://knit-app.netlify.app/) <br>
+To test the app use email: tester@email.com and password: testapp123 <br>
 (projects and queue sections are ready)
 
 #### Project description:
