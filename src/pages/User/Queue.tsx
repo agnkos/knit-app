@@ -35,7 +35,7 @@ const Queue = () => {
         ))
 
         return (
-            <div>
+            <div className="p-4">
                 {queuedItemsElements}
             </div>
         )
