@@ -1,11 +1,13 @@
-import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, Await, redirect, useNavigate, useParams } from "react-router-dom";
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import imgPlaceholder from '../img/knit-black.png';
 import { StashItem } from "../types";
 
-export async function action({ params, request }: any) {
+export async function action({ params, request }: any): Promise<Response | {
+    error: any;
+}> {
     const formData = await request.formData();
     const name = formData.get('name');
     const skeins = formData.get('skeins');
@@ -13,6 +15,8 @@ export async function action({ params, request }: any) {
     const dyelot = formData.get('dyelot');
     const purchased = formData.get('purchased');
     console.log('params id', params.id)
+    console.log('params', params)
+    console.log('req', request)
 
     try {
         const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${params.id}`)
@@ -38,15 +42,18 @@ type LoaderData = {
 
 const EditStashItem = () => {
     const data = useLoaderData() as LoaderData
+    // const params = useParams()
+    // console.log('params from comp', params)
+    // console.log('data', data.stashItem)
 
     return (
-        <div><h1 className="text-2xl font-bold">Edit Project</h1>
+        <div><h1 className="text-2xl font-bold">Edit Yarn</h1>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={data.stashItem}>
                     {
                         item => (
                             <>
-                                <Form action={`/stash/${item.stashItemtId}/edit`} method="post">
+                                <Form action={`/stash/${item.stashItemId}/edit`} method="post">
                                     <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                                         <div>
                                             {/* {item.imageUrl === "" && ( */}
@@ -56,6 +63,7 @@ const EditStashItem = () => {
                                                     className=' opacity-30'
                                                 />
                                             </div>
+
                                             {/* ) */}
                                             {/* // } */}
                                             {/* {item.imageUrl && (
@@ -102,7 +110,7 @@ const EditStashItem = () => {
                                                 <p className="">
                                                     <input
                                                         type="text"
-                                                        name="pattern"
+                                                        name="skeins"
                                                         className='my-1 px-3 py-1 border max-w-full'
                                                         defaultValue={item.skeins}
                                                     />
@@ -113,7 +121,7 @@ const EditStashItem = () => {
                                                 <p className="">
                                                     <input
                                                         type="text"
-                                                        name="size"
+                                                        name="colorway"
                                                         className='my-1 px-3 py-1 border max-w-full'
                                                         defaultValue={item.colorway}
                                                     />
@@ -124,7 +132,7 @@ const EditStashItem = () => {
                                                 <p className="">
                                                     <input
                                                         type="text"
-                                                        name="needles"
+                                                        name="dyelot"
                                                         className='my-1 px-3 py-1 border max-w-full'
                                                         defaultValue={item.dyelot}
                                                     />
@@ -135,7 +143,7 @@ const EditStashItem = () => {
                                                 <p className="">
                                                     <input
                                                         type="text"
-                                                        name="needles"
+                                                        name="purchased"
                                                         className='my-1 px-3 py-1 border max-w-full'
                                                         defaultValue={item.purchased}
                                                     />

@@ -70,12 +70,6 @@ const StashItemDetail = () => {
                                     <p className="text-zinc-700">Purchased at</p>
                                     <p className="">{item.purchased}</p>
                                 </div>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
-                                    <p className="text-zinc-700">dye lot</p>
-                                    <p className="">{item.dyelot}</p>
-                                </div>
-
-
                             </div>
                         </div>
                     )}

@@ -15,7 +15,7 @@ import QueueModal, { action as addToQueueAction } from './components/QueueModal'
 import ErrorPage from './pages/ErrorPage';
 import AddStashItem, { action as addStashItemAction } from './pages/AddStashItem';
 import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/StashItemDetail';
-import EditStashItem, { action as editStashItemAction } from './pages/EditStashItem';
+import EditStashItem, { action as editItemAction } from './pages/EditStashItem';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<Layout />} errorElement={<ErrorPage />}>
@@ -29,11 +29,11 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="stash" element={<Stash />} loader={stashLoader} />
       <Route path="addstashitem" element={<AddStashItem />} action={addStashItemAction} />
       <Route path="stash/:id" element={<StashItemDetail />} loader={stashItemDetailLoader} />
-      <Route path="stash/:id/edit" element={<EditStashItem />} loader={stashItemDetailLoader} action={editStashItemAction} />
-      <Route path="notes" element={<Notes />} />
+      <Route path="stash/:id/edit" element={<EditStashItem />} loader={stashItemDetailLoader} action={editItemAction} />
       <Route path="addproject" element={<AddProject />} action={addProjectAction} />
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
       <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editProjectAction} />
+      <Route path="notes" element={<Notes />} />
     </Route>
     <Route path="*" element={<ErrorPage />} />
   </Route >

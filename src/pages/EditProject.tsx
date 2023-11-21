@@ -16,6 +16,7 @@ export async function action({ params, request }: any) {
     const yarn = formData.get('yarn');
     const needles = formData.get('needles');
     const notes = formData.get('notes');
+    console.log('params project',params.id)
 
     try {
         const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${params.id}`)
