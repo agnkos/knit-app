@@ -18,3 +18,14 @@ export type QueuedItemType = {
   position: number,
   createdAt: Date
 }
+
+export type StashItem = {
+  stashItemId: string,
+  name: string,
+  skeins: number,
+  colorway: string | number,
+  dyelot: number,
+  purchased: string
+}
+
+export type AllStash = Partial<StashItem>[]

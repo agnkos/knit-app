@@ -1,32 +1,28 @@
-import { redirect, Form } from "react-router-dom";
 import { doc, collection, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-
+import { Form, redirect } from "react-router-dom";
 
 export async function action({ request }: any): Promise<Response | {
     error: any;
 }> {
     const formData = await request.formData();
     const name = formData.get('name');
-    const pattern = formData.get('pattern');
-    const size = formData.get('size');
-    const yarn = formData.get('yarn');
-    const needles = formData.get('needles');
+    const skeins = formData.get('skeins');
+    const colorway = formData.get('colorway');
+    const dyelot = formData.get('dyelot');
+    const purchased = formData.get('purchased');
 
     try {
-        const projectRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "projects"))
-        await setDoc(projectRef, {
-            projectId: projectRef.id,
+        const stashItemRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "stash"))
+        await setDoc(stashItemRef, {
+            stashItemId: stashItemRef.id,
             name: name,
-            pattern: pattern,
-            size: size,
-            yarn: yarn,
-            needles: needles,
-            imageUrl: ""
+            skeins: skeins,
+            colorway: colorway,
+            dyelot: dyelot,
+            purchased: purchased
         })
-
-        return redirect('/projects')
-
+        return redirect('/stash')
     } catch (err: any) {
         return {
             error: err.message
@@ -34,14 +30,13 @@ export async function action({ request }: any): Promise<Response | {
     }
 }
 
-const AddProject = () => {
-
+const AddStashItem = () => {
     return (
         <div>
             <h1 className="text-2xl font-bold">New Project</h1>
-            <Form action="/addproject" method="post">
+            <Form action='/addstashitem' method='post'>
                 <div className="my-2">
-                    <label>Project name</label>
+                    <label>Yarn name</label>
                     <input
                         required
                         type="text"
@@ -50,42 +45,42 @@ const AddProject = () => {
                     />
                 </div>
                 <div className="my-2">
-                    <label>Pattern</label>
+                    <label>Skeins</label>
                     <input
                         type="text"
-                        name="pattern"
+                        name="skeins"
                         className='my-1 px-3 py-1 border block'
                     />
                 </div>
                 <div className="my-2">
-                    <label>Size</label>
+                    <label>Colorway</label>
                     <input
                         type="text"
-                        name="size"
+                        name="colorway"
                         className='my-1 px-3 py-1 border block'
                     />
                 </div>
                 <div className="my-2">
-                    <label>Yarn</label>
+                    <label>Dye lot</label>
                     <input
                         type="text"
-                        name="yarn"
+                        name="dyelot"
                         className='my-1 px-3 py-1 border block'
                     />
                 </div>
                 <div className="my-2">
-                    <label>Needles</label>
+                    <label>Purchased at</label>
                     <input
                         type="text"
-                        name="needles"
+                        name="purchased"
                         className='my-1 px-3 py-1 border block'
                     />
                 </div>
                 <button
                     className='mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
-                >Create project</button>
+                >Add yarn</button>
             </Form>
         </div>
     )
 }
-export default AddProject
+export default AddStashItem

@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
-import { useLoaderData, useNavigate, defer, Await } from 'react-router-dom';
+import { useLoaderData, useNavigate, defer, Await, Link } from 'react-router-dom';
 import knittingImg from '../../img/knitting.png';
 import { getProjects } from '../../config/firebase';
 import imgPlaceholder from '../../img/knit-black.png';
-import { Link } from 'react-router-dom';
 import { AllProjects, Project } from '../../types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
@@ -65,7 +64,7 @@ const Projects = () => {
   return (
     <div className="flex flex-col grow">
       <div className="flex gap-3 items-center my-4">
-        <h1 className="px-4 text-4xl font-bold">Projects</h1>
+        <h1 className="px-4 text-3xl sm:text-4xl font-bold">Projects</h1>
         <button
           className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
           onClick={addProject}

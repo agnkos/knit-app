@@ -1,18 +1,16 @@
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, useLoaderData, Link } from "react-router-dom";
 import { getProjectDetail } from "../../config/firebase";
 import { Suspense } from "react";
 import imgPlaceholder from '../../img/knit-black.png';
-import { Link } from "react-router-dom";
 import { Project } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 
+export function loader({ params }: any) {
+    return defer({ projectDetail: getProjectDetail(params.id) })
+}
 
 type LoaderData = {
     projectDetail: Project
-}
-
-export function loader({ params }: any) {
-    return defer({ projectDetail: getProjectDetail(params.id) })
 }
 
 const ProjectDetail = () => {
