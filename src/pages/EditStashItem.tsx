@@ -2,8 +2,11 @@ import { Form, useLoaderData, Await, redirect, useNavigate, useParams } from "re
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { StashItem } from "../types";
+import DeleteModal from "../components/DeleteModal";
 
 export async function action({ params, request }: any): Promise<Response | {
     error: any;
@@ -41,32 +44,93 @@ type LoaderData = {
 }
 
 const EditStashItem = () => {
+    const [imageUpload, setImageUpload] = useState<File | undefined>();
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData
-    // const params = useParams()
-    // console.log('params from comp', params)
-    // console.log('data', data.stashItem)
+    const navigate = useNavigate()
+
+    console.log(data.stashItem)
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement;
+        const file = target.files?.[0];
+        console.log('file added')
+        setImageUpload(file);
+    }
+
+    const uploadImage = async (id: string) => {
+        if (!imageUpload) return;
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`)
+        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+        try {
+            await uploadBytes(imageFolderRef, imageUpload)
+                .then(snapshot => {
+                    getDownloadURL(snapshot.ref).then(url => {
+                        console.log(url)
+                        updateDoc(itemRef, {
+                            imageUrl: url
+                        })
+                    })
+                })
+        } catch (err) {
+            console.log(err);
+        }
+        navigate(`/stash/${id}/edit`);
+    }
+
+    const deleteImage = (id: string) => {
+        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
+        deleteObject(imageFolderRef);
+        updateDoc(itemRef, {
+            imageUrl: ""
+        })
+        navigate(`/stash/${id}/edit`);
+    }
+
+    const showModal = () => {
+        setShowDeleteModal(true);
+        console.log('delete project?', data.stashItem.stashItemId)
+    }
+
+    const closeModal = () => {
+        setShowDeleteModal(false);
+    }
+
+    const deleteStashItem = (id: string, url: string) => {
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
+        deleteDoc(itemRef);
+        if (url) {
+            const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+            deleteObject(imageFolderRef);
+        }
+        console.log('stash item deleted', id)
+        closeModal();
+        navigate('/projects');
+    }
 
     return (
         <div><h1 className="text-2xl font-bold">Edit Yarn</h1>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={data.stashItem}>
                     {
-                        item => (
+                        (item: StashItem) => (
                             <>
                                 <Form action={`/stash/${item.stashItemId}/edit`} method="post">
                                     <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                                         <div>
-                                            {/* {item.imageUrl === "" && ( */}
-                                            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
-                                                <img src={imgPlaceholder}
-                                                    alt="Wool icon created by Darius Dan - Flaticon"
-                                                    className=' opacity-30'
-                                                />
-                                            </div>
+                                            {(!item.imageUrl || item.imageUrl === "") && (
+                                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
+                                                    <img src={imgPlaceholder}
+                                                        alt="Wool icon created by Darius Dan - Flaticon"
+                                                        className='opacity-30'
+                                                    />
+                                                </div>
 
-                                            {/* ) */}
-                                            {/* // } */}
-                                            {/* {item.imageUrl && (
+                                            )
+                                            }
+                                            {item.imageUrl && (
                                                 <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
                                                     <img src={item.imageUrl}
                                                         alt={`stash photo`}
@@ -74,25 +138,22 @@ const EditStashItem = () => {
                                                     />
                                                 </div>
                                             )
-                                            } */}
+                                            }
                                             <input
                                                 type="file"
                                                 id="file"
                                                 className='my-1 p-1 border sm:max-w-[250px] max-w-full'
-                                            // onChange={handleChange}
-                                            // hidden
+                                                onChange={handleChange}
                                             />
-                                            {/* <label htmlFor="file"> */}
                                             <div className="flex justify-end gap-4 sm:max-w-[250px]">
                                                 <div
-                                                    // onClick={() => uploadImage(project.projectId)}
+                                                    onClick={() => uploadImage(item.stashItemId)}
                                                     className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Add Photo</div>
                                                 <div
-                                                    // onClick={() => deleteImage(project.projectId)}
+                                                    onClick={() => deleteImage(item.stashItemId)}
                                                     className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Remove Photo</div>
-                                                {/* </label> */}
                                             </div>
                                         </div>
                                         <div className="max-w-[500px] sm:grow me-2">
@@ -151,7 +212,7 @@ const EditStashItem = () => {
                                             </div>
                                             <div className="flex gap-4 items-center justify-end">
                                                 <div
-                                                    // onClick={showModal}
+                                                    onClick={showModal}
                                                     className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Delete Item</div>
                                                 <button
@@ -161,13 +222,13 @@ const EditStashItem = () => {
                                         </div>
                                     </div>
                                 </Form>
-                                {/* {showDeleteModal && <DeleteModal closeModal={closeModal} deleteProject={() => deleteProject(project.projectId, project.imageUrl)} />} */}
+                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteStashItem(item.stashItemId, item.imageUrl)} item='yarn' />}
                             </>
                         )
                     }
                 </Await>
             </Suspense>
-        </div>
+        </div >
     )
 }
 export default EditStashItem

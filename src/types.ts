@@ -25,7 +25,8 @@ export type StashItem = {
   skeins: number,
   colorway: string | number,
   dyelot: number,
-  purchased: string
+  purchased: string,
+  imageUrl: string
 }
 
 export type AllStash = Partial<StashItem>[]

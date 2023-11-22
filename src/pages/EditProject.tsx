@@ -16,7 +16,7 @@ export async function action({ params, request }: any) {
     const yarn = formData.get('yarn');
     const needles = formData.get('needles');
     const notes = formData.get('notes');
-    console.log('params project',params.id)
+    console.log('params project', params.id)
 
     try {
         const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${params.id}`)
@@ -115,12 +115,12 @@ const EditProject = () => {
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={data.projectDetail}>
                     {
-                        project => (
+                        (project: Project) => (
                             <>
                                 <Form action={`/projects/${project.projectId}/edit`} method="post">
                                     <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                                         <div>
-                                            {project.imageUrl === "" && (
+                                            {(!project.imageUrl || project.imageUrl === "") && (
                                                 <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
                                                     <img src={imgPlaceholder}
                                                         alt="Wool icon created by Darius Dan - Flaticon"
@@ -231,7 +231,7 @@ const EditProject = () => {
                                         </div>
                                     </div>
                                 </Form>
-                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteProject={() => deleteProject(project.projectId, project.imageUrl)} />}
+                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteProject(project.projectId, project.imageUrl)} item='project' />}
                             </>
                         )
                     }
