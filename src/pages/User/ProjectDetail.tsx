@@ -1,18 +1,16 @@
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, useLoaderData, Link } from "react-router-dom";
 import { getProjectDetail } from "../../config/firebase";
 import { Suspense } from "react";
 import imgPlaceholder from '../../img/knit-black.png';
-import { Link } from "react-router-dom";
 import { Project } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 
+export function loader({ params }: any) {
+    return defer({ projectDetail: getProjectDetail(params.id) })
+}
 
 type LoaderData = {
     projectDetail: Project
-}
-
-export function loader({ params }: any) {
-    return defer({ projectDetail: getProjectDetail(params.id) })
 }
 
 const ProjectDetail = () => {
@@ -23,7 +21,7 @@ const ProjectDetail = () => {
             <Link to="/projects" className="flex gap-2 items-center"><ArrowLeftCircleIcon className="w-5 h-5" /><p>Back to projects</p></Link>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={loaderData.projectDetail}>
-                    {project => (
+                    {(project: Project) => (
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                             {project.imageUrl ? (
                                 <div className="my-2 border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">

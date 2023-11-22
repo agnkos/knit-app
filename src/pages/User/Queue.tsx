@@ -32,7 +32,7 @@ const Queue = () => {
     return (
         <div className="flex flex-col grow">
             <div className="flex gap-3 items-center my-4">
-                <h1 className="px-4 text-4xl font-bold max-[325px]:text-3xl">Queue</h1>
+                <h1 className="px-4 text-3xl sm:text-4xl font-bold max-[325px]:text-3xl">Queue</h1>
                 <Link
                     to="add"
                     state={{ button: "" }}

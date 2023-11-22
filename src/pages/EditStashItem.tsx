@@ -1,38 +1,37 @@
-import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, Await, redirect, useNavigate} from "react-router-dom";
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
-import { Project } from "../types";
+import { StashItem } from "../types";
 import DeleteModal from "../components/DeleteModal";
 
-export async function action({ params, request }: any) {
+export async function action({ params, request }: any): Promise<Response | {
+    error: any;
+}> {
     const formData = await request.formData();
     const name = formData.get('name');
-    const pattern = formData.get('pattern');
-    const size = formData.get('size');
-    const yarn = formData.get('yarn');
-    const needles = formData.get('needles');
-    const notes = formData.get('notes');
-    console.log('params project', params.id)
+    const skeins = formData.get('skeins');
+    const colorway = formData.get('colorway');
+    const dyelot = formData.get('dyelot');
+    const purchased = formData.get('purchased');
+    console.log('params id', params.id)
+    console.log('params', params)
+    console.log('req', request)
 
     try {
-        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${params.id}`)
-        await updateDoc(projectRef, {
-            projectId: projectRef.id,
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${params.id}`)
+        await updateDoc(itemRef, {
+            stashItemId: itemRef.id,
             name: name,
-            pattern: pattern,
-            size: size,
-            yarn: yarn,
-            needles: needles,
-            notes: notes
+            skeins: skeins,
+            colorway: colorway,
+            dyelot: dyelot,
+            purchased: purchased
         })
-        console.log('refresh: file added')
-
-        return redirect(`/projects/${projectRef.id}`)
-
+        return redirect(`/stash/${itemRef.id}`)
     } catch (err: any) {
         return {
             error: err.message
@@ -41,35 +40,17 @@ export async function action({ params, request }: any) {
 }
 
 type LoaderData = {
-    projectDetail: Project
+    stashItem: StashItem
 }
 
-const EditProject = () => {
+const EditStashItem = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-    const data = useLoaderData() as LoaderData;
+    const data = useLoaderData() as LoaderData
     const navigate = useNavigate()
 
-    const uploadImage = async (id: string) => {
-        if (!imageUpload) return;
-        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`)
-        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
-        try {
-            await uploadBytes(imageFolderRef, imageUpload)
-                .then(snapshot => {
-                    getDownloadURL(snapshot.ref).then(url => {
-                        console.log(url)
-                        // setImageUrl(url)
-                        updateDoc(projectRef, {
-                            imageUrl: url
-                        })
-                    })
-                })
-        } catch (err) {
-            console.log(err);
-        }
-        navigate(`/projects/${id}/edit`);
-    }
+    console.log(data.stashItem)
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
@@ -78,60 +59,81 @@ const EditProject = () => {
         setImageUpload(file);
     }
 
+    const uploadImage = async (id: string) => {
+        if (!imageUpload) return;
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`)
+        const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
+        try {
+            await uploadBytes(imageFolderRef, imageUpload)
+                .then(snapshot => {
+                    getDownloadURL(snapshot.ref).then(url => {
+                        console.log(url)
+                        updateDoc(itemRef, {
+                            imageUrl: url
+                        })
+                    })
+                })
+        } catch (err) {
+            console.log(err);
+        }
+        navigate(`/stash/${id}/edit`);
+    }
+
     const deleteImage = (id: string) => {
         const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
-        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
         deleteObject(imageFolderRef);
-        updateDoc(projectRef, {
+        updateDoc(itemRef, {
             imageUrl: ""
         })
-        navigate(`/projects/${id}/edit`);
+        navigate(`/stash/${id}/edit`);
     }
 
     const showModal = () => {
         setShowDeleteModal(true);
-        console.log('delete project?', data.projectDetail.projectId)
+        console.log('delete project?', data.stashItem.stashItemId)
     }
 
     const closeModal = () => {
         setShowDeleteModal(false);
     }
 
-    const deleteProject = (id: string, url: string) => {
-        const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
-        deleteDoc(projectRef);
+    const deleteStashItem = (id: string, url: string) => {
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
+        deleteDoc(itemRef);
         if (url) {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
             deleteObject(imageFolderRef);
         }
-        console.log('project deleted', id)
+        console.log('stash item deleted', id)
         closeModal();
         navigate('/projects');
     }
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold">Edit Project</h1>
+        <div><h1 className="text-2xl font-bold">Edit Yarn</h1>
             <Suspense fallback={<h3>loading details...</h3>}>
-                <Await resolve={data.projectDetail}>
+                <Await resolve={data.stashItem}>
                     {
-                        (project: Project) => (
+                        (item: StashItem) => (
                             <>
-                                <Form action={`/projects/${project.projectId}/edit`} method="post">
+                                <Form action={`/stash/${item.stashItemId}/edit`} method="post">
                                     <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                                         <div>
-                                            {(!project.imageUrl || project.imageUrl === "") && (
+                                            {(!item.imageUrl || item.imageUrl === "") && (
                                                 <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
                                                     <img src={imgPlaceholder}
                                                         alt="Wool icon created by Darius Dan - Flaticon"
-                                                        className=' opacity-30'
+                                                        className='opacity-30'
                                                     />
-                                                </div>)
+                                                </div>
+
+                                            )
                                             }
-                                            {project.imageUrl && (
+                                            {item.imageUrl && (
                                                 <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                                                    <img src={project.imageUrl}
-                                                        alt={`project photo`}
+                                                    <img src={item.imageUrl}
+                                                        alt={`stash photo`}
                                                         className="w-full h-full object-cover"
                                                     />
                                                 </div>
@@ -140,90 +142,79 @@ const EditProject = () => {
                                             <input
                                                 type="file"
                                                 id="file"
-                                                className='my-1 p-1 border sm:max-w-[250px]'
+                                                className='my-1 p-1 border sm:max-w-[250px] max-w-full'
                                                 onChange={handleChange}
-                                            // hidden
                                             />
-                                            {/* <label htmlFor="file"> */}
                                             <div className="flex justify-end gap-4 sm:max-w-[250px]">
                                                 <div
-                                                    onClick={() => uploadImage(project.projectId)}
+                                                    onClick={() => uploadImage(item.stashItemId)}
                                                     className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Add Photo</div>
                                                 <div
-                                                    onClick={() => deleteImage(project.projectId)}
+                                                    onClick={() => deleteImage(item.stashItemId)}
                                                     className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Remove Photo</div>
-                                                {/* </label> */}
                                             </div>
                                         </div>
-                                        <div className="max-w-[500px] sm:grow">
+                                        <div className="max-w-[500px] sm:grow me-2">
                                             <p className='text-2xl font-bold'>
                                                 <input
                                                     required
                                                     type="text"
                                                     name="name"
                                                     className='my-1 px-3 py-1 border block w-full'
-                                                    defaultValue={project.name}
+                                                    defaultValue={item.name}
                                                 /></p>
-                                            <p className="text-lg font-bold">Project info</p>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                                <p className="col-start-1 text-zinc-700 ">Pattern</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <p className="text-lg font-bold">Yarn info</p>
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className=" text-zinc-700 ">Skeins</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
-                                                        name="pattern"
-                                                        className='my-1 px-3 py-1 border block'
-                                                        defaultValue={project.pattern}
+                                                        name="skeins"
+                                                        className='my-1 px-3 py-1 border max-w-full'
+                                                        defaultValue={item.skeins}
                                                     />
                                                 </p>
                                             </div>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                                <p className="col-start-1 text-zinc-700">Size</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className="text-zinc-700">Colorway</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
-                                                        name="size"
-                                                        className='my-1 px-3 py-1 border block'
-                                                        defaultValue={project.size}
+                                                        name="colorway"
+                                                        className='my-1 px-3 py-1 border max-w-full'
+                                                        defaultValue={item.colorway}
                                                     />
                                                 </p>
                                             </div>
-
-                                            <p className="text-lg font-bold">Needles & yarn</p>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                                <p className="col-start-1 text-zinc-700">Needle</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className=" text-zinc-700">Dye lot</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
-                                                        name="needles"
-                                                        className='my-1 px-3 py-1 border block'
-                                                        defaultValue={project.needles}
+                                                        name="dyelot"
+                                                        className='my-1 px-3 py-1 border max-w-full'
+                                                        defaultValue={item.dyelot}
                                                     />
                                                 </p>
                                             </div>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                                <p className="col-start-1 text-zinc-700 ">Yarn</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className="text-zinc-700">Purchased at</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
-                                                        name="yarn"
-                                                        className='my-1 px-3 py-1 border block'
-                                                        defaultValue={project.yarn}
+                                                        name="purchased"
+                                                        className='my-1 px-3 py-1 border max-w-full'
+                                                        defaultValue={item.purchased}
                                                     />
                                                 </p>
                                             </div>
-                                            <p className="text-lg font-bold">Notes</p>
-                                            <textarea
-                                                name="notes"
-                                                className='mt-1 mb-4 px-3 py-1 border block resize-none w-full'
-                                                defaultValue={project.notes}
-                                            />
                                             <div className="flex gap-4 items-center justify-end">
                                                 <div
                                                     onClick={showModal}
                                                     className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
-                                                >Delete Project</div>
+                                                >Delete Item</div>
                                                 <button
                                                     className='block px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
                                                 >Save</button>
@@ -231,13 +222,13 @@ const EditProject = () => {
                                         </div>
                                     </div>
                                 </Form>
-                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteProject(project.projectId, project.imageUrl)} item='project' />}
+                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteStashItem(item.stashItemId, item.imageUrl)} item='yarn' />}
                             </>
                         )
                     }
                 </Await>
             </Suspense>
-        </div>
+        </div >
     )
 }
-export default EditProject
+export default EditStashItem
