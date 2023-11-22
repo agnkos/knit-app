@@ -1,4 +1,4 @@
-import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, Await, redirect, useNavigate, Link } from "react-router-dom";
 import { useState, Suspense } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
@@ -48,7 +48,7 @@ const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const data = useLoaderData() as LoaderData;
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const uploadImage = async (id: string) => {
         if (!imageUpload) return;
@@ -111,7 +111,13 @@ const EditProject = () => {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold">Edit Project</h1>
+            <div className="flex gap-2 items-center">
+                <h1 className="text-2xl font-bold">Edit Project</h1>
+                <button
+                    className='px-2 bg-teal-200 text-md  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
+                    onClick={() => navigate(-1)}
+                >cancel</button>
+            </div>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={data.projectDetail}>
                     {

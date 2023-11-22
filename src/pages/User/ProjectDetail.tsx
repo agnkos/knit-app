@@ -18,7 +18,10 @@ const ProjectDetail = () => {
 
     return (
         <>
-            <Link to="/projects" className="flex gap-2 items-center"><ArrowLeftCircleIcon className="w-5 h-5" /><p>Back to projects</p></Link>
+            <Link to="/projects" className="flex gap-2 items-center">
+                <ArrowLeftCircleIcon className="w-5 h-5" />
+                <p className="border-b border-white hover:border-b hover:border-zinc-950">Back to projects</p>
+            </Link>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={loaderData.projectDetail}>
                     {(project: Project) => (

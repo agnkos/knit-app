@@ -18,7 +18,10 @@ const StashItemDetail = () => {
 
     return (
         <>
-            <Link to="/stash" className="flex gap-2 items-center"><ArrowLeftCircleIcon className="w-5 h-5" /><p>Back to stash</p></Link>
+            <Link to="/stash" className="flex gap-2 items-center">
+                <ArrowLeftCircleIcon className="w-5 h-5" />
+                <p className="border-b border-white hover:border-b hover:border-zinc-950">Back to stash</p>
+            </Link>
             <Suspense fallback={<h3>loading details...</h3>}>
                 <Await resolve={loaderData.stashItem}>
                     {(item: StashItem) => (
@@ -31,13 +34,13 @@ const StashItemDetail = () => {
                                     />
                                 </div>
                             ) : (
-                            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                <img src={imgPlaceholder}
-                                    alt="Wool icon created by Darius Dan - Flaticon"
-                                    className=' opacity-30'
-                                />
-                            </div>
-                             )
+                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
+                                    <img src={imgPlaceholder}
+                                        alt="Wool icon created by Darius Dan - Flaticon"
+                                        className=' opacity-30'
+                                    />
+                                </div>
+                            )
                             }
                             <div className="max-w-[500px] sm:grow">
                                 <div className="mb-3 flex justify-between items-center">
