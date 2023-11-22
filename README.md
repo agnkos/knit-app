@@ -4,7 +4,7 @@
 
 ## [Link to the deployed app](https://knit-app.netlify.app/) <br>
 To test the app use email: tester@email.com and password: testapp123 <br>
-(projects and queue sections are ready)
+(projects, queue and stash sections are ready)
 
 #### Project description:
 - app for storing info about current and finished knitting projects, project queue, yarn stash
@@ -35,3 +35,4 @@ To test the app use email: tester@email.com and password: testapp123 <br>
 - adding and deleting project photo
 - queue: adding, deleting, editing items
 - queue: changing item position
+- stash page: adding & deleting items, images
