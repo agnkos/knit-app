@@ -1,4 +1,4 @@
-import { useEffect, Suspense } from 'react'
+import { Suspense } from 'react'
 import { defer, useLoaderData, useNavigate, Link, Await } from 'react-router-dom';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { getStash } from '../../config/firebase';
