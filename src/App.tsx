@@ -17,6 +17,7 @@ import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/S
 import EditStashItem, { action as editItemAction } from './pages/EditStashItem';
 import Notes, { loader as notesLoader } from './pages/User/Notes';
 import AddNote, { action as addNoteAction } from './pages/AddNote';
+import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<Layout />} errorElement={<ErrorPage />}>
@@ -35,6 +36,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
       <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editProjectAction} />
       <Route path="notes" element={<Notes />} loader={notesLoader} />
+      <Route path="notes/:id" element={<NoteDetail />} loader={noteDetailLoader} action={noteDetailAction}/>
       <Route path="addnote" element={<AddNote />} action={addNoteAction} />
     </Route>
     <Route path="*" element={<ErrorPage />} />

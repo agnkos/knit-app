@@ -76,3 +76,10 @@ export async function getNotes() {
     }));
     return dataArr;
 }
+
+export async function getNoteDetail(id: string) {
+    const userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}')
+    const q = doc(db, "users", `${userId}`, "notes", id);
+    const noteDetailSnapshot = await getDoc(q);
+    return noteDetailSnapshot.data()
+}

@@ -3,7 +3,6 @@ import { useLoaderData, useNavigate, defer, Await, Link } from 'react-router-dom
 import { getNotes } from '../../config/firebase';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { AllNotes, Note } from '../../types';
-import { TrashIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 export function loader() {
   return defer({ notes: getNotes() })
@@ -21,19 +20,19 @@ const Notes = () => {
     navigate('/addnote')
   }
 
-  function renderNotes(notes: AllNotes) {
+  function renderNotes(notes: Note[]) {
     const notesElements = notes.map(note => (
+      <Link to={`${note.noteId}`}>
       <div key={note.noteId} className='flex flex-col gap-1 mb-4 pb-4 border-b'>
         <div className='flex justify-between'>
           <p className='font-bold'>{note.title}</p>
           <div className='flex gap-2'>
-            <PencilIcon className='w-5 h-5 cursor-pointer hover:text-teal-600 transition-colors duration-300' />
-            <TrashIcon className='w-5 h-5 cursor-pointer hover:text-teal-600 transition-colors duration-300' />
           </div>
         </div>
         <p className='text-sm'>{note.date?.toString()}</p>
         <p>{note.content}</p>
       </div>
+      </Link>
     ))
 
     return (
@@ -60,7 +59,9 @@ const Notes = () => {
 
       <Suspense fallback={<h3>Loading...</h3>}>
         <Await resolve={loaderData.notes}>
+
           {renderNotes}
+
         </Await>
       </Suspense>
     </div>

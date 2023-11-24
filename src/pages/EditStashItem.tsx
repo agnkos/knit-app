@@ -17,12 +17,9 @@ export async function action({ params, request }: any): Promise<Response | {
     const colorway = formData.get('colorway');
     const dyelot = formData.get('dyelot');
     const purchased = formData.get('purchased');
-    console.log('params id', params.id)
-    console.log('params', params)
-    console.log('req', request)
 
     try {
-        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${params.id}`)
+        const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${params.id}`);
         await updateDoc(itemRef, {
             stashItemId: itemRef.id,
             name: name,
