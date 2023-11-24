@@ -57,23 +57,23 @@ const ProjectDetail = () => {
                                     </Link>
                                 </div>
                                 <p className="text-lg font-bold">Project info</p>
-                                <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                    <p className="col-start-1 text-zinc-700 ">Pattern</p>
-                                    <p className="col-start-2 col-span-3">{project.pattern}</p>
+                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                    <p className="text-zinc-700 ">Pattern</p>
+                                    <p className="">{project.pattern}</p>
                                 </div>
-                                <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                    <p className="col-start-1 text-zinc-700">Size</p>
-                                    <p className="col-start-2 col-span-3">{project.size}</p>
+                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
+                                    <p className="text-zinc-700">Size</p>
+                                    <p className="">{project.size}</p>
                                 </div>
 
                                 <p className="text-lg font-bold">Needles & yarn</p>
-                                <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                    <p className="col-start-1 text-zinc-700">Needle</p>
-                                    <p className="col-start-2 col-span-3">{project.needles}</p>
+                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                    <p className="text-zinc-700">Needle</p>
+                                    <p className="">{project.needles}</p>
                                 </div>
-                                <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                    <p className="col-start-1 text-zinc-700 ">Yarn</p>
-                                    <p className="col-start-2 col-span-3">{project.yarn}</p>
+                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
+                                    <p className="text-zinc-700 ">Yarn</p>
+                                    <p className="">{project.yarn}</p>
                                 </div>
                                 <p className="text-lg font-bold">Notes</p>
                                 <p>{project.notes}</p>

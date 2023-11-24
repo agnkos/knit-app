@@ -17,7 +17,7 @@ const Dashboard = () => {
     return (
         <div className='min-h-screen flex flex-col '>
             <Navbar toggleMenu={toggleMenu} />
-            <div className='md:flex md:h-screen'>
+            <div className='flex h-screen'>
                 <Menu toggle={toggle} closeMenu={closeMenu} />
                 <div className='mt-16 p-4 flex flex-col grow'>
                     <Outlet />

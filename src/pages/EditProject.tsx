@@ -173,9 +173,9 @@ const EditProject = () => {
                                                     defaultValue={project.name}
                                                 /></p>
                                             <p className="text-lg font-bold">Project info</p>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                                <p className="col-start-1 text-zinc-700 ">Pattern</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className="text-zinc-700 ">Pattern</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
                                                         name="pattern"
@@ -184,9 +184,9 @@ const EditProject = () => {
                                                     />
                                                 </p>
                                             </div>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                                <p className="col-start-1 text-zinc-700">Size</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
+                                                <p className="text-zinc-700">Size</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
                                                         name="size"
@@ -197,9 +197,9 @@ const EditProject = () => {
                                             </div>
 
                                             <p className="text-lg font-bold">Needles & yarn</p>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700">
-                                                <p className="col-start-1 text-zinc-700">Needle</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
+                                                <p className="text-zinc-700">Needle</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
                                                         name="needles"
@@ -208,9 +208,9 @@ const EditProject = () => {
                                                     />
                                                 </p>
                                             </div>
-                                            <div className="grid grid-cols-4 py-1 border-b border-zinc-700 mb-3">
-                                                <p className="col-start-1 text-zinc-700 ">Yarn</p>
-                                                <p className="col-start-2 col-span-3">
+                                            <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
+                                                <p className="text-zinc-700 ">Yarn</p>
+                                                <p className="">
                                                     <input
                                                         type="text"
                                                         name="yarn"
