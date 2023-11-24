@@ -30,3 +30,12 @@ export type StashItem = {
 }
 
 export type AllStash = Partial<StashItem>[]
+
+export type Note = {
+  noteId: string,
+  title: string,
+  content: string,
+  date: Date
+}
+
+export type AllNotes = Partial<Note>[]

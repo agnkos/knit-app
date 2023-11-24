@@ -1,10 +1,6 @@
 import knittingImg from '../img/knitting.png';
 
-type ItemsPlaceholderProps = {
-  text: string
-}
-
-const ItemsPlaceholder = ({ text }: ItemsPlaceholderProps) => {
+const ItemsPlaceholder = ({ text }: { text: string }) => {
   return (
     <div className="grow flex flex-col items-center justify-center">
       <div>

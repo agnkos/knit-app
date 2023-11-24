@@ -65,3 +65,14 @@ export async function getStashItem(id: string) {
     const stashItemSnapshot = await getDoc(q);
     return stashItemSnapshot.data()
 }
+
+export async function getNotes() {
+    const userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    const q = collection(db, "users", `${userId}`, "notes");
+    const querySnapshot = await getDocs(q);
+    const dataArr = querySnapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }));
+    return dataArr;
+}

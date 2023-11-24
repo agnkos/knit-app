@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { useLoaderData, useNavigate, defer, Await, Link } from 'react-router-dom';
-// import knittingImg from '../../img/knitting.png';
 import { getProjects } from '../../config/firebase';
 import imgPlaceholder from '../../img/knit-black.png';
 import { AllProjects, Project } from '../../types';

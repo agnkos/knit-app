@@ -7,7 +7,6 @@ import Dashboard from './pages/User/Dashboard';
 import Projects, { loader as projectsLoader } from './pages/User/Projects';
 import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';
 import Stash, { loader as stashLoader } from './pages/User/Stash';
-import Notes from './pages/User/Notes';
 import AddProject, { action as addProjectAction } from './pages/AddProject';
 import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
 import EditProject, { action as editProjectAction } from './pages/EditProject';
@@ -16,6 +15,8 @@ import ErrorPage from './pages/ErrorPage';
 import AddStashItem, { action as addStashItemAction } from './pages/AddStashItem';
 import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/StashItemDetail';
 import EditStashItem, { action as editItemAction } from './pages/EditStashItem';
+import Notes, { loader as notesLoader } from './pages/User/Notes';
+import AddNote, { action as addNoteAction } from './pages/AddNote';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route element={<Layout />} errorElement={<ErrorPage />}>
@@ -33,7 +34,8 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="addproject" element={<AddProject />} action={addProjectAction} />
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
       <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editProjectAction} />
-      <Route path="notes" element={<Notes />} />
+      <Route path="notes" element={<Notes />} loader={notesLoader} />
+      <Route path="addnote" element={<AddNote />} action={addNoteAction} />
     </Route>
     <Route path="*" element={<ErrorPage />} />
   </Route >

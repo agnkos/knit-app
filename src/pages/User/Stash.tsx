@@ -1,10 +1,9 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense } from 'react'
 import { defer, useLoaderData, useNavigate, Link, Await } from 'react-router-dom';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { getStash } from '../../config/firebase';
 import { AllStash, StashItem } from '../../types';
 import imgPlaceholder from '../../img/knit-black.png';
-// import knittingImg from '../../img/knitting.png';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
 
 export function loader() {
@@ -57,11 +56,6 @@ const Stash = () => {
       </div>
     )
   }
-
-  useEffect(() => {
-    console.log('loader stash', loaderData)
-    console.log(loaderData.stash.length)
-  }, [])
 
   return (
     <div className="flex flex-col grow">
