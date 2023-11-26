@@ -46,9 +46,6 @@ const EditStashItem = () => {
     const data = useLoaderData() as LoaderData
     const navigate = useNavigate()
 
-    console.log(data.stashItem)
-
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
         const file = target.files?.[0];
@@ -88,7 +85,6 @@ const EditStashItem = () => {
 
     const showModal = () => {
         setShowDeleteModal(true);
-        console.log('delete project?', data.stashItem.stashItemId)
     }
 
     const closeModal = () => {
@@ -102,7 +98,6 @@ const EditStashItem = () => {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
             deleteObject(imageFolderRef);
         }
-        console.log('stash item deleted', id)
         closeModal();
         navigate('/projects');
     }
