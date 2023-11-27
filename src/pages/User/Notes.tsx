@@ -23,15 +23,15 @@ const Notes = () => {
   function renderNotes(notes: Note[]) {
     const notesElements = notes.map(note => (
       <Link to={`${note.noteId}`} key={note.noteId}>
-      <div className='flex flex-col gap-1 mb-4 pb-4 border-b'>
-        <div className='flex justify-between'>
-          <p className='font-bold'>{note.title}</p>
-          <div className='flex gap-2'>
+        <div className='flex flex-col gap-1 mb-4 pb-4 border-b'>
+          <div className='flex justify-between'>
+            <p className='font-bold'>{note.title}</p>
+            <div className='flex gap-2'>
+            </div>
           </div>
+          <p className='text-sm'>{note.date?.toString()}</p>
+          <p className='h-6 overflow-hidden'>{note.content}</p>
         </div>
-        <p className='text-sm'>{note.date?.toString()}</p>
-        <p>{note.content}</p>
-      </div>
       </Link>
     ))
 

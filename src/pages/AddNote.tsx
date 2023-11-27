@@ -14,7 +14,7 @@ export async function action({ request }: any): Promise<Response | {
         const noteRef = doc(collection(db, "users", `${auth?.currentUser?.uid}`, "notes"))
         await setDoc(noteRef, {
             noteId: noteRef.id,
-            title: title,
+            title: title || 'untitled',
             content: content,
             date: date.toLocaleDateString()
         })

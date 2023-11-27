@@ -7,7 +7,7 @@ import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { StashItem } from "../types";
 import DeleteModal from "../components/DeleteModal";
-import DeleteModalContext from '../context/deleteModalContext';
+import DeleteModalContext from '../context/DeleteModalContext';
 
 export async function action({ params, request }: any): Promise<Response | {
     error: any;
@@ -74,22 +74,22 @@ const EditStashItem = () => {
         navigate(`/stash/${id}/edit`);
     }
 
-    const deleteImage = (id: string) => {
+    const deleteImage = async (id: string) => {
         const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
         const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
-        deleteObject(imageFolderRef);
-        updateDoc(itemRef, {
+        await deleteObject(imageFolderRef);
+        await updateDoc(itemRef, {
             imageUrl: ""
         })
         navigate(`/stash/${id}/edit`);
     }
 
-    const deleteStashItem = (id: string, url: string) => {
+    const deleteStashItem = async (id: string, url: string) => {
         const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
-        deleteDoc(itemRef);
+        await deleteDoc(itemRef);
         if (url) {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
-            deleteObject(imageFolderRef);
+            await deleteObject(imageFolderRef);
         }
         deleteModalDispatch({ type: 'HIDE' })
         navigate('/stash');
