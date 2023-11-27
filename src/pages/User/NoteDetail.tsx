@@ -6,7 +6,7 @@ import { getNoteDetail } from "../../config/firebase";
 import { Note } from "../../types";
 import { TrashIcon, CheckIcon, ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import DeleteModal from "../../components/DeleteModal";
-import DeleteModalContext from '../../context/deleteModalContext';
+import DeleteModalContext from '../../context/DeleteModalContext';
 
 export function loader({ params }: any) {
     return defer({ noteDetail: getNoteDetail(params.id) })
@@ -43,15 +43,15 @@ const NoteDetail = () => {
     const loaderData = useLoaderData() as LoaderData;
     const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext)
 
-    const deleteNote = (id: string) => {
+    const deleteNote = async (id: string) => {
         const noteRef = doc(db, "users", `${auth?.currentUser?.uid}`, "notes", `${id}`);
-        deleteDoc(noteRef);
+        await deleteDoc(noteRef);
         deleteModalDispatch({ type: 'HIDE' })
         navigate('/notes')
     }
 
     return (
-        <div>
+        <>
             <Link to="/notes" className="flex gap-2 items-center mb-4">
                 <ArrowLeftCircleIcon className="w-5 h-5" />
                 <p className="border-b border-white hover:border-b hover:border-zinc-950">Back to notes</p>
@@ -60,8 +60,8 @@ const NoteDetail = () => {
                 <Await resolve={loaderData.noteDetail}>
                     {(note: Note) => (
                         <>
-                            <Form action={`/notes/${note.noteId}`} method="post">
-                                <div key={note.noteId} className='flex flex-col gap-1 mb-4 pb-4'>
+                            <Form action={`/notes/${note.noteId}`} method="post" className="h-full">
+                                <div key={note.noteId} className='flex flex-col gap-1 mb-4 pb-4 h-full'>
                                     <div className='flex justify-between'>
                                         <input
                                             type="text"
@@ -79,7 +79,7 @@ const NoteDetail = () => {
                                     <textarea
                                         required
                                         name="content"
-                                        className='mt-1 mb-4 py-1 block resize-none w-full h-32'
+                                        className='mt-1 mb-4 py-1 resize-none w-full h-full'
                                         defaultValue={note.content}
                                     />
                                 </div>
@@ -89,7 +89,7 @@ const NoteDetail = () => {
                     )}
                 </Await>
             </Suspense>
-        </div>
+        </>
     )
 }
 export default NoteDetail

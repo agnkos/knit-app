@@ -7,7 +7,7 @@ import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { Project } from "../types";
 import DeleteModal from "../components/DeleteModal";
-import DeleteModalContext from '../context/deleteModalContext';
+import DeleteModalContext from '../context/DeleteModalContext';
 
 export async function action({ params, request }: any) {
     const formData = await request.formData();
@@ -78,11 +78,11 @@ const EditProject = () => {
         setImageUpload(file);
     }
 
-    const deleteImage = (id: string) => {
+    const deleteImage = async (id: string) => {
         const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
         const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
-        deleteObject(imageFolderRef);
-        updateDoc(projectRef, {
+        await deleteObject(imageFolderRef);
+        await updateDoc(projectRef, {
             imageUrl: ""
         })
         navigate(`/projects/${id}/edit`);

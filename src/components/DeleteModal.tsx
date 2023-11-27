@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { XCircleIcon } from "@heroicons/react/24/outline";
-import DeleteModalContext from '../context/deleteModalContext';
+import DeleteModalContext from '../context/DeleteModalContext';
 
 type DeleteModalProps = {
     closeModal: () => void,
