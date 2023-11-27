@@ -36,7 +36,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="projects/:id" element={<ProjectDetail />} loader={projectDetailLoader} />
       <Route path="projects/:id/edit" element={<EditProject />} loader={projectDetailLoader} action={editProjectAction} />
       <Route path="notes" element={<Notes />} loader={notesLoader} />
-      <Route path="notes/:id" element={<NoteDetail />} loader={noteDetailLoader} action={noteDetailAction}/>
+      <Route path="notes/:id" element={<NoteDetail />} loader={noteDetailLoader} action={noteDetailAction} />
       <Route path="addnote" element={<AddNote />} action={addNoteAction} />
     </Route>
     <Route path="*" element={<ErrorPage />} />
@@ -46,7 +46,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 export default function App() {
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
     </React.StrictMode>
   )
 }

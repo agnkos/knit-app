@@ -1,5 +1,5 @@
 import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
-import { useState, Suspense } from "react";
+import { useState, Suspense, useContext } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -7,6 +7,7 @@ import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { StashItem } from "../types";
 import DeleteModal from "../components/DeleteModal";
+import DeleteModalContext from '../context/deleteModalContext';
 
 export async function action({ params, request }: any): Promise<Response | {
     error: any;
@@ -42,9 +43,9 @@ type LoaderData = {
 
 const EditStashItem = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
-    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-    const data = useLoaderData() as LoaderData
-    const navigate = useNavigate()
+    const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
+    const data = useLoaderData() as LoaderData;
+    const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
@@ -83,14 +84,6 @@ const EditStashItem = () => {
         navigate(`/stash/${id}/edit`);
     }
 
-    const showModal = () => {
-        setShowDeleteModal(true);
-    }
-
-    const closeModal = () => {
-        setShowDeleteModal(false);
-    }
-
     const deleteStashItem = (id: string, url: string) => {
         const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`);
         deleteDoc(itemRef);
@@ -98,8 +91,8 @@ const EditStashItem = () => {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
             deleteObject(imageFolderRef);
         }
-        closeModal();
-        navigate('/projects');
+        deleteModalDispatch({ type: 'HIDE' })
+        navigate('/stash');
     }
 
     return (
@@ -211,7 +204,7 @@ const EditStashItem = () => {
                                             </div>
                                             <div className="flex gap-4 items-center justify-end">
                                                 <div
-                                                    onClick={showModal}
+                                                    onClick={() => deleteModalDispatch({ type: 'SHOW' })}
                                                     className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Delete Item</div>
                                                 <button
@@ -221,7 +214,7 @@ const EditStashItem = () => {
                                         </div>
                                     </div>
                                 </Form>
-                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteStashItem(item.stashItemId, item.imageUrl)} item='yarn' />}
+                                {deleteModal && <DeleteModal closeModal={() => deleteModalDispatch({ type: 'HIDE' })} deleteItem={() => deleteStashItem(item.stashItemId, item.imageUrl)} item='yarn' />}
                             </>
                         )
                     }

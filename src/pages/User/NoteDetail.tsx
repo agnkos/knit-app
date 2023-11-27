@@ -1,11 +1,12 @@
 import { defer, useLoaderData, Await, Form, redirect, Link, useNavigate } from "react-router-dom";
-import { Suspense, useState} from "react";
+import { Suspense, useContext } from "react";
 import { auth, db } from "../../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { getNoteDetail } from "../../config/firebase";
 import { Note } from "../../types";
 import { TrashIcon, CheckIcon, ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
 import DeleteModal from "../../components/DeleteModal";
+import DeleteModalContext from '../../context/deleteModalContext';
 
 export function loader({ params }: any) {
     return defer({ noteDetail: getNoteDetail(params.id) })
@@ -38,22 +39,14 @@ export async function action({ params, request }: any): Promise<Response | { err
 }
 
 const NoteDetail = () => {
-    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const navigate = useNavigate()
     const loaderData = useLoaderData() as LoaderData;
-
-    const showModal = () => {
-        setShowDeleteModal(true);
-    }
-
-    const closeModal = () => {
-        setShowDeleteModal(false);
-    }
+    const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext)
 
     const deleteNote = (id: string) => {
         const noteRef = doc(db, "users", `${auth?.currentUser?.uid}`, "notes", `${id}`);
         deleteDoc(noteRef);
-        closeModal();
+        deleteModalDispatch({ type: 'HIDE' })
         navigate('/notes')
     }
 
@@ -79,7 +72,7 @@ const NoteDetail = () => {
                                             <button className="block">
                                                 <CheckIcon className='w-5 h-5 cursor-pointer hover:text-teal-600 transition-colors duration-300' />
                                             </button>
-                                            <TrashIcon className='w-5 h-5 cursor-pointer hover:text-teal-600 transition-colors duration-300' onClick={showModal} />
+                                            <TrashIcon className='w-5 h-5 cursor-pointer hover:text-teal-600 transition-colors duration-300' onClick={() => deleteModalDispatch({ type: 'SHOW' })} />
                                         </div>
                                     </div>
                                     <p className='text-sm'>{note.date?.toString()}</p>
@@ -91,7 +84,7 @@ const NoteDetail = () => {
                                     />
                                 </div>
                             </Form>
-                            {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteNote(note.noteId)} item='note' />}
+                            {deleteModal && <DeleteModal closeModal={() => deleteModalDispatch({ type: 'HIDE' })} deleteItem={() => deleteNote(note.noteId)} item='note' />}
                         </>
                     )}
                 </Await>

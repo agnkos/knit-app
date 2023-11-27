@@ -1,5 +1,5 @@
-import { Form, useLoaderData, Await, redirect, useNavigate, Link } from "react-router-dom";
-import { useState, Suspense } from "react";
+import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
+import { useState, Suspense, useContext } from "react";
 import { auth, db } from "../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -7,6 +7,7 @@ import { storage } from "../config/firebase";
 import imgPlaceholder from '../img/knit-black.png';
 import { Project } from "../types";
 import DeleteModal from "../components/DeleteModal";
+import DeleteModalContext from '../context/deleteModalContext';
 
 export async function action({ params, request }: any) {
     const formData = await request.formData();
@@ -46,7 +47,7 @@ type LoaderData = {
 
 const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
-    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+    const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
     const data = useLoaderData() as LoaderData;
     const navigate = useNavigate();
 
@@ -59,7 +60,6 @@ const EditProject = () => {
                 .then(snapshot => {
                     getDownloadURL(snapshot.ref).then(url => {
                         console.log(url)
-                        // setImageUrl(url)
                         updateDoc(projectRef, {
                             imageUrl: url
                         })
@@ -88,24 +88,15 @@ const EditProject = () => {
         navigate(`/projects/${id}/edit`);
     }
 
-    const showModal = () => {
-        setShowDeleteModal(true);
-        console.log('delete project?', data.projectDetail.projectId)
-    }
-
-    const closeModal = () => {
-        setShowDeleteModal(false);
-    }
-
-    const deleteProject = (id: string, url: string) => {
+    const deleteProject = async (id: string, url: string) => {
         const projectRef = doc(db, "users", `${auth?.currentUser?.uid}`, "projects", `${id}`);
-        deleteDoc(projectRef);
+        await deleteDoc(projectRef);
         if (url) {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
             deleteObject(imageFolderRef);
         }
         console.log('project deleted', id)
-        closeModal();
+        deleteModalDispatch({ type: 'HIDE' })
         navigate('/projects');
     }
 
@@ -227,7 +218,7 @@ const EditProject = () => {
                                             />
                                             <div className="flex gap-4 items-center justify-end">
                                                 <div
-                                                    onClick={showModal}
+                                                    onClick={() => deleteModalDispatch({ type: 'SHOW' })}
                                                     className=' my-4  max-w-fit px-3 py-1 bg-red-400  hover:bg-red-600 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                                                 >Delete Project</div>
                                                 <button
@@ -237,7 +228,7 @@ const EditProject = () => {
                                         </div>
                                     </div>
                                 </Form>
-                                {showDeleteModal && <DeleteModal closeModal={closeModal} deleteItem={() => deleteProject(project.projectId, project.imageUrl)} item='project' />}
+                                {deleteModal && <DeleteModal closeModal={() => deleteModalDispatch({ type: 'HIDE' })} deleteItem={() => deleteProject(project.projectId, project.imageUrl)} item='yarn' />}
                             </>
                         )
                     }
