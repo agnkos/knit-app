@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { doc, collection, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { doc, collection, getDoc, getDocs, getFirestore, query, orderBy } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
@@ -69,7 +69,7 @@ export async function getStashItem(id: string) {
 export async function getNotes() {
     const userId: string = auth?.currentUser?.uid || JSON.parse(localStorage.getItem('loggedUser') || '{}');
     const q = collection(db, "users", `${userId}`, "notes");
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(query(q, orderBy('added', 'desc')));
     const dataArr = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id

@@ -1,6 +1,7 @@
 import { redirect, Form, Link } from "react-router-dom";
 import { doc, collection, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
+import { Timestamp } from "firebase/firestore";
 
 export async function action({ request }: any): Promise<Response | {
     error: any;
@@ -16,7 +17,8 @@ export async function action({ request }: any): Promise<Response | {
             noteId: noteRef.id,
             title: title || 'untitled',
             content: content,
-            date: date.toLocaleDateString()
+            date: date.toLocaleDateString(),
+            added: Timestamp.now()
         })
         return redirect('/notes')
     } catch (err: any) {
