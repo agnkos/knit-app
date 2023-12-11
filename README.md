@@ -4,17 +4,32 @@
 
 ## Contents
 * [Deployed app](#deployed-app)
+* [Sign in](#sign-in)
 * [Project description](#project-description)
 * [Technologies](#technologies)
-* [Setup](#setup)
-* [Application view](#application-view)
+* [Installation](#installation)
+* [Screenshots](#screenshots)
 
 ## Deployed app
 <b> [Link to the deployed app](https://knit-app.netlify.app/) </b> <br>
-To test the app log in with email: tester@email.com and password: testapp123 <br>
+
+## Sign in
+To test the app log in with email: 
+
+        tester@email.com 
+        
+and password:
+
+        testapp123 
 
 ## Project description:
 - app for storing info about current and finished knitting projects, project queue, yarn stash
+- with KnitApp you can:
+     - add and delete project, edit project's info
+     - add and delete project's photo
+     - add items to queue and change item's position
+     - add and delete stash items, edit details, add photo
+     - write, edit and delete notes
 - design ispired by [ravelry.com](https://www.ravelry.com/)
 - knitting icons: created by Darius Dan and by iconixar - Flaticon
 
@@ -29,7 +44,7 @@ To test the app log in with email: tester@email.com and password: testapp123 <br
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
 
-## Setup
+## Installation
 
 Clone the repo:
 
@@ -48,19 +63,9 @@ KnitApp is ready at port 5173:
     http://localhost:5173/
   
 
-## Application view:
+## Screenshots:
 
 <img src='./public/Screenshot1.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
 <img src='./public/Screenshot2.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
 <img src='./public/Screenshot3.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
 <img src='./public/Screenshot4.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
-
-
-#### Completed:
-- login and signup page
-- all projects page
-- adding and editing projects
-- adding and deleting project photo
-- queue: adding, deleting, editing items
-- queue: changing item position
-- stash page: adding & deleting items, images
