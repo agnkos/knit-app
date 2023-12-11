@@ -30,8 +30,12 @@ To test the app log in with email: tester@email.com and password: testapp123 <br
 ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
 
 ## Setup
-Clone the repo
-
+Clone the repo <br>
+``` git clone https://github.com/agnkos/knit-app.git ``` <br>
+Install npm packages <br>
+``` npm install ``` <br>
+Run the app <br>
+``` npm run dev ``` <br>
 
 ## Application view:
 
