@@ -7,6 +7,7 @@
 * [Sign in](#sign-in)
 * [Project description](#project-description)
 * [Technologies](#technologies)
+* [Credits](#credits)
 * [Installation](#installation)
 * [Screenshots](#screenshots)
 
@@ -30,8 +31,6 @@ and password:
      - add items to queue and change item's position
      - add and delete stash items, edit details, add photo
      - write, edit and delete notes
-- design ispired by [ravelry.com](https://www.ravelry.com/)
-- knitting icons: created by Darius Dan and by iconixar - Flaticon
 
 ## Technologies
 - login with email and password (firebase authentication)
@@ -43,6 +42,10 @@ and password:
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+
+## Credits
+- design ispired by [ravelry.com](https://www.ravelry.com/)
+- knitting icons: <a href="https://www.flaticon.com/free-icons/wool" title="wool icons">Wool icons created by Darius Dan - Flaticon</a> and <a href="https://www.flaticon.com/free-icons/knitting" title="knitting icons">Knitting icons created by iconixar - Flaticon</a>
 
 ## Installation
 
