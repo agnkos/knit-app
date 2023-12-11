@@ -15,13 +15,15 @@
 <b> [Link to the deployed app](https://knit-app.netlify.app/) </b> <br>
 
 ## Sign in
-To test the app log in with email: 
+To test the app you can log in with email: 
 
         tester@email.com 
         
 and password:
 
         testapp123 
+
+or create a new account
 
 ## Project description:
 - app for storing info about current and finished knitting projects, project queue, yarn stash
