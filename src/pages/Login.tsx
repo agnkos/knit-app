@@ -1,4 +1,5 @@
 import { Form, NavLink, redirect } from 'react-router-dom';
+import { ActionFunction } from 'react-router-typesafe';
 import knitLogo from "../img/art-and-design.png";
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';

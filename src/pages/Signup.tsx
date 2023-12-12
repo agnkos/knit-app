@@ -3,9 +3,11 @@ import knitLogo from "../img/art-and-design.png";
 import { auth, db } from '../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+// import type { ActionFunction } from "react-router";
 
 
-export async function action({ request }: any) {
+// export async function action({ request }: any) {
+export const action = async ({ request }: any) => {
     console.log(request)
     const formData = await request.formData();
     const email = formData.get('email');

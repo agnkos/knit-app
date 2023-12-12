@@ -1,50 +1,56 @@
 import { Suspense } from 'react';
 import { useLoaderData, useNavigate, defer, Await, Link } from 'react-router-dom';
+import { LoaderFunction } from 'react-router-typesafe';
 import { getNotes } from '../../config/firebase';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { AllNotes, Note } from '../../types';
 
-export function loader() {
-  return defer({ notes: getNotes() })
-}
+// export function loader() {
+//   return defer({ notes: getNotes() })
+// }
+
+export const loader = (() => defer({ notes: getNotes() })) satisfies LoaderFunction
 
 type LoaderData = {
   notes: AllNotes
 }
 
+
+
 const Notes = () => {
   const navigate = useNavigate();
   const loaderData = useLoaderData() as LoaderData
+  // const loaderData = useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   const addNote = () => {
-    navigate('/addnote')
-  }
+      navigate('/addnote')
+    }
 
-  console.log(loaderData)
+    console.log(loaderData)
 
-  function renderNotes(notes: Note[]) {
+    function renderNotes(notes: Note[]) {
     const notesElements = notes.map(note => (
-      <Link to={`${note.noteId}`} key={note.noteId}>
-        <div className='flex flex-col gap-1 mb-4 pb-4 border-b'>
-          <div className='flex justify-between'>
-            <p className='font-bold'>{note.title}</p>
-            <div className='flex gap-2'>
-            </div>
+    <Link to={`${note.noteId}`} key={note.noteId}>
+      <div className='flex flex-col gap-1 mb-4 pb-4 border-b'>
+        <div className='flex justify-between'>
+          <p className='font-bold'>{note.title}</p>
+          <div className='flex gap-2'>
           </div>
-          <p className='text-sm'>{note.date?.toString()}</p>
-          <p className='h-6 overflow-hidden'>{note.content}</p>
         </div>
-      </Link>
+        <p className='text-sm'>{note.date?.toString()}</p>
+        <p className='h-6 overflow-hidden'>{note.content}</p>
+      </div>
+    </Link>
     ))
 
     return (
-      <div className='p-4'>
-        {notesElements}
-      </div>
+    <div className='p-4'>
+      {notesElements}
+    </div>
     )
   }
 
-  return (
+    return (
     <div>
       <div className="flex gap-3 items-center my-4">
         <h1 className="px-4 max-[330px]:text-2xl text-3xl sm:text-4xl font-bold">Notes</h1>
@@ -67,6 +73,6 @@ const Notes = () => {
         </Await>
       </Suspense>
     </div>
-  )
+    )
 }
-export default Notes
+    export default Notes
