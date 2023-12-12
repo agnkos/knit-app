@@ -1,10 +1,9 @@
-import { Form, NavLink, redirect } from 'react-router-dom';
+import { Form, NavLink, redirect, useActionData } from 'react-router-dom';
 import knitLogo from "../img/art-and-design.png";
 import { auth } from '../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export async function action({ request }: any) {
-    console.log(request)
     const formData = await request.formData();
     const email = formData.get('email');
     const password = formData.get('password');
@@ -23,6 +22,9 @@ export async function action({ request }: any) {
 }
 
 const Login = () => {
+    const data: any = useActionData()
+    // const error : any = useRouteError()
+    // console.log('error', error)
 
     return (
         <div className='flex flex-col justify-center items-center gap-4 h-screen bg-teal-50'>
@@ -40,6 +42,7 @@ const Login = () => {
                     placeholder='Email adress'
                     className='px-3 py-1'
                 />
+                {data?.error === 'Firebase: Error (auth/user-not-found).' && (<pre className='text-red-600'>wrong user</pre>)}
                 <input
                     name="password"
                     type="password"
@@ -47,6 +50,7 @@ const Login = () => {
                     placeholder='Password'
                     className='px-3 py-1'
                 />
+                {data?.error === 'Firebase: Error (auth/wrong-password).' && (<pre className='text-red-600'>wrong password</pre>)}
                 <button
                     className='mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
                 >Log in</button>

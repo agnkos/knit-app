@@ -55,6 +55,7 @@ const EditStashItem = () => {
     }
 
     const uploadImage = async (id: string) => {
+        // spr czy imageupload
         if (!imageUpload) return;
         const itemRef = doc(db, "users", `${auth?.currentUser?.uid}`, "stash", `${id}`)
         const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
