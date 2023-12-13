@@ -1,10 +1,9 @@
-import { Form, useLoaderData, Await, redirect, useNavigate } from "react-router-dom";
+import { useLoaderData, Await, useNavigate } from "react-router-dom";
 import { useState, Suspense, useContext } from "react";
 import { auth, db } from "../../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from "../../config/firebase";
-import imgPlaceholder from '../../img/knit-black.png';
 import { StashItem } from "../../types";
 import DeleteModal from "../../components/DeleteModal";
 import DeleteModalContext from '../../context/DeleteModalContext';

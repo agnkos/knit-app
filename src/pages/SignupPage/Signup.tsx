@@ -1,6 +1,6 @@
 import { Form, redirect } from 'react-router-dom';
-import knitLogo from "../img/art-and-design.png";
-import { auth, db } from '../config/firebase';
+import knitLogo from "../../img/art-and-design.png";
+import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 

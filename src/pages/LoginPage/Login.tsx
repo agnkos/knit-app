@@ -1,34 +1,36 @@
 import { Form, NavLink, redirect, useActionData } from 'react-router-dom';
-import knitLogo from "../img/art-and-design.png";
-import { auth } from '../config/firebase';
+import knitLogo from "../../img/art-and-design.png";
+import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import LoginForm from './LoginForm';
 
-export async function action({ request }: any) {
-    const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
+// export async function action({ request }: any) {
+//     const formData = await request.formData();
+//     const email = formData.get('email');
+//     const password = formData.get('password');
 
-    try {
-        const data = await signInWithEmailAndPassword(auth, email, password);
-        localStorage.setItem('loggedUser', JSON.stringify(data.user.uid))
-        return redirect('/projects')
+//     try {
+//         const data = await signInWithEmailAndPassword(auth, email, password);
+//         localStorage.setItem('loggedUser', JSON.stringify(data.user.uid))
+//         return redirect('/projects')
 
-    } catch (err: any) {
-        console.log(err)
-        return {
-            error: err.message
-        }
-    }
-}
+//     } catch (err: any) {
+//         console.log(err)
+//         return {
+//             error: err.message
+//         }
+//     }
+// }
 
-const Login = () => {
+export const Login = () => {
     const data: any = useActionData()
     // const error : any = useRouteError()
     // console.log('error', error)
 
     return (
         <div className='flex flex-col justify-center items-center gap-4 h-screen bg-teal-50'>
-            <Form action="/" method="post"
+            <LoginForm data={data} />
+            {/* <Form action="/" method="post"
                 className='flex flex-col items-center max-w-sm bg-zinc-100 py-6 px-8 gap-4 shadow-[3px_3px_0_0] shadow-zinc-800'>
                 <h1 className='m-2 text-4xl text-rose-500 font-logo'>Knit.app</h1>
                 <img src={knitLogo}
@@ -60,9 +62,9 @@ const Login = () => {
                     <NavLink to="/signup"
                         className="text-teal-500 hover:text-teal-700"
                     > sign up.</NavLink></p>
-            </Form>
+            </Form> */}
         </div>
     )
 }
-export default Login
+// export default Login
 

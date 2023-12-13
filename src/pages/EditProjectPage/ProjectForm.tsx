@@ -37,9 +37,7 @@ const ProjectForm = ({ project, uploadImage, deleteImage, handleChange, showModa
                         id="file"
                         className='my-1 p-1 border sm:max-w-[250px]'
                         onChange={handleChange}
-                    // hidden
                     />
-                    {/* <label htmlFor="file"> */}
                     <div className="flex justify-end gap-4 sm:max-w-[250px]">
                         <div
                             onClick={() => uploadImage(project.projectId)}
@@ -49,7 +47,6 @@ const ProjectForm = ({ project, uploadImage, deleteImage, handleChange, showModa
                             onClick={() => deleteImage(project.projectId)}
                             className=' my-4 max-w-fit px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5 cursor-pointer'
                         >Remove Photo</div>
-                        {/* </label> */}
                     </div>
                 </div>
                 <div className="max-w-[500px] sm:grow">
