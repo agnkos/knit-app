@@ -9,12 +9,12 @@ import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';
 import Stash, { loader as stashLoader } from './pages/User/Stash';
 import AddProject, { action as addProjectAction } from './pages/AddProject';
 import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
-import EditProject, { action as editProjectAction } from './pages/EditProject';
+import { EditProject, action as editProjectAction } from './pages/EditProjectPage';
+import { EditStashItem, action as editItemAction } from './pages/EditStashItemPage';
 import QueueModal, { action as addToQueueAction } from './components/QueueModal';
 import ErrorPage from './pages/ErrorPage';
 import AddStashItem, { action as addStashItemAction } from './pages/AddStashItem';
 import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/StashItemDetail';
-import EditStashItem, { action as editItemAction } from './pages/EditStashItem';
 import Notes, { loader as notesLoader } from './pages/User/Notes';
 import AddNote, { action as addNoteAction } from './pages/AddNote';
 import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
@@ -46,7 +46,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 export default function App() {
   return (
     <React.StrictMode>
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </React.StrictMode>
   )
 }

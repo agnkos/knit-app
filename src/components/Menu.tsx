@@ -32,10 +32,17 @@ const Menu = ({ toggle, closeMenu }: ToggleProps) => {
     }
 
     return (
+
         <ul
-            className={`fixed right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500 hidden'} md:block md:opacity-100 md:static md:mt-16 md`}
+            className={`fixed right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500 hidden'} md:block md:opacity-100 md:static md:mt-16 md:min-h-full`}
             ref={ref}
         >
+            {/* <div
+                    className={`fixed right-0 py-6 top-16  border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle ? 'opacity-100 transition duration-500' : 'opacity-0 transition duration-500 hidden'} md:block md:opacity-100 md:relative md:min-h-full md:w-[325px]`}
+                    ref={ref}
+                >
+
+                    <ul className="md:fixed top-30"> */}
             <li className="py-4 px-12 font-bold">{auth?.currentUser?.email}</li>
             <li onClick={closeMenu}><NavLink to="projects"
                 className={({ isActive }) => isActive ? 'text-teal-700 block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer' : 'block py-2 px-12 font-semibold hover:bg-teal-200 cursor-pointer'}
@@ -52,6 +59,7 @@ const Menu = ({ toggle, closeMenu }: ToggleProps) => {
                     onClick={logout}
                 >Logout</button></li>
         </ul>
+
     )
 }
 export default Menu
