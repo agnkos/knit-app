@@ -1,5 +1,4 @@
 import { Form, NavLink } from 'react-router-dom';
-import knitLogo from "../../img/art-and-design.png";
 
 const LoginForm = ({ data }: any) => {
     return (
