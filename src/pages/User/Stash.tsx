@@ -5,6 +5,7 @@ import { getStash } from '../../config/firebase';
 import { AllStash, StashItem } from '../../types';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
+import Image from '../../components/Image';
 
 export function loader() {
   return defer({ stash: getStash() })
@@ -28,14 +29,10 @@ const Stash = () => {
         <div
           className='flex flex-col items-center gap-2 mb-4'>
           <p className='text-lg text-center sm:w-[200px] truncate'>{item.name}</p>
-          {item.imageUrl ? (
-            <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-              <img src={item.imageUrl}
-                alt={`project photo`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ) : <ImagePlaceholder />
+          {item.imageUrl ?
+            <Image url={item.imageUrl} alt="stash photo" />
+            : 
+            <ImagePlaceholder />
           }
         </div>
       </Link>

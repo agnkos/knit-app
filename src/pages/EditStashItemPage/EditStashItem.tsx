@@ -101,5 +101,3 @@ export const EditStashItem = () => {
         </div >
     )
 }
-
-// export default EditStashItem

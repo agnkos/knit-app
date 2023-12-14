@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Project } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
+import Image from "../../components/Image";
 
 export function loader({ params }: any) {
     return defer({ projectDetail: getProjectDetail(params.id) })
@@ -26,14 +27,10 @@ const ProjectDetail = () => {
                 <Await resolve={loaderData.projectDetail}>
                     {(project: Project) => (
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
-                            {project.imageUrl ? (
-                                <div className="my-2 border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                                    <img src={project.imageUrl}
-                                        alt={`project photo`}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            ) : <ImagePlaceholder />
+                            {project.imageUrl ?
+                                <Image url={project.imageUrl} alt="project photo" />
+                                :
+                                <ImagePlaceholder />
                             }
                             <div className="max-w-[500px] sm:grow">
                                 <div className="mb-3 flex justify-between items-center">

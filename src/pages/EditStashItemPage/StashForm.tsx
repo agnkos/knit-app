@@ -1,6 +1,7 @@
 import { Form } from "react-router-dom";
 import { StashItem } from "../../types";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
+import Image from "../../components/Image";
 
 type FormProps = {
     item: StashItem,
@@ -16,14 +17,8 @@ const StashForm = ({ item, uploadImage, deleteImage, handleChange, showModal }: 
             <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                 <div>
                     {(!item.imageUrl || item.imageUrl === "") && <ImagePlaceholder />}
-                    {item.imageUrl && (
-                        <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                            <img src={item.imageUrl}
-                                alt={`stash photo`}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                    )
+                    {item.imageUrl &&
+                        <Image url={item.imageUrl} alt="stash photo" />
                     }
                     <input
                         type="file"

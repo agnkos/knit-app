@@ -1,6 +1,7 @@
 import { Form } from "react-router-dom";
 import { Project } from "../../types";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
+import Image from "../../components/Image";
 
 type FormProps = {
     project: Project,
@@ -16,14 +17,8 @@ const ProjectForm = ({ project, uploadImage, deleteImage, handleChange, showModa
             <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                 <div>
                     {(!project.imageUrl || project.imageUrl === "") && <ImagePlaceholder />}
-                    {project.imageUrl && (
-                        <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                            <img src={project.imageUrl}
-                                alt={`project photo`}
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
-                    )
+                    {project.imageUrl &&
+                        <Image url={project.imageUrl} alt="project photo" />
                     }
                     <input
                         type="file"
