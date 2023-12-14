@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import { Login, action as loginAction } from "./pages/LoginPage";
 import Layout from './components/Layout';
-import Signup, { action as signupAction } from "./pages/SignupPage/Signup";
+import { Login, action as loginAction } from "./pages/LoginPage";
+import { Signup, action as signupAction } from "./pages/SignupPage";
 import Dashboard from './pages/User/Dashboard';
 import Projects, { loader as projectsLoader } from './pages/User/Projects';
 import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';

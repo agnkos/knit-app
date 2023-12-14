@@ -1,9 +1,9 @@
 import { Await, defer, useLoaderData, Link } from "react-router-dom";
 import { getProjectDetail } from "../../config/firebase";
 import { Suspense } from "react";
-import imgPlaceholder from '../../img/knit-black.png';
 import { Project } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 export function loader({ params }: any) {
     return defer({ projectDetail: getProjectDetail(params.id) })
@@ -33,14 +33,7 @@ const ProjectDetail = () => {
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-                            ) : (
-                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                    <img src={imgPlaceholder}
-                                        alt="Wool icon created by Darius Dan - Flaticon"
-                                        className=' opacity-30'
-                                    />
-                                </div>
-                            )
+                            ) : <ImagePlaceholder />
                             }
                             <div className="max-w-[500px] sm:grow">
                                 <div className="mb-3 flex justify-between items-center">

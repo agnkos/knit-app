@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 import { StashItem } from "../../types";
-import imgPlaceholder from '../../img/knit-black.png';
+import ImagePlaceholder from "../../components/ImagePlaceholder";
 
 type FormProps = {
     item: StashItem,
@@ -15,16 +15,7 @@ const StashForm = ({ item, uploadImage, deleteImage, handleChange, showModal }: 
         <Form action={`/stash/${item.stashItemId}/edit`} method="post">
             <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                 <div>
-                    {(!item.imageUrl || item.imageUrl === "") && (
-                        <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px] sm:mx-auto'>
-                            <img src={imgPlaceholder}
-                                alt="Wool icon created by Darius Dan - Flaticon"
-                                className='opacity-30'
-                            />
-                        </div>
-
-                    )
-                    }
+                    {(!item.imageUrl || item.imageUrl === "") && <ImagePlaceholder />}
                     {item.imageUrl && (
                         <div className="my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
                             <img src={item.imageUrl}

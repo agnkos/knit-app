@@ -3,8 +3,8 @@ import { defer, useLoaderData, useNavigate, Link, Await } from 'react-router-dom
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { getStash } from '../../config/firebase';
 import { AllStash, StashItem } from '../../types';
-import imgPlaceholder from '../../img/knit-black.png';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
+import ImagePlaceholder from '../../components/ImagePlaceholder';
 
 export function loader() {
   return defer({ stash: getStash() })
@@ -35,14 +35,7 @@ const Stash = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          ) : (
-            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-              <img src={imgPlaceholder}
-                alt="Wool icon created by Darius Dan - Flaticon"
-                className=' opacity-30'
-              />
-            </div>
-          )
+          ) : <ImagePlaceholder />
           }
         </div>
       </Link>

@@ -3,13 +3,8 @@ import knitLogo from "../../img/art-and-design.png";
 
 const LoginForm = ({ data }: any) => {
     return (
-        <Form action="/" method="post"
-            className='flex flex-col items-center max-w-sm bg-zinc-100 py-6 px-8 gap-4 shadow-[3px_3px_0_0] shadow-zinc-800'>
-            <h1 className='m-2 text-4xl text-rose-500 font-logo'>Knit.app</h1>
-            <img src={knitLogo}
-                alt="Wool icon created by Darius Dan - Flaticon"
-                className='w-40'
-            />
+        < Form action="/" method="post"
+            className='flex flex-col items-center max-w-sm gap-4 ' >
             <input
                 name="email"
                 type="email"
@@ -35,7 +30,8 @@ const LoginForm = ({ data }: any) => {
                 <NavLink to="/signup"
                     className="text-teal-500 hover:text-teal-700"
                 > sign up.</NavLink></p>
-        </Form>
+        </Form >
+
     )
 }
 export default LoginForm
