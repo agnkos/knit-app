@@ -4,6 +4,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
@@ -19,5 +20,7 @@ module.exports = {
         },
       },
     ],
+    "no-unused-vars": 2,
+    "no-console": 1
   },
-}
+};

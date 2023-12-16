@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer {
-    body {
-        @apply text-zinc-950;
-    }
+  body {
+    @apply text-zinc-950;
+  }
 }

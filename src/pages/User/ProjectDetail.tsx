@@ -1,88 +1,87 @@
-import { Await, defer, useLoaderData, Link } from "react-router-dom";
-import { getProjectDetail } from "../../config/firebase";
-import { Suspense } from "react";
+import { Await, defer, useLoaderData, Link } from 'react-router-dom';
+import { getProjectDetail } from '../../config/firebase';
+import { Suspense } from 'react';
 import imgPlaceholder from '../../img/knit-black.png';
-import { Project } from "../../types";
-import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
+import { Project } from '../../types';
+import { ArrowLeftCircleIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 export function loader({ params }: any) {
-    return defer({ projectDetail: getProjectDetail(params.id) })
+  return defer({ projectDetail: getProjectDetail(params.id) });
 }
 
 type LoaderData = {
-    projectDetail: Project
-}
+  projectDetail: Project;
+};
 
 const ProjectDetail = () => {
-    const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData() as LoaderData;
 
-    return (
-        <>
-            <Link to="/projects" className="flex gap-2 items-center">
-                <ArrowLeftCircleIcon className="w-5 h-5" />
-                <p className="border-b border-white hover:border-b hover:border-zinc-950">Back to projects</p>
-            </Link>
-            <Suspense fallback={<h3>loading details...</h3>}>
-                <Await resolve={loaderData.projectDetail}>
-                    {(project: Project) => (
-                        <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
-                            {project.imageUrl ? (
-                                <div className="my-2 border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]">
-                                    <img src={project.imageUrl}
-                                        alt={`project photo`}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            ) : (
-                                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-                                    <img src={imgPlaceholder}
-                                        alt="Wool icon created by Darius Dan - Flaticon"
-                                        className=' opacity-30'
-                                    />
-                                </div>
-                            )
-                            }
-                            <div className="max-w-[500px] sm:grow">
-                                <div className="mb-3 flex justify-between items-center">
-                                    <p className='text-2xl font-bold'>{project.name}</p>
-                                    <Link to="edit">
-                                        <button
-                                            className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
-                                        >
-                                            <PencilIcon className="w-4 h-4" />
-                                            <span>
-                                                edit
-                                            </span>
-                                        </button>
-                                    </Link>
-                                </div>
-                                <p className="text-lg font-bold">Project info</p>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
-                                    <p className="text-zinc-700 ">Pattern</p>
-                                    <p className="">{project.pattern}</p>
-                                </div>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
-                                    <p className="text-zinc-700">Size</p>
-                                    <p className="">{project.size}</p>
-                                </div>
+  return (
+    <>
+      <Link to='/projects' className='flex gap-2 items-center'>
+        <ArrowLeftCircleIcon className='w-5 h-5' />
+        <p className='border-b border-white hover:border-b hover:border-zinc-950'>
+          Back to projects
+        </p>
+      </Link>
+      <Suspense fallback={<h3>loading details...</h3>}>
+        <Await resolve={loaderData.projectDetail}>
+          {(project: Project) => (
+            <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
+              {project.imageUrl ? (
+                <div className='my-2 border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]'>
+                  <img
+                    src={project.imageUrl}
+                    alt={`project photo`}
+                    className='w-full h-full object-cover'
+                  />
+                </div>
+              ) : (
+                <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
+                  <img
+                    src={imgPlaceholder}
+                    alt='Wool icon created by Darius Dan - Flaticon'
+                    className=' opacity-30'
+                  />
+                </div>
+              )}
+              <div className='max-w-[500px] sm:grow'>
+                <div className='mb-3 flex justify-between items-center'>
+                  <p className='text-2xl font-bold'>{project.name}</p>
+                  <Link to='edit'>
+                    <button className='flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'>
+                      <PencilIcon className='w-4 h-4' />
+                      <span>edit</span>
+                    </button>
+                  </Link>
+                </div>
+                <p className='text-lg font-bold'>Project info</p>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700'>
+                  <p className='text-zinc-700 '>Pattern</p>
+                  <p className=''>{project.pattern}</p>
+                </div>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3'>
+                  <p className='text-zinc-700'>Size</p>
+                  <p className=''>{project.size}</p>
+                </div>
 
-                                <p className="text-lg font-bold">Needles & yarn</p>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
-                                    <p className="text-zinc-700">Needle</p>
-                                    <p className="">{project.needles}</p>
-                                </div>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
-                                    <p className="text-zinc-700 ">Yarn</p>
-                                    <p className="">{project.yarn}</p>
-                                </div>
-                                <p className="text-lg font-bold">Notes</p>
-                                <p>{project.notes}</p>
-                            </div>
-                        </div>
-                    )}
-                </Await>
-            </Suspense >
-        </>
-    )
-}
-export default ProjectDetail
+                <p className='text-lg font-bold'>Needles & yarn</p>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700'>
+                  <p className='text-zinc-700'>Needle</p>
+                  <p className=''>{project.needles}</p>
+                </div>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3'>
+                  <p className='text-zinc-700 '>Yarn</p>
+                  <p className=''>{project.yarn}</p>
+                </div>
+                <p className='text-lg font-bold'>Notes</p>
+                <p>{project.notes}</p>
+              </div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+    </>
+  );
+};
+export default ProjectDetail;
