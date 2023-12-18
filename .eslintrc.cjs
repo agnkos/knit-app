@@ -22,7 +22,9 @@ module.exports = {
         },
       },
     ],
-    "no-unused-vars": 2,
+    // "no-unused-vars": 2,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "no-console": 1
   },
 };
