@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
