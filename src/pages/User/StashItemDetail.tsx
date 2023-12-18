@@ -7,15 +7,15 @@ import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
 
 export function loader({ params }: any) {
-    return defer({ stashItem: getStashItem(params.id) })
+  return defer({ stashItem: getStashItem(params.id) });
 }
 
 type LoaderData = {
-    stashItem: StashItem
-}
+  stashItem: StashItem;
+};
 
 const StashItemDetail = () => {
-    const loaderData = useLoaderData() as LoaderData
+  const loaderData = useLoaderData() as LoaderData;
 
     return (
         <>

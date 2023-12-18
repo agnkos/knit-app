@@ -7,15 +7,15 @@ import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
 
 export function loader({ params }: any) {
-    return defer({ projectDetail: getProjectDetail(params.id) })
+  return defer({ projectDetail: getProjectDetail(params.id) });
 }
 
 type LoaderData = {
-    projectDetail: Project
-}
+  projectDetail: Project;
+};
 
 const ProjectDetail = () => {
-    const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData() as LoaderData;
 
     return (
         <>
@@ -56,23 +56,23 @@ const ProjectDetail = () => {
                                     <p className="">{project.size}</p>
                                 </div>
 
-                                <p className="text-lg font-bold">Needles & yarn</p>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700">
-                                    <p className="text-zinc-700">Needle</p>
-                                    <p className="">{project.needles}</p>
-                                </div>
-                                <div className="grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3">
-                                    <p className="text-zinc-700 ">Yarn</p>
-                                    <p className="">{project.yarn}</p>
-                                </div>
-                                <p className="text-lg font-bold">Notes</p>
-                                <p>{project.notes}</p>
-                            </div>
-                        </div>
-                    )}
-                </Await>
-            </Suspense >
-        </>
-    )
-}
-export default ProjectDetail
+                <p className='text-lg font-bold'>Needles & yarn</p>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700'>
+                  <p className='text-zinc-700'>Needle</p>
+                  <p className=''>{project.needles}</p>
+                </div>
+                <div className='grid grid-cols-[100px_minmax(100px,300px)] gap-2 py-1 border-b border-zinc-700 mb-3'>
+                  <p className='text-zinc-700 '>Yarn</p>
+                  <p className=''>{project.yarn}</p>
+                </div>
+                <p className='text-lg font-bold'>Notes</p>
+                <p>{project.notes}</p>
+              </div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+    </>
+  );
+};
+export default ProjectDetail;

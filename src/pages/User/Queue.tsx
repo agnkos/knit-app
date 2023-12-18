@@ -7,15 +7,15 @@ import { QueuedItemType } from "../../types";
 import ItemsPlaceholder from "../../components/ItemsPlaceholder";
 
 export function loader() {
-    return defer({ queuedItems: getQueuedItems() })
+  return defer({ queuedItems: getQueuedItems() });
 }
 
 type LoaderData = {
-    queuedItems: QueuedItemType[]
-}
+  queuedItems: QueuedItemType[];
+};
 
 const Queue = () => {
-    const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData() as LoaderData;
 
     function renderQueuedItems(queuedItems: QueuedItemType[]) {
         const queuedItemsElements = queuedItems.map((item, index: number) => (
@@ -31,21 +31,21 @@ const Queue = () => {
         )
     }
 
-    return (
-        <div className="flex flex-col grow">
-            <div className="flex gap-3 items-center my-4">
-                <h1 className="px-4 text-3xl sm:text-4xl font-bold max-[325px]:text-3xl">Queue</h1>
-                <Link
-                    to="add"
-                    state={{ button: "" }}
-                    className="flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5"
-                >
-                    <PlusCircleIcon className="w-4 h-4" />
-                    <span>
-                        add to queue
-                    </span>
-                </Link>
-            </div>
+  return (
+    <div className='flex flex-col grow'>
+      <div className='flex gap-3 items-center my-4'>
+        <h1 className='px-4 text-3xl sm:text-4xl font-bold max-[325px]:text-3xl'>
+          Queue
+        </h1>
+        <Link
+          to='add'
+          state={{ button: '' }}
+          className='flex gap-1 items-center mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
+        >
+          <PlusCircleIcon className='w-4 h-4' />
+          <span>add to queue</span>
+        </Link>
+      </div>
 
             {loaderData.queuedItems.length === 0 && <ItemsPlaceholder text='Time to plan some projects!'/>
             }
