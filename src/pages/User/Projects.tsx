@@ -1,29 +1,24 @@
 import { Suspense } from 'react';
 import {
-  useLoaderData,
   useNavigate,
-  defer,
   Await,
   Link,
 } from 'react-router-dom';
 import { getProjects } from '../../config/firebase';
-import { AllProjects, Project } from '../../types';
+import { Project } from '../../types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import Image from '../../components/Image';
+import { defer, useLoaderData } from "react-router-typesafe";
 
 export function loader() {
   return defer({ projects: getProjects() });
 }
 
-type LoaderData = {
-  projects: AllProjects;
-};
-
 const Projects = () => {
   const navigate = useNavigate();
-  const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData<typeof loader>();
 
   const addProject = () => {
     navigate('/addproject');

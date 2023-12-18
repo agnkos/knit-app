@@ -1,14 +1,14 @@
-import { redirect } from 'react-router-dom';
+import { redirect, ActionFunctionArgs } from 'react-router-dom';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
-export async function action({ request }: any) {
+export async function action({ request }: ActionFunctionArgs) {
     console.log(request)
     const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const username = formData.get('username');
+    const email = String(formData.get('email'));
+    const password = String(formData.get('password'));
+    const username = String(formData.get('username'));
 
 
     try {
@@ -21,11 +21,8 @@ export async function action({ request }: any) {
         })
         return redirect('/projects')
 
-    } catch (err: any) {
-        console.log(err)
-        return {
-            error: err.message
-        }
+    } catch (error) {
+        if (error instanceof Error) return { error: error.message }
+        return String(error)
     }
-
 }

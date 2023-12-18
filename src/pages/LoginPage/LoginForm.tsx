@@ -1,6 +1,7 @@
 import { Form, NavLink } from 'react-router-dom';
 
 const LoginForm = ({ data }: any) => {
+    console.log(data)
     return (
         < Form action="/" method="post"
             className='flex flex-col items-center max-w-sm gap-4 ' >
@@ -25,7 +26,7 @@ const LoginForm = ({ data }: any) => {
             >Log in</button>
             <p
                 className='text-sm'
-            >If you don't have an account,
+            >If you don&apos;t have an account,
                 <NavLink to="/signup"
                     className="text-teal-500 hover:text-teal-700"
                 > sign up.</NavLink></p>

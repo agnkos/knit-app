@@ -1,35 +1,37 @@
 import { Suspense } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { Await, Link, Outlet, defer, useLoaderData } from 'react-router-dom';
+import { Await, Link, Outlet } from 'react-router-dom';
 import { getQueuedItems } from "../../config/firebase";
 import QueuedItem from "../../components/QueuedItem";
 import { QueuedItemType } from "../../types";
 import ItemsPlaceholder from "../../components/ItemsPlaceholder";
+import { defer, useLoaderData } from "react-router-typesafe";
 
 export function loader() {
   return defer({ queuedItems: getQueuedItems() });
 }
 
-type LoaderData = {
-  queuedItems: QueuedItemType[];
-};
+// type LoaderData = {
+//   queuedItems: QueuedItemType[];
+// };
 
 const Queue = () => {
-  const loaderData = useLoaderData() as LoaderData;
+  // const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData<typeof loader>();
 
-    function renderQueuedItems(queuedItems: QueuedItemType[]) {
-        const queuedItemsElements = queuedItems.map((item, index: number) => (
-            <QueuedItem item={item} index={index} key={item.queuedItemId} />
-        ))
+  function renderQueuedItems(queuedItems: QueuedItemType[]) {
+    const queuedItemsElements = queuedItems.map((item, index: number) => (
+      <QueuedItem item={item} index={index} key={item.queuedItemId} />
+    ))
 
-        if (queuedItems.length === 0) return <ItemsPlaceholder text='Time to plan some projects!'/>
+    if (queuedItems.length === 0) return <ItemsPlaceholder text='Time to plan some projects!' />
 
-        return (
-            <div className="p-4">
-                {queuedItemsElements}
-            </div>
-        )
-    }
+    return (
+      <div className="p-4">
+        {queuedItemsElements}
+      </div>
+    )
+  }
 
   return (
     <div className='flex flex-col grow'>
@@ -47,15 +49,15 @@ const Queue = () => {
         </Link>
       </div>
 
-            {loaderData.queuedItems.length === 0 && <ItemsPlaceholder text='Time to plan some projects!'/>
-            }
-            <Outlet />
-            <Suspense fallback={<h3>Loading queue...</h3>}>
-                <Await resolve={loaderData.queuedItems}>
-                    {renderQueuedItems}
-                </Await>
-            </Suspense>
-        </div>
-    )
+      {/* {loaderData.queuedItems.length === 0 && <ItemsPlaceholder text='Time to plan some projects!' />
+      } */}
+      <Outlet />
+      <Suspense fallback={<h3>Loading queue...</h3>}>
+        <Await resolve={loaderData.queuedItems}>
+          {renderQueuedItems}
+        </Await>
+      </Suspense>
+    </div>
+  )
 }
 export default Queue

@@ -1,9 +1,15 @@
 import { useActionData } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import knitLogo from "../../img/art-and-design.png";
+import { useEffect } from 'react';
+// import { action } from './action'
 
 export const Login = () => {
-    const data: any = useActionData()
+    const data = useActionData()
+    useEffect(() => {
+        console.log(data)
+
+    }, [data])
 
     return (
         <div className='flex flex-col justify-center items-center h-screen bg-teal-50'>

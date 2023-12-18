@@ -1,4 +1,4 @@
-import { Await, defer, useLoaderData, Link } from "react-router-dom";
+import { Await, defer, useLoaderData, Link, LoaderFunctionArgs } from "react-router-dom";
 import { Suspense } from "react";
 import { getStashItem } from "../../config/firebase";
 import { StashItem } from "../../types";
@@ -6,16 +6,31 @@ import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
 
-export function loader({ params }: any) {
-  return defer({ stashItem: getStashItem(params.id) });
+// type RequestObject = {
+//     params: Params
+// }
+
+// type Params = {
+//     id: string
+// }
+
+// export function loader(request: RequestObject) {
+//     console.log(request)
+//     return defer({ stashItem: getStashItem(request.params.id) });
+// }
+
+export function loader({ params }: LoaderFunctionArgs) {
+    if (params.id !== undefined) {
+        return defer({ stashItem: getStashItem(params.id) });
+    }
 }
 
 type LoaderData = {
-  stashItem: StashItem;
+    stashItem: StashItem;
 };
 
 const StashItemDetail = () => {
-  const loaderData = useLoaderData() as LoaderData;
+    const loaderData = useLoaderData() as LoaderData;
 
     return (
         <>
@@ -29,7 +44,7 @@ const StashItemDetail = () => {
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                             {item.imageUrl ?
                                 <Image url={item.imageUrl} alt="stash photo" />
-                                : 
+                                :
                                 <ImagePlaceholder />
                             }
                             <div className="max-w-[500px] sm:grow">

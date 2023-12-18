@@ -1,10 +1,9 @@
 import { auth, db } from "../../config/firebase";
 import { doc, collection, setDoc, Timestamp } from "firebase/firestore";
 import { redirect } from "react-router-dom";
+import type { ActionFunctionArgs } from 'react-router-dom';
 
-export async function action({ request }: any): Promise<Response | {
-    error: any;
-}> {
+export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const title = formData.get('title');
     const content = formData.get('content');
@@ -20,9 +19,8 @@ export async function action({ request }: any): Promise<Response | {
             added: Timestamp.now()
         })
         return redirect('/notes')
-    } catch (err: any) {
-        return {
-            error: err.message
-        }
+    } catch (error) {
+        if (error instanceof Error) return { error: error.message }
+        return String(error)
     }
 }

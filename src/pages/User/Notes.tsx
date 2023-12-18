@@ -1,26 +1,21 @@
 import { Suspense } from 'react';
 import {
-  useLoaderData,
   useNavigate,
-  defer,
   Await,
   Link,
 } from 'react-router-dom';
 import { getNotes } from '../../config/firebase';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { AllNotes, Note } from '../../types';
+import { Note } from '../../types';
+import {defer, useLoaderData} from "react-router-typesafe";
 
 export function loader() {
   return defer({ notes: getNotes() });
 }
 
-type LoaderData = {
-  notes: AllNotes;
-};
-
 const Notes = () => {
   const navigate = useNavigate();
-  const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData<typeof loader>();
 
   const addNote = () => {
     navigate('/addnote');
