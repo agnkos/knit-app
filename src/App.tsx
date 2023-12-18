@@ -1,39 +1,23 @@
 import React from 'react';
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from 'react-router-dom';
-import Login, { action as loginAction } from './pages/Login';
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Layout from './components/Layout';
-import Signup, { action as signupAction } from './pages/Signup';
+import { Login, action as loginAction } from "./pages/LoginPage";
+import { Signup, action as signupAction } from "./pages/SignupPage";
 import Dashboard from './pages/User/Dashboard';
 import Projects, { loader as projectsLoader } from './pages/User/Projects';
 import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';
 import Stash, { loader as stashLoader } from './pages/User/Stash';
-import AddProject, { action as addProjectAction } from './pages/AddProject';
-import ProjectDetail, {
-  loader as projectDetailLoader,
-} from './pages/User/ProjectDetail';
-import EditProject, { action as editProjectAction } from './pages/EditProject';
-import QueueModal, {
-  action as addToQueueAction,
-} from './components/QueueModal';
+import { AddProject, action as addProjectAction } from './pages/AddProjectPage';
+import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
+import { EditProject, action as editProjectAction } from './pages/EditProjectPage';
+import { EditStashItem, action as editItemAction } from './pages/EditStashItemPage';
+import QueueModal, { action as addToQueueAction } from './components/QueueModal';
 import ErrorPage from './pages/ErrorPage';
-import AddStashItem, {
-  action as addStashItemAction,
-} from './pages/AddStashItem';
-import StashItemDetail, {
-  loader as stashItemDetailLoader,
-} from './pages/User/StashItemDetail';
-import EditStashItem, { action as editItemAction } from './pages/EditStashItem';
+import { AddStashItem, action as addStashItemAction } from './pages/AddStashItemPage/';
+import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/StashItemDetail';
 import Notes, { loader as notesLoader } from './pages/User/Notes';
-import AddNote, { action as addNoteAction } from './pages/AddNote';
-import NoteDetail, {
-  loader as noteDetailLoader,
-  action as noteDetailAction,
-} from './pages/User/NoteDetail';
+import { AddNote, action as addNoteAction } from './pages/AddNotePage';
+import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -104,6 +88,7 @@ const router = createBrowserRouter(
 export default function App() {
   return (
     <React.StrictMode>
+      <RouterProvider router={router} />
       <RouterProvider router={router} />
     </React.StrictMode>
   );

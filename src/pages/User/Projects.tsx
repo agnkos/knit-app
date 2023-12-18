@@ -7,10 +7,11 @@ import {
   Link,
 } from 'react-router-dom';
 import { getProjects } from '../../config/firebase';
-import imgPlaceholder from '../../img/knit-black.png';
 import { AllProjects, Project } from '../../types';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
+import ImagePlaceholder from '../../components/ImagePlaceholder';
+import Image from '../../components/Image';
 
 export function loader() {
   return defer({ projects: getProjects() });
@@ -31,25 +32,14 @@ const Projects = () => {
   function renderProjects(projects: Project[]) {
     const projectsElements = projects.map((project) => (
       <Link to={`${project.projectId}`} key={project.projectId}>
-        <div className='flex flex-col items-center gap-2 mb-4'>
-          <p className='text-lg'>{project.name}</p>
-          {project.imageUrl ? (
-            <div className='my-2 mx-auto border border-zinc-950 max-w-[500px] h-[80vw] w-[80vw] sm:w-[200px] sm:h-[200px]'>
-              <img
-                src={project.imageUrl}
-                alt={`project photo`}
-                className='w-full h-full object-cover'
-              />
-            </div>
-          ) : (
-            <div className='my-2 p-4 border border-zinc-950 bg-slate-100 sm:w-[200px]'>
-              <img
-                src={imgPlaceholder}
-                alt='Wool icon created by Darius Dan - Flaticon'
-                className=' opacity-30'
-              />
-            </div>
-          )}
+        <div
+          className='flex flex-col items-center gap-2 mb-4'>
+          <p className='text-lg text-center sm:w-[200px] truncate'>{project.name}</p>
+          {project.imageUrl ?
+            <Image url={project.imageUrl} alt="project photo" />
+            :
+            <ImagePlaceholder />
+          }
         </div>
       </Link>
     ));
