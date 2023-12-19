@@ -11,12 +11,7 @@ export function loader() {
   return defer({ queuedItems: getQueuedItems() });
 }
 
-// type LoaderData = {
-//   queuedItems: QueuedItemType[];
-// };
-
 const Queue = () => {
-  // const loaderData = useLoaderData() as LoaderData;
   const loaderData = useLoaderData<typeof loader>();
 
   function renderQueuedItems(queuedItems: QueuedItemType[]) {
@@ -49,8 +44,6 @@ const Queue = () => {
         </Link>
       </div>
 
-      {/* {loaderData.queuedItems.length === 0 && <ItemsPlaceholder text='Time to plan some projects!' />
-      } */}
       <Outlet />
       <Suspense fallback={<h3>Loading queue...</h3>}>
         <Await resolve={loaderData.queuedItems}>

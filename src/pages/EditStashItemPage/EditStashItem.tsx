@@ -1,4 +1,4 @@
-import { useLoaderData, Await, useNavigate } from "react-router-dom";
+import {  Await, useNavigate } from "react-router-dom";
 import { useState, Suspense, useContext } from "react";
 import { auth, db } from "../../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
@@ -8,15 +8,17 @@ import { StashItem } from "../../types";
 import DeleteModal from "../../components/DeleteModal";
 import DeleteModalContext from '../../context/DeleteModalContext';
 import StashForm from "./StashForm";
-
-type LoaderData = {
-    stashItem: StashItem
-}
+import { useLoaderData } from "react-router-typesafe";
+import {loader} from '../User/StashItemDetail'
+// type LoaderData = {
+//     stashItem: StashItem
+// }
 
 export const EditStashItem = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
-    const data = useLoaderData() as LoaderData;
+    // const data = useLoaderData() as LoaderData;
+    const data = useLoaderData<typeof loader>();
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

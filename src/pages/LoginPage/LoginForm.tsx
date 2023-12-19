@@ -1,5 +1,6 @@
 import { Form, NavLink } from 'react-router-dom';
 
+
 const LoginForm = ({ data }: any) => {
     console.log(data)
     return (
