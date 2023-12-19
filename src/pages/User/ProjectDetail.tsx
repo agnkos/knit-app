@@ -8,9 +8,9 @@ import Image from "../../components/Image";
 import { defer, useLoaderData } from "react-router-typesafe";
 
 export function loader({ params }: LoaderFunctionArgs) {
-  if (params.id !== undefined) {
-    return defer({ projectDetail: getProjectDetail(params.id) });
-  }
+  // if (params.id !== undefined) {
+    return defer({ projectDetail: getProjectDetail(String(params.id)) });
+  // }
 }
 
 const ProjectDetail = () => {

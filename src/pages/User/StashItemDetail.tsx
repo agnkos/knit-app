@@ -1,29 +1,32 @@
-import { Await, Link, LoaderFunctionArgs, } from "react-router-dom";
+import { Await, Link, LoaderFunctionArgs } from "react-router-dom";
 import { Suspense } from "react";
 import { getStashItem } from "../../config/firebase";
 import { StashItem } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
-import { defer, useLoaderData, makeLoader } from "react-router-typesafe";
+import { defer, useLoaderData } from "react-router-typesafe";
 
-// type RequestObject = {
-//     params: Params
-// }
 
 // type Params = {
 //     id: string
 // }
+
+
 
 // export function loader(request: RequestObject) {
 //     console.log(request)
 //     return defer({ stashItem: getStashItem(request.params.id) });
 // }
 
-export function loader({ params }) {
-    if (params.id !== undefined) {
-        return defer({ stashItem: getStashItem(params.id) });
-    }
+// type LoaderData = { 
+//     stashItem: StashItem;
+// };
+
+export function loader({ params }: LoaderFunctionArgs) {
+    // if (params.id !== undefined) {
+    return defer({ stashItem: getStashItem(String(params.id)) });
+    // }
 }
 
 // export const loader = makeLoader(({ params }: any) => {
@@ -34,6 +37,7 @@ export function loader({ params }) {
 
 const StashItemDetail = () => {
     const loaderData = useLoaderData<typeof loader>();
+    // const loaderData = useLoaderData() as LoaderData;
 
     return (
         <>
