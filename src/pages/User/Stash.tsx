@@ -1,29 +1,24 @@
 import { Suspense } from 'react';
 import {
-  defer,
-  useLoaderData,
   useNavigate,
   Link,
   Await,
 } from 'react-router-dom';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { getStash } from '../../config/firebase';
-import { AllStash, StashItem } from '../../types';
+import { StashItem } from '../../types';
 import ItemsPlaceholder from '../../components/ItemsPlaceholder';
 import ImagePlaceholder from '../../components/ImagePlaceholder';
 import Image from '../../components/Image';
+import { defer, useLoaderData } from "react-router-typesafe";
 
 export function loader() {
   return defer({ stash: getStash() });
 }
 
-type LoaderData = {
-  stash: AllStash;
-};
-
 const Stash = () => {
   const navigate = useNavigate();
-  const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData<typeof loader>();
 
   const addStashItem = () => {
     navigate('/addstashitem');

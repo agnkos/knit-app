@@ -1,11 +1,11 @@
 import {
-  defer,
-  useLoaderData,
   Await,
   Form,
   redirect,
   Link,
   useNavigate,
+  ActionFunctionArgs,
+  LoaderFunctionArgs
 } from 'react-router-dom';
 import { Suspense, useContext } from 'react';
 import { auth, db } from '../../config/firebase';
@@ -19,19 +19,16 @@ import {
 } from '@heroicons/react/24/outline';
 import DeleteModal from '../../components/DeleteModal';
 import DeleteModalContext from '../../context/DeleteModalContext';
+import { defer, useLoaderData } from "react-router-typesafe";
 
-export function loader({ params }: any) {
-  return defer({ noteDetail: getNoteDetail(params.id) });
+export function loader({ params }: LoaderFunctionArgs) {
+  return defer({ noteDetail: getNoteDetail(String(params.id)) });
 }
-
-type LoaderData = {
-  noteDetail: Note;
-};
 
 export async function action({
   params,
   request,
-}: any): Promise<Response | { error: any }> {
+}: ActionFunctionArgs) {
   const formData = await request.formData();
   const title = formData.get('title');
   const content = formData.get('content');
@@ -52,16 +49,15 @@ export async function action({
       date: date.toLocaleDateString(),
     });
     return redirect(`/notes/${noteRef.id}`);
-  } catch (err: any) {
-    return {
-      error: err.message,
-    };
+  } catch (error) {
+    if (error instanceof Error) return { error: error.message }
+    return String(error)
   }
 }
 
 const NoteDetail = () => {
   const navigate = useNavigate();
-  const loaderData = useLoaderData() as LoaderData;
+  const loaderData = useLoaderData<typeof loader>();
   const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
 
   const deleteNote = async (id: string) => {
@@ -86,7 +82,7 @@ const NoteDetail = () => {
         </p>
       </Link>
       <Suspense fallback={<h3>Loading...</h3>}>
-        <Await resolve={loaderData.noteDetail}>
+        <Await resolve={loaderData?.noteDetail}>
           {(note: Note) => (
             <>
               <Form

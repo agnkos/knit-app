@@ -5,14 +5,18 @@ module.exports = {
     "plugin:react/recommended",
     'plugin:react/jsx-runtime',
     'plugin:@typescript-eslint/recommended',
+    "plugin:@typescript-eslint/eslint-recommended",
     'plugin:react-hooks/recommended',
     'prettier',
   ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh'],
+  settings: { react: { version: '18.2' } },
+  plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
-    'react-refresh/only-export-components': 'warn',
+    'react-refresh/only-export-components': [
+      'warn'],
     '@typescript-eslint/ban-types': [
       'error',
       {
@@ -22,7 +26,9 @@ module.exports = {
         },
       },
     ],
-    "no-unused-vars": 2,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "no-console": 1
   },
+  root: true,
 };

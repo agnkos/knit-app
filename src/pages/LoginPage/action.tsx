@@ -1,21 +1,19 @@
-import { redirect } from 'react-router-dom';
+import { redirect, ActionFunctionArgs } from 'react-router-dom';
 import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-export async function action({ request }: any) {
+export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = String(formData.get('email'));
+    const password = String(formData.get('password'));
 
     try {
         const data = await signInWithEmailAndPassword(auth, email, password);
         localStorage.setItem('loggedUser', JSON.stringify(data.user.uid))
         return redirect('/projects')
 
-    } catch (err: any) {
-        console.log(err)
-        return {
-            error: err.message
-        }
+    } catch (error) {
+        if (error instanceof Error) return { error: error.message }
+        return String(error)
     }
 }

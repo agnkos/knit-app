@@ -1,21 +1,18 @@
-import { Await, defer, useLoaderData, Link } from "react-router-dom";
+import { Await, Link, LoaderFunctionArgs } from "react-router-dom";
 import { Suspense } from "react";
 import { getStashItem } from "../../config/firebase";
 import { StashItem } from "../../types";
 import { ArrowLeftCircleIcon, PencilIcon } from "@heroicons/react/24/outline";
 import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
+import { defer, useLoaderData } from "react-router-typesafe";
 
-export function loader({ params }: any) {
-  return defer({ stashItem: getStashItem(params.id) });
+export function loader({ params }: LoaderFunctionArgs) {
+    return defer({ stashItem: getStashItem(String(params.id)) });
 }
 
-type LoaderData = {
-  stashItem: StashItem;
-};
-
 const StashItemDetail = () => {
-  const loaderData = useLoaderData() as LoaderData;
+    const loaderData = useLoaderData<typeof loader>();
 
     return (
         <>
@@ -24,12 +21,12 @@ const StashItemDetail = () => {
                 <p className="border-b border-white hover:border-b hover:border-zinc-950">Back to stash</p>
             </Link>
             <Suspense fallback={<h3>loading details...</h3>}>
-                <Await resolve={loaderData.stashItem}>
+                <Await resolve={loaderData?.stashItem}>
                     {(item: StashItem) => (
                         <div className='p-4 sm:flex sm:gap-6 sm:items-start'>
                             {item.imageUrl ?
                                 <Image url={item.imageUrl} alt="stash photo" />
-                                : 
+                                :
                                 <ImagePlaceholder />
                             }
                             <div className="max-w-[500px] sm:grow">

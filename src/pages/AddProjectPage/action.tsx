@@ -1,10 +1,8 @@
-import { redirect } from "react-router-dom";
+import { redirect, ActionFunctionArgs } from "react-router-dom";
 import { auth, db } from "../../config/firebase";
 import { doc, collection, setDoc } from "firebase/firestore";
 
-export async function action({ request }: any): Promise<Response | {
-    error: any;
-}> {
+export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
     const name = formData.get('name');
     const pattern = formData.get('pattern');
@@ -26,9 +24,8 @@ export async function action({ request }: any): Promise<Response | {
 
         return redirect('/projects')
 
-    } catch (err: any) {
-        return {
-            error: err.message
-        }
+    } catch (error) {
+        if (error instanceof Error) return { error: error.message }
+        return String(error)
     }
 }
