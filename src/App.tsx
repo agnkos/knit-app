@@ -1,22 +1,29 @@
 import React from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import Layout from './components/Layout';
-import { Login, action as loginAction } from "./pages/LoginPage";
-import { Signup, action as signupAction } from "./pages/SignupPage";
+import { Login } from "./pages/LoginPage";
+import { action as loginAction } from "./pages/LoginPage/action";
+import { Signup } from "./pages/SignupPage";
+import { action as signupAction } from "./pages/SignupPage/action";
 import Dashboard from './pages/User/Dashboard';
 import Projects, { loader as projectsLoader } from './pages/User/Projects';
 import Queue, { loader as queuedItemsLoader } from './pages/User/Queue';
 import Stash, { loader as stashLoader } from './pages/User/Stash';
-import { AddProject, action as addProjectAction } from './pages/AddProjectPage';
+import { AddProject } from './pages/AddProjectPage';
+import { action as addProjectAction } from './pages/AddProjectPage/action';
 import ProjectDetail, { loader as projectDetailLoader } from './pages/User/ProjectDetail';
-import { EditProject, action as editProjectAction } from './pages/EditProjectPage';
-import { EditStashItem, action as editItemAction } from './pages/EditStashItemPage';
+import { EditProject } from './pages/EditProjectPage';
+import { action as editProjectAction } from './pages/EditProjectPage/action'
+import { EditStashItem } from './pages/EditStashItemPage';
+import { action as editItemAction } from './pages/EditStashItemPage/action';
 import QueueModal, { action as addToQueueAction } from './components/QueueModal';
 import ErrorPage from './pages/ErrorPage';
-import { AddStashItem, action as addStashItemAction } from './pages/AddStashItemPage/';
+import { AddStashItem } from './pages/AddStashItemPage/';
+import { action as addStashItemAction } from './pages/AddStashItemPage/action';
 import StashItemDetail, { loader as stashItemDetailLoader } from './pages/User/StashItemDetail';
 import Notes, { loader as notesLoader } from './pages/User/Notes';
-import { AddNote, action as addNoteAction } from './pages/AddNotePage';
+import { AddNote } from './pages/AddNotePage';
+import { action as addNoteAction } from './pages/AddNotePage/action'
 import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
 
 const router = createBrowserRouter(

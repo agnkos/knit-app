@@ -2,7 +2,8 @@ import { Form, NavLink } from 'react-router-dom';
 
 
 const LoginForm = ({ data }: any) => {
-    console.log(data)
+    // const { error }: any = data
+
     return (
         < Form action="/" method="post"
             className='flex flex-col items-center max-w-sm gap-4 ' >
@@ -13,7 +14,7 @@ const LoginForm = ({ data }: any) => {
                 placeholder='Email adress'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/user-not-found).' && (<pre className='text-red-600'>wrong user</pre>)}
+            {data.error === 'Firebase: Error (auth/user-not-found).' && (<pre className='text-red-600'>wrong user</pre>)}
             <input
                 name="password"
                 type="password"
@@ -21,7 +22,7 @@ const LoginForm = ({ data }: any) => {
                 placeholder='Password'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/wrong-password).' && (<pre className='text-red-600'>wrong password</pre>)}
+            {data.error === 'Firebase: Error (auth/wrong-password).' && (<pre className='text-red-600'>wrong password</pre>)}
             <button
                 className='mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
             >Log in</button>

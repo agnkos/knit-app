@@ -4,7 +4,6 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 export async function action({ request }: ActionFunctionArgs) {
-    console.log(request)
     const formData = await request.formData();
     const email = String(formData.get('email'));
     const password = String(formData.get('password'));

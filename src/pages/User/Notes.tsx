@@ -21,8 +21,6 @@ const Notes = () => {
     navigate('/addnote');
   };
 
-  console.log(loaderData);
-
   function renderNotes(notes: Note[]) {
     const notesElements = notes.map((note) => (
       <Link to={`${note.noteId}`} key={note.noteId}>

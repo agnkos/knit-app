@@ -28,7 +28,7 @@ const Menu = ({ toggle, closeMenu }: ToggleProps) => {
     return () => {
       document.removeEventListener('click', closeOnClickOutside);
     };
-  }, [toggle]);
+  }, [toggle, closeMenu]);
 
   const logout = () => {
     localStorage.setItem('loggedUser', '');
@@ -38,11 +38,10 @@ const Menu = ({ toggle, closeMenu }: ToggleProps) => {
 
   return (
     <ul
-      className={`fixed right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${
-        toggle
+      className={`fixed right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle
           ? 'opacity-100 transition duration-500'
           : 'opacity-0 transition duration-500 hidden'
-      } md:block md:opacity-100 md:static md:mt-16 md`}
+        } md:block md:opacity-100 md:static md:mt-16 md`}
       ref={ref}
     >
       <li className='py-4 px-12 font-bold'>{auth?.currentUser?.email}</li>

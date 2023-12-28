@@ -6,14 +6,14 @@ import {
   updateDoc,
   getDocs,
 } from 'firebase/firestore';
-import { Form, redirect, useLocation, useNavigate } from 'react-router-dom';
+import { Form, redirect, useLocation, useNavigate, ActionFunctionArgs } from 'react-router-dom';
 import { auth, db } from '../config/firebase';
 
-export async function action({ request }: any) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  const name = formData.get('name');
-  const notes = formData.get('notes');
-  const id = formData.get('id');
+  const name = String(formData.get('name'));
+  const notes = String(formData.get('notes'));
+  const id = String(formData.get('id'));
 
   try {
     if (id !== '') {
@@ -48,8 +48,9 @@ export async function action({ request }: any) {
     }
 
     return redirect('/queue');
-  } catch (err: any) {
-    return { error: err.message };
+  } catch (error) {
+    if (error instanceof Error) return { error: error.message }
+    return String(error)
   }
 }
 

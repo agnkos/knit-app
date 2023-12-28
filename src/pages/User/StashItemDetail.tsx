@@ -7,37 +7,12 @@ import ImagePlaceholder from "../../components/ImagePlaceholder";
 import Image from "../../components/Image";
 import { defer, useLoaderData } from "react-router-typesafe";
 
-
-// type Params = {
-//     id: string
-// }
-
-
-
-// export function loader(request: RequestObject) {
-//     console.log(request)
-//     return defer({ stashItem: getStashItem(request.params.id) });
-// }
-
-// type LoaderData = { 
-//     stashItem: StashItem;
-// };
-
 export function loader({ params }: LoaderFunctionArgs) {
-    // if (params.id !== undefined) {
     return defer({ stashItem: getStashItem(String(params.id)) });
-    // }
 }
-
-// export const loader = makeLoader(({ params }: any) => {
-//     if (params.id !== undefined) {
-//         return defer({ stashItem: getStashItem(params.id) });
-//     }
-// })
 
 const StashItemDetail = () => {
     const loaderData = useLoaderData<typeof loader>();
-    // const loaderData = useLoaderData() as LoaderData;
 
     return (
         <>
