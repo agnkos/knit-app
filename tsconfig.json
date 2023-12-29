@@ -9,7 +9,7 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "types": [
-      "node"
+      "vitest/globals", "node"
     ],
     /* Bundler mode */
     "moduleResolution": "bundler",
