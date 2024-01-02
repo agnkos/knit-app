@@ -26,7 +26,7 @@ import { AddNote } from './pages/AddNotePage';
 import { action as addNoteAction } from './pages/AddNotePage/action'
 import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
 
-export const routes = 
+export const testRoutes = 
   <Route element={<Layout />} errorElement={<ErrorPage />}>
     <Route path='/' element={<Login />} action={loginAction} />
     <Route path='signup' element={<Signup />} action={signupAction} />
@@ -91,7 +91,68 @@ export const routes =
 
 
 const router = createBrowserRouter(
-  createRoutesFromElements(routes))
+  createRoutesFromElements(
+    <Route element={<Layout />} errorElement={<ErrorPage />}>
+      <Route path='/' element={<Login />} action={loginAction} />
+      <Route path='signup' element={<Signup />} action={signupAction} />
+      <Route element={<Dashboard />} errorElement={<ErrorPage />}>
+        <Route
+          path='projects'
+          index
+          element={<Projects />}
+          loader={projectsLoader}
+        />
+        <Route path='queue' element={<Queue />} loader={queuedItemsLoader}>
+          <Route
+            path='add'
+            element={<QueueModal />}
+            action={addToQueueAction}
+          />
+        </Route>
+        <Route path='stash' element={<Stash />} loader={stashLoader} />
+        <Route
+          path='addstashitem'
+          element={<AddStashItem />}
+          action={addStashItemAction}
+        />
+        <Route
+          path='stash/:id'
+          element={<StashItemDetail />}
+          loader={stashItemDetailLoader}
+        />
+        <Route
+          path='stash/:id/edit'
+          element={<EditStashItem />}
+          loader={stashItemDetailLoader}
+          action={editItemAction}
+        />
+        <Route
+          path='addproject'
+          element={<AddProject />}
+          action={addProjectAction}
+        />
+        <Route
+          path='projects/:id'
+          element={<ProjectDetail />}
+          loader={projectDetailLoader}
+        />
+        <Route
+          path='projects/:id/edit'
+          element={<EditProject />}
+          loader={projectDetailLoader}
+          action={editProjectAction}
+        />
+        <Route path='notes' element={<Notes />} loader={notesLoader} />
+        <Route
+          path='notes/:id'
+          element={<NoteDetail />}
+          loader={noteDetailLoader}
+          action={noteDetailAction}
+        />
+        <Route path='addnote' element={<AddNote />} action={addNoteAction} />
+      </Route>
+      <Route path='*' element={<ErrorPage />} />
+    </Route>))
 
 export default function App() {
   return (
