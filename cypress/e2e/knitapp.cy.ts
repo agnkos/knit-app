@@ -19,7 +19,7 @@ describe('Knit app', function () {
       cy.get('input[type=email]').should('have.value', 'tester@email.com')
       cy.get('input[type=password]').type('testapp123')
       cy.get('input[type=password]').should('have.value', 'testapp123')
-      cy.get('button').click()
+      cy.contains('Log in').click()
 
       cy.get('h1').should('contain', 'Projects')
     })
@@ -27,7 +27,7 @@ describe('Knit app', function () {
     it('logging in fails with incorrect password', function () {
       cy.get('input[type=email]').type('tester@email.com')
       cy.get('input[type=password]').type('wrongpassword')
-      cy.get('button').click()
+      cy.contains('Log in').click()
 
       cy.get('pre').should('contain', 'wrong password')
     })
@@ -35,7 +35,7 @@ describe('Knit app', function () {
     it('logging in fails with incorrect email', function () {
       cy.get('input[type=email]').type('wrongemail@email.com')
       cy.get('input[type=password]').type('testapp123')
-      cy.get('button').click()
+      cy.contains('Log in').click()
 
       cy.get('pre').should('contain', 'wrong user')
     })
@@ -58,7 +58,7 @@ describe('Knit app', function () {
       cy.get("input[placeholder='Email adress']").type('knitting@email.com')
       cy.get("input[placeholder='Password']").type('knitting1234')
       cy.get("input[placeholder='Repeat password']").type('knitting1234')
-      cy.get('button').click()
+      cy.contains('Create an account').click()
       cy.get('h1').should('contain', 'Projects')
     })
 
@@ -76,7 +76,7 @@ describe('Knit app', function () {
       cy.get("input[placeholder='Email adress']").type('knitting@email.com')
       cy.get("input[placeholder='Password']").type('password')
       cy.get("input[placeholder='Repeat password']").type('passwort')
-      cy.get('button').click()
+      cy.contains('Create an account').click()
       cy.get('Form').should('contain', "Passwords don't match")
     })
   })
