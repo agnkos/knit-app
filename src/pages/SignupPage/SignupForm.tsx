@@ -8,11 +8,10 @@ type SignUpFormData = {
     password: string,
     repeatPassword: string
 }
-const emailRegex = new RegExp(/^\S+@\S+\.\S+$/)
 
 const validationSchema = Yup.object({
     username: Yup.string().required('Username is required'),
-    email: Yup.string().email('Invalid email address').required('Email is required').matches(emailRegex, "Invalid email"),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().required('Password is required').min(6, 'Password must be 6 characters long or more'),
     repeatPassword: Yup.string().oneOf([Yup.ref("password")], "Passwords don't match").required('Repeat password'),
 })

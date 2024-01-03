@@ -1,5 +1,5 @@
 module.exports = {
-  env: { browser: true, es2020: true, node: true },
+  env: { browser: true, es2020: true, node: true, "cypress/globals": true },
   extends: [
     'eslint:recommended',
     "plugin:react/recommended",
@@ -13,7 +13,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh', '@typescript-eslint'],
+  plugins: ['react-refresh', '@typescript-eslint', 'cypress'],
   rules: {
     'react-refresh/only-export-components': [
       'warn'],
