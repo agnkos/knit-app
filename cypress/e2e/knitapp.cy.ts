@@ -49,7 +49,7 @@ describe('Knit app', function () {
     })
 
     it('Signup page is shown', function () {
-      cy.url().should('contain', 'http://localhost:5174/signup')
+      cy.url().should('contain', 'http://localhost:5173/signup')
       cy.get('button').should('contain', 'Create an account')
     })
 

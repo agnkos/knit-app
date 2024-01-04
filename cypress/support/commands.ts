@@ -44,3 +44,16 @@ Cypress.Commands.add('login', (email: string, password: string) => {
     cy.get('h1').should('contain', 'Projects')
 })
 
+// Cypress.Commands.add('login', (email, password) => {
+//     cy.session('loginsession',
+//         () => {
+//             cy.visit('/')
+//             cy.get('input[type=email]').type(email)
+//             cy.get('input[type=password]').type(`${password}{enter}`, { log: false })
+
+//             cy.location('pathname').should('eq', '/')
+//             // cy.url().should('include', '/projects')
+//             // cy.get('h1').should('contain', 'Projects')
+//         }
+//     )
+// })
