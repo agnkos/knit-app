@@ -13,7 +13,7 @@ const validationSchema = Yup.object({
 })
 
 const LoginForm = ({ data }: any) => {
-    // const { error }: any = data
+
     const submit = useSubmit()
     const formik = useFormik<LogInFormData>({
         initialValues: {
@@ -24,11 +24,12 @@ const LoginForm = ({ data }: any) => {
         onSubmit: async (values, actions) => {
             console.log('login values', values)
             try {
-                await submit(values, { method: "post" })
+                submit(values, { method: "post" })
 
             } catch (error) {
                 console.log(error)
                 actions.setStatus
+
             }
         }
     })
@@ -40,21 +41,27 @@ const LoginForm = ({ data }: any) => {
             <input
                 type="email"
                 {...formik.getFieldProps('email')}
-                // name="email"
                 required
                 placeholder='Email adress'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/user-not-found).' && (<pre className='text-red-600'>wrong user</pre>)}
+            {data?.error === 'auth/user-not-found' && (<pre className='text-red-600'>wrong user</pre>)}
+            {formik.touched.email && formik.errors.email ?
+                (
+                    <div className='text-sm text-red-600'>{formik.errors.email}</div>
+                )
+                : null}
             <input
                 type="password"
-                // name="password"
                 {...formik.getFieldProps('password')}
                 required
                 placeholder='Password'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/wrong-password).' && (<pre className='text-red-600'>wrong password</pre>)}
+            {data?.error === 'auth/wrong-password' && (<pre className='text-red-600'>wrong password</pre>)}
+            {formik.touched.password && formik.errors.password ? (
+                <div className='text-sm text-red-600'>{formik.errors.password}</div>
+            ) : null}
             <button
                 className='mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
                 type="submit"

@@ -13,7 +13,7 @@ export async function action({ request }: ActionFunctionArgs) {
         return redirect('/projects')
 
     } catch (error) {
-        if (error instanceof Error) return { error: error.message }
+        if (error instanceof Error) return { error: error.code }
         return String(error)
     }
 }
