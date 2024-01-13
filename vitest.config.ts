@@ -9,7 +9,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: [
         ...configDefaults.exclude,
-        'src/types', 'postcss.config.js', 'tailwind.config.js', 'eslintrc.cjs', './src/types.ts', './src/vite-env.d.ts'
+        './src/types', './postcss.config.js', './tailwind.config.js', './eslintrc.cjs', './src/types.ts', './src/vite-env.d.ts'
       ]
     },
   },

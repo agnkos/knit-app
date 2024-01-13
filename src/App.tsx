@@ -26,7 +26,7 @@ import { AddNote } from './pages/AddNotePage';
 import { action as addNoteAction } from './pages/AddNotePage/action'
 import NoteDetail, { loader as noteDetailLoader, action as noteDetailAction } from './pages/User/NoteDetail';
 
-export const testRoutes = 
+export const testRoutes =
   <Route element={<Layout />} errorElement={<ErrorPage />}>
     <Route path='/' element={<Login />} action={loginAction} />
     <Route path='signup' element={<Signup />} action={signupAction} />

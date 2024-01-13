@@ -1,6 +1,6 @@
 
 // YourComponent.test.jsx
-import { mount, vi, describe, it, expect } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 import LoginForm from './LoginForm';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'

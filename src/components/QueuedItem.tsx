@@ -101,19 +101,22 @@ const QueuedItem = ({ item, index }: QueuedItemProps) => {
       <div className='flex items-center gap-1'>
         <ArrowUpCircleIcon
           className='w-5 h-5 text-zinc-800 cursor-pointer  hover:text-teal-600 transition-colors duration-300'
-          onClick={() => changePosition(item.queuedItemId, item.position, 'up')}
+          onClick={() => changePosition(item.queuedItemId, item.position, 'up')
+          }
+          data-testid="up-icon"
         />
-        <p className='px-2 border'>{index + 1}</p>
+        <p className='px-2 border' data-testid="item-index">{index + 1}</p>
         <ArrowDownCircleIcon
           className='w-5 h-5 text-zinc-800 cursor-pointer  hover:text-teal-600 transition-colors duration-300'
           onClick={() =>
             changePosition(item.queuedItemId, item.position, 'down')
           }
+          data-testid='down-icon'
         />
       </div>
       <div className='w-full'>
         <div className='flex items-center'>
-          <p className='font-bold mr-2 md:ml-4'>{item.name}</p>
+          <p className='font-bold mr-2 md:ml-4' data-testid="item-name">{item.name}</p>
           <Link
             to='add'
             className='ml-auto'
@@ -124,9 +127,10 @@ const QueuedItem = ({ item, index }: QueuedItemProps) => {
           <TrashIcon
             onClick={() => deleteQueuedItem(item.queuedItemId)}
             className='w-4 h-4 mx-4 max-[335px]:mx-2 cursor-pointer  hover:text-teal-600 transition-colors duration-300'
+            data-testid='trash-icon'
           />
         </div>
-        <p className='md:ml-4'>{item.notes}</p>
+        <p className='md:ml-4' data-testid="item-notes">{item.notes}</p>
       </div>
     </div>
   );
