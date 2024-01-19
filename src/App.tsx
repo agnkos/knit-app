@@ -16,7 +16,7 @@ import { EditProject } from './pages/EditProjectPage';
 import { action as editProjectAction } from './pages/EditProjectPage/action'
 import { EditStashItem } from './pages/EditStashItemPage';
 import { action as editItemAction } from './pages/EditStashItemPage/action';
-import QueueModal, { action as addToQueueAction } from './components/QueueModal';
+import QueueModal, { action as addToQueueAction } from './components/QueueModal/QueueModal';
 import ErrorPage from './pages/ErrorPage';
 import { AddStashItem } from './pages/AddStashItemPage/';
 import { action as addStashItemAction } from './pages/AddStashItemPage/action';

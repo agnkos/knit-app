@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for knit-app/src/components/QueueModal.tsx</title>
+    <title>Code coverage report for knit-app/src/components/QueueModal/QueueModal.tsx</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">knit-app/src/components</a> QueueModal.tsx</h1>
+        <h1><a href="../../../../index.html">All files</a> / <a href="index.html">knit-app/src/components/QueueModal</a> QueueModal.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/98</span>
+                <span class='fraction'>15/100</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">15% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/98</span>
+                <span class='fraction'>15/100</span>
             </div>
         
             
@@ -161,7 +161,9 @@
 <a name='L96'></a><a href='#L96'>96</a>
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -172,6 +174,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -218,6 +221,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -267,8 +271,9 @@ import {
   updateDoc,
   getDocs,
 } from 'firebase/firestore';
-import { Form, redirect, useLocation, useNavigate, ActionFunctionArgs } from 'react-router-dom';
-import { auth, db } from '../config/firebase';
+import { redirect, useLocation, useNavigate, ActionFunctionArgs } from 'react-router-dom';
+import { auth, db } from '../../config/firebase';
+import QueueModalForm from './QueueModalForm'
 &nbsp;
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export async function action({ request }: ActionFunctionArgs) {</span></span>
 <span class="cstat-no" title="statement not covered" >  const formData = await request.formData();</span>
@@ -330,9 +335,10 @@ const QueueModal = <span class="fstat-no" title="function not covered" >() =&gt;
 <span class="cstat-no" title="statement not covered" >          /&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;p className='text-center font-bold'&gt;</span>
-<span class="cstat-no" title="statement not covered" >          {state.button === 'edit' ? 'Edit item' : 'Add new project to queue:'}</span>
+<span class="cstat-no" title="statement not covered" >          {state?.button === 'edit' ? 'Edit item' : 'Add new project to queue:'}</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/p&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;Form action='/queue/add' method='post'&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;QueueModalForm state={state} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        {/* &lt;Form action='/queue/add' method='post'&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;label className='text-sm'&gt;Project name&lt;/label&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;input</span>
 <span class="cstat-no" title="statement not covered" >            required</span>
@@ -349,9 +355,9 @@ const QueueModal = <span class="fstat-no" title="function not covered" >() =&gt;
 <span class="cstat-no" title="statement not covered" >          /&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;input type='hidden' name='id' value={state?.item?.queuedItemId} /&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;button className='block ml-auto px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'&gt;</span>
-<span class="cstat-no" title="statement not covered" >            {state.button === 'edit' ? 'Save changes' : 'Add to queue'}</span>
+<span class="cstat-no" title="statement not covered" >            {state?.button === 'edit' ? 'Save changes' : 'Add to queue'}</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;/Form&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/Form&gt; */}</span>
 <span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >  );</span>
@@ -364,16 +370,16 @@ export default QueueModal;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-13T20:50:01.140Z
+                at 2024-01-19T20:10:47.435Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../../../../sorter.js"></script>
+        <script src="../../../../block-navigation.js"></script>
     </body>
 </html>
     
