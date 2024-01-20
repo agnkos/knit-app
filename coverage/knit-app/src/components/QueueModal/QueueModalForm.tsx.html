@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/30</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/30</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -74,47 +74,11 @@
 <a name='L9'></a><a href='#L9'>9</a>
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
-<a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a>
-<a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L12'></a><a href='#L12'>12</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -129,24 +93,6 @@ const QueueModalForm = <span class="fstat-no" title="function not covered" >({ s
 <span class="cstat-no" title="statement not covered" >    return (</span>
 <span class="cstat-no" title="statement not covered" >        &lt;Form action='/queue/add' method='post'&gt;</span>
 <span class="cstat-no" title="statement not covered" >            &lt;_QueueModalForm state={state} /&gt;</span>
-<span class="cstat-no" title="statement not covered" >            {/* &lt;label className='text-sm'&gt;Project name&lt;/label&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;input</span>
-<span class="cstat-no" title="statement not covered" >                required</span>
-<span class="cstat-no" title="statement not covered" >                type='text'</span>
-<span class="cstat-no" title="statement not covered" >                name='name'</span>
-<span class="cstat-no" title="statement not covered" >                className='my-1 px-3 py-1 border block'</span>
-<span class="cstat-no" title="statement not covered" >                defaultValue={state?.item?.name}</span>
-<span class="cstat-no" title="statement not covered" >            /&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;label className='text-sm'&gt;Notes&lt;/label&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;textarea</span>
-<span class="cstat-no" title="statement not covered" >                name='notes'</span>
-<span class="cstat-no" title="statement not covered" >                defaultValue={state?.item?.notes}</span>
-<span class="cstat-no" title="statement not covered" >                className='mt-1 mb-4 px-3 py-1 h-24 border block resize-none w-full'</span>
-<span class="cstat-no" title="statement not covered" >            /&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;input type='hidden' name='id' value={state?.item?.queuedItemId} /&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;button className='block ml-auto px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'&gt;</span>
-<span class="cstat-no" title="statement not covered" >                {state?.button === 'edit' ? 'Save changes' : 'Add to queue'}</span>
-<span class="cstat-no" title="statement not covered" >            &lt;/button&gt; */}</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/Form&gt;</span>
 <span class="cstat-no" title="statement not covered" >    )</span>
 <span class="cstat-no" title="statement not covered" >}</span>
@@ -157,7 +103,7 @@ export default QueueModalForm</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-19T20:10:47.435Z
+                at 2024-01-20T15:50:23.627Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

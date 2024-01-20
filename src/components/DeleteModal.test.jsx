@@ -8,16 +8,12 @@ describe('delete modal testing', () => {
 
     it('delete modal is shown', () => {
         render(<DeleteModal />)
-        screen.debug()
         expect(screen.getByText('Are you sure you want to delete this ?')).toBeInTheDocument()
 
     })
     it('delete modal props "item" is passed', () => {
         render(<DeleteModal item={'yarn'} />)
         expect(screen.getByText('Are you sure you want to delete this yarn?')).toBeInTheDocument()
-        screen.debug()
-
-
     })
     it('delete modal can be closed', async () => {
         const user = userEvent.setup()
@@ -27,7 +23,6 @@ describe('delete modal testing', () => {
             <DeleteModal item={'yarn'} closeModal={mockCallback} />
         )
         const icon = screen.getByTestId('close-icon')
-        screen.debug(icon)
         await user.click(icon)
 
         expect(mockCallback).toHaveBeenCalledOnce()
@@ -40,7 +35,6 @@ describe('delete modal testing', () => {
             <DeleteModal item={'yarn'} closeModal={mockCallback} />
         )
         const cancelBtn = screen.getByText('Cancel')
-        screen.debug(cancelBtn)
         await user.click(cancelBtn)
         expect(mockCallback).toHaveBeenCalledOnce()
     })
@@ -52,7 +46,6 @@ describe('delete modal testing', () => {
             <DeleteModal item={'yarn'} deleteItem={mockCallback} />
         )
         const deleteBtn = screen.getByText('Delete')
-        screen.debug(deleteBtn)
         await user.click(deleteBtn)
         expect(mockCallback).toHaveBeenCalledOnce()
     })

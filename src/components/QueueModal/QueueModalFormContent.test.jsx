@@ -24,7 +24,6 @@ describe('Queue modal testing', () => {
         }
 
         const { container } = render(<QueueModalFormContent state={state} />)
-        screen.debug()
         expect(container.querySelector('input[name="name"]')).toHaveValue('new project')
         expect(container.querySelector('textarea[name="notes"]')).toHaveValue('blabla')
         expect(screen.getByRole('button')).toHaveTextContent('Save changes')
