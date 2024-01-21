@@ -15,8 +15,8 @@ type QueueModalFormContentProps = {
 const QueueModalFormContent = ({ onSubmit, state }: QueueModalFormContentProps) => {
     const handleClick = () => {
         const formData = {
-            name: (document.querySelector('input[name="name"]') as HTMLInputElement)?.value || '',
-            notes: (document.querySelector('textarea[name="notes"]') as HTMLTextAreaElement)?.value || '',
+            name: (document.querySelector('input[data-testid="name"]') as HTMLInputElement)?.value || '',
+            notes: (document.querySelector('textarea[data-testid="notes"]') as HTMLTextAreaElement)?.value || '',
         };
         onSubmit(formData);
     };
@@ -30,6 +30,7 @@ const QueueModalFormContent = ({ onSubmit, state }: QueueModalFormContentProps) 
                 className='my-1 px-3 py-1 border block'
                 defaultValue={state?.item?.name}
                 aria-labelledby="name"
+                data-testid="name"
             />
             <label className='text-sm' id='notes'>Notes</label>
             <textarea
@@ -37,6 +38,7 @@ const QueueModalFormContent = ({ onSubmit, state }: QueueModalFormContentProps) 
                 defaultValue={state?.item?.notes}
                 className='mt-1 mb-4 px-3 py-1 h-24 border block resize-none w-full'
                 aria-labelledby="notes"
+                data-testid="notes"
             />
             <input type='hidden' name='id' value={state?.item?.queuedItemId} />
             <button className='block ml-auto px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'

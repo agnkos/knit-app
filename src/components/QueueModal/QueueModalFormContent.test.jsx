@@ -47,5 +47,35 @@ describe('Queue modal testing', () => {
 
         })
     })
+    it('when user clicks save button, onSubmit function is called with proper arguments', async () => {
+        const user = userEvent.setup()
+        const mockSubmit = vi.fn()
+        const state = {
+            button: 'edit',
+            item: {
+                name: 'new project',
+                notes: 'blabla'
+            }
+        }
+        render(<QueueModalFormContent state={state} onSubmit={mockSubmit} />)
+        const nameInput = screen.getByTestId('name')
+        const notesInput = screen.getByTestId('notes');
+        console.log('inputs values 1 ', nameInput.value, notesInput.value)
+        userEvent.clear(nameInput)
+        userEvent.clear(notesInput)
+        await user.type(notesInput, 'this is a new note');
+        await user.type(nameInput, 'new project')
+        console.log('inputs values 2', nameInput.value, notesInput.value)
+        screen.debug()
+        const formBtn = screen.getByText('Save changes')
+        user.click(formBtn)
+        await waitFor(() => {
+            expect(mockSubmit).toHaveBeenCalledOnce()
+            expect(mockSubmit).toHaveBeenCalledWith({
+                name: 'new project',
+                notes: 'this is a new note',
+            })
+        })
+    })
 
 })

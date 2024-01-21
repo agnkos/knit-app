@@ -5,8 +5,8 @@ type NoteFormContentProps = {
 const NoteFormContent = ({ onSubmit }: NoteFormContentProps) => {
     const handleClick = () => {
         const formData = {
-            title: (document.querySelector('input[name="name"]') as HTMLInputElement)?.value || '',
-            content: (document.querySelector('textarea[name="notes"]') as HTMLTextAreaElement)?.value || '',
+            title: (document.querySelector('[data-testid="title"]') as HTMLInputElement)?.value || '',
+            content: (document.querySelector('textarea[data-testid="content"]') as HTMLTextAreaElement)?.value || '',
         };
         onSubmit(formData);
     };
@@ -19,6 +19,7 @@ const NoteFormContent = ({ onSubmit }: NoteFormContentProps) => {
                     name="title"
                     className='my-1 px-3 py-1 border block w-full'
                     aria-labelledby="title"
+                    data-testid="title"
                 />
             </div>
             <div className="my-2">
@@ -28,6 +29,7 @@ const NoteFormContent = ({ onSubmit }: NoteFormContentProps) => {
                     name="content"
                     className='mt-1 mb-4 px-3 py-1 border block resize-none w-full h-32'
                     aria-labelledby="content"
+                    data-testid="content"
                 />
             </div>
             <button

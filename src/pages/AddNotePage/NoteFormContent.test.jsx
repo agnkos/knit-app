@@ -34,4 +34,24 @@ describe('NoteForm tests', () => {
 
         })
     })
+    it('user can click on Create note button and onSubmit function is called with proper arguments', async () => {
+        const mockSubmit = vi.fn()
+        const user = userEvent.setup()
+        const { container } = render(<NoteFormContent onSubmit={mockSubmit} />)
+        const formBtn = screen.getByText('Create note')
+        const titleInput = container.querySelector('input[data-testid="title"]')
+        const contentInput = container.querySelector('textarea[data-testid="content"]')
+        await user.type(titleInput, 'new title')
+        await user.type(contentInput, 'this is a new note')
+        user.click(formBtn)
+
+        await waitFor(() => {
+            expect(mockSubmit).toHaveBeenCalledOnce()
+            expect(mockSubmit).toHaveBeenCalledWith({
+                title: 'new title',
+                content: 'this is a new note',
+            })
+
+        })
+    })
 })
