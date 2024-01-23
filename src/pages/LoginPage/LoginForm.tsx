@@ -21,17 +21,25 @@ const LoginForm = ({ data }: any) => {
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: async (values, actions) => {
-            console.log('login values', values)
-            try {
-                submit(values, { method: "post" })
+        onSubmit: async (values) => submit(values, { method: "post" })
+        // submit(values, { method: "post" })
 
-            } catch (error) {
-                console.log(error)
-                actions.setStatus
+        // setStatus('sent')
 
-            }
-        }
+        // {
+        //     console.log('login values', values)
+        //     try {
+        //       const response =  await submit(values, { method: "post" })
+        //         if (!response.ok) {
+        //             const errorData = await response.json();
+        //             throw new Error(errorData.message);
+        //           }
+        //     } catch (error) {
+        //         console.log('error submit', error)
+        //         setStatus({ error: 'login errror' })
+
+        //     }
+        // }
     })
 
     return (
