@@ -70,7 +70,7 @@ const LoginForm = (props: { data: ReturnType<typeof useActionData<typeof action>
                                 className='px-3 py-1 mb-1'
                             />
                             <ErrorMessage name="email" component="div" className="text-sm text-red-500" />
-                            {/* {(typeof props.data === 'object' && props?.data?.error === 'auth/user-not-found') && <p className="text-sm text-red-500">Incorrect email</p>} */}
+                            {(typeof props.data === 'object' && props?.data?.error === 'auth/user-not-found') && <p className="text-sm text-red-500">Incorrect email</p>}
                         </div>
                         <div className='text-center'>
                             <Field
