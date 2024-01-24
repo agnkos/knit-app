@@ -13,6 +13,8 @@ export async function action({ request }: ActionFunctionArgs) {
         return redirect('/projects')
 
     } catch (error) {
+        // console.log('login error code', error.code)
+        // console.log('login error message', error.message)
         if (error instanceof Error) return { error: error.code }
         return String(error)
     }
