@@ -1,9 +1,9 @@
 import { Form, NavLink } from 'react-router-dom';
+import { action } from './action'
+import { useActionData } from 'react-router-typesafe';
 
 
-const LoginForm = ({ data }: any) => {
-    // const { error }: any = data
-
+const LoginForm = (props: { data: ReturnType<typeof useActionData<typeof action>> }) => {
     return (
         < Form action="/" method="post"
             className='flex flex-col items-center max-w-sm gap-4 ' >
@@ -14,7 +14,7 @@ const LoginForm = ({ data }: any) => {
                 placeholder='Email adress'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/user-not-found).' && (<pre className='text-red-600'>wrong user</pre>)}
+            {(typeof props.data === 'object' && props?.data?.error === 'auth/user-not-found') && <p className="text-sm text-red-500">Incorrect email</p>}
             <input
                 name="password"
                 type="password"
@@ -22,7 +22,7 @@ const LoginForm = ({ data }: any) => {
                 placeholder='Password'
                 className='px-3 py-1'
             />
-            {data?.error === 'Firebase: Error (auth/wrong-password).' && (<pre className='text-red-600'>wrong password</pre>)}
+            {(typeof props.data === 'object' && props?.data?.error === 'auth/wrong-password') && <p className="text-sm text-red-500">Incorrect password</p>}
             <button
                 className='mt-1 px-3 py-1 bg-teal-200  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
             >Log in</button>
