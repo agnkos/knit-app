@@ -3,7 +3,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { action } from './action'
 import { useActionData } from 'react-router-typesafe';
-import { useEffect } from 'react';
 // import { useCallback } from 'react';
 
 // type LogInFormData = {
@@ -44,10 +43,6 @@ const LoginForm = (props: { data: ReturnType<typeof useActionData<typeof action>
     //         setErrors({ password: 'wrong password' })
     //     }
     // }
-
-    useEffect(() => {
-        console.log('props from useeff', props.data)
-    }, [props.data])
 
     return (
         <Formik

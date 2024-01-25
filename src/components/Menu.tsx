@@ -39,9 +39,9 @@ const Menu = ({ toggle, closeMenu }: ToggleProps) => {
   return (
     <ul
       className={`fixed right-0 py-6 top-16 max-w-min max-h-min border-t-2 border-zinc-900 bg-zinc-100 z-10  ${toggle
-          ? 'opacity-100 transition duration-500'
-          : 'opacity-0 transition duration-500 hidden'
-        } md:block md:opacity-100 md:static md:mt-16 md`}
+        ? 'opacity-100 transition duration-500'
+        : 'opacity-0 transition duration-500 hidden'
+        } min-[850px]:block min-[850px]:opacity-100 min-[850px]:static min-[850px]:mt-16 md`}
       ref={ref}
     >
       <li className='py-4 px-12 font-bold'>{auth?.currentUser?.email}</li>

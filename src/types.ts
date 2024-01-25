@@ -22,7 +22,7 @@ export type QueuedItemType = {
 export type StashItem = {
   stashItemId: string;
   name: string;
-  skeins: number;
+  skeins: string | number;
   colorway: string | number;
   dyelot: number;
   purchased: string;
