@@ -1,4 +1,4 @@
-import { useLoaderData, Await, useNavigate } from "react-router-dom";
+import { Await, useNavigate, useParams } from "react-router-dom";
 import { useState, Suspense, useContext } from "react";
 import { auth, db } from "../../config/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
@@ -7,16 +7,15 @@ import { storage } from "../../config/firebase";
 import { Project } from "../../types";
 import DeleteModal from "../../components/DeleteModal";
 import DeleteModalContext from '../../context/DeleteModalContext';
-import ProjectForm from "./ProjectForm";
-
-type LoaderData = {
-    projectDetail: Project
-}
+import ProjectForm from "./EditProjectForm";
+import { useLoaderData } from "react-router-typesafe";
+import { loader } from '../User/ProjectDetail'
 
 export const EditProject = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
-    const data = useLoaderData() as LoaderData;
+    const data = useLoaderData<typeof loader>();
+    const params = useParams()
     const navigate = useNavigate();
 
     const uploadImage = async (id: string) => {
@@ -27,7 +26,6 @@ export const EditProject = () => {
             await uploadBytes(imageFolderRef, imageUpload)
                 .then(snapshot => {
                     getDownloadURL(snapshot.ref).then(url => {
-                        console.log(url)
                         updateDoc(projectRef, {
                             imageUrl: url
                         })
@@ -42,7 +40,6 @@ export const EditProject = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
         const file = target.files?.[0];
-        console.log('file added')
         setImageUpload(file);
     }
 
@@ -63,7 +60,6 @@ export const EditProject = () => {
             const imageFolderRef = ref(storage, `${auth?.currentUser?.uid}/${id}`);
             deleteObject(imageFolderRef);
         }
-        console.log('project deleted', id)
         deleteModalDispatch({ type: 'HIDE' })
         navigate('/projects');
     }
@@ -77,7 +73,7 @@ export const EditProject = () => {
                 <h1 className="text-2xl font-bold">Edit Project</h1>
                 <button
                     className='px-2 bg-teal-200 text-md  hover:bg-teal-300 shadow-[3px_3px_0_0] shadow-zinc-800 hover:translate-x-0.5 hover:translate-y-0.5'
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate(`/projects/${params.id}`)}
                 >cancel</button>
             </div>
             <Suspense fallback={<h3>loading details...</h3>}>

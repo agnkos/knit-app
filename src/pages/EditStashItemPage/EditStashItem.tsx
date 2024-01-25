@@ -10,21 +10,16 @@ import DeleteModalContext from '../../context/DeleteModalContext';
 import StashForm from "./StashForm";
 import { useLoaderData } from "react-router-typesafe";
 import {loader} from '../User/StashItemDetail'
-// type LoaderData = {
-//     stashItem: StashItem
-// }
 
 export const EditStashItem = () => {
     const [imageUpload, setImageUpload] = useState<File | undefined>();
     const { deleteModal, deleteModalDispatch } = useContext(DeleteModalContext);
-    // const data = useLoaderData() as LoaderData;
     const data = useLoaderData<typeof loader>();
     const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target as HTMLInputElement;
         const file = target.files?.[0];
-        console.log('file added')
         setImageUpload(file);
     }
 
@@ -37,7 +32,6 @@ export const EditStashItem = () => {
             await uploadBytes(imageFolderRef, imageUpload)
                 .then(snapshot => {
                     getDownloadURL(snapshot.ref).then(url => {
-                        console.log(url)
                         updateDoc(itemRef, {
                             imageUrl: url
                         })

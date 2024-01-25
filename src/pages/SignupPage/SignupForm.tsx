@@ -37,7 +37,6 @@ const SignupForm = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            console.log('values', values)
             submit(values, { method: "post" })
         },
     })
