@@ -15,7 +15,7 @@ export async function action({ request }: ActionFunctionArgs) {
     } catch (error) {
         // console.log('login error code', error.code)
         // console.log('login error message', error.message)
-        if (error instanceof Error) return { error: error.code }
+        if (error instanceof Error) return { error: error['code'] }
         return String(error)
     }
 }
