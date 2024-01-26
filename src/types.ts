@@ -39,3 +39,10 @@ export type Note = {
 };
 
 export type AllNotes = Partial<Note>[];
+
+export type QueueModalFormProps = {
+  state: {
+      button: string,
+      item: QueuedItemType
+  }
+}
