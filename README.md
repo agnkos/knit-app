@@ -75,13 +75,15 @@ Run the app:
 
     npm run dev
 
-KnitApp is ready at port 5173:
-
-    http://localhost:5173/
-
 ## Screenshots:
 
-<img src='./public/Screenshot1.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
-<img src='./public/Screenshot2.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
-<img src='./public/Screenshot3.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
-<img src='./public/Screenshot4.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'>
+<img src='./public/Screenshot_11.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_10.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_2.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_3.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_4.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_5.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_6.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/Screenshot_7.jpg' alt="app screenshot" title="app screenshot" style='width: 250px; margin: 10px;'> 
+<img src='./public/desktop.jpg' alt="app screenshot" title="app screenshot" style='width: 400px; margin: 10px;'> 
+<img src='./public/desktop2.jpg' alt="app screenshot" title="app screenshot" style='width: 400px; margin: 10px;'> 
