@@ -44,11 +44,17 @@ or create a new account
 - data stored in Firebase Storage and Firestore Database
 - navigation built with React Router 6 (actions, loaders)
 - styled with Tailwind CSS
+- Forms managed and valitaded using Formik and Yup
+- used react-router-typesafe for typing useLoaderData [link](https://github.com/fredericoo/react-router-typesafe)
+- ESLint and Prettier for formatting and preventing code errors
 - built with:
   ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
   ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
   ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
   ![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+- Tested with:
+  ![React Testing Library](https://img.shields.io/badge/Testing%20Library-E33332.svg?style=for-the-badge&logo=Testing-Library&logoColor=white)
+  ![Vitest](https://img.shields.io/badge/Vitest-6E9F18.svg?style=for-the-badge&logo=Vitest&logoColor=white)
 
 ## Credits
 
