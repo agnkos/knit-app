@@ -28,6 +28,8 @@ module.exports = {
     ],
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
     "no-console": 1
   },
   root: true,

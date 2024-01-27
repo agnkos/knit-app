@@ -1,6 +1,7 @@
 import { redirect, ActionFunctionArgs } from 'react-router-dom';
 import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = await request.formData();
@@ -15,7 +16,10 @@ export async function action({ request }: ActionFunctionArgs) {
     } catch (error) {
         // console.log('login error code', error.code)
         // console.log('login error message', error.message)
-        if (error instanceof Error) return { error: error.code }
+        if (error instanceof FirebaseError) {
+            return { error: error.code };
+        }
+        // if (error instanceof Error) return { error: error?.code }
         return String(error)
     }
 }
