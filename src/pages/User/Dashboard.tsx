@@ -20,7 +20,6 @@ const Dashboard = () => {
             <div className='flex min-h-screen'>
                 <Menu toggle={toggle} closeMenu={closeMenu} />
                 <div className='mt-16 p-4 flex flex-col grow'>
-                    <button onClick={() => methodDoesNotExist()}>Break the world</button>;
                     <Outlet />
                 </div>
             </div>
