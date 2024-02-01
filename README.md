@@ -10,6 +10,7 @@
 - [Technologies](#technologies)
 - [Credits](#credits)
 - [Installation](#installation)
+- [Maintenance](#maintenance)
 - [Screenshots](#screenshots)
 
 ## Deployed app
@@ -74,6 +75,10 @@ Install npm packages:
 Run the app:
 
     npm run dev
+
+## Maintenance
+
+
 
 ## Screenshots:
 
