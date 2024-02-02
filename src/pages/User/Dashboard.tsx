@@ -14,6 +14,11 @@ const Dashboard = () => {
         setToggle(false)
     }
 
+    const throwError = () => {
+        throw new Error
+    }
+
+
     return (
         <div className='min-h-screen flex flex-col '>
             <Navbar toggleMenu={toggleMenu} />
@@ -21,6 +26,7 @@ const Dashboard = () => {
                 <Menu toggle={toggle} closeMenu={closeMenu} />
                 <div className='mt-16 p-4 flex flex-col grow'>
                     <Outlet />
+                    <button onClick={() => throwError()} className='border border-red-600 p-4 rounded-md'>error</button>
                 </div>
             </div>
         </div>
