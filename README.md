@@ -56,7 +56,7 @@ or create a new account
 - Tested with:
   ![React Testing Library](https://img.shields.io/badge/Testing%20Library-E33332.svg?style=for-the-badge&logo=Testing-Library&logoColor=white)
   ![Vitest](https://img.shields.io/badge/Vitest-6E9F18.svg?style=for-the-badge&logo=Vitest&logoColor=white)
-  - Maintenance: 
+- Maintenance: 
  ![Sentry](https://img.shields.io/badge/Sentry-362D59.svg?style=for-the-badge&logo=Sentry&logoColor=white)
 
 ## Credits
@@ -80,7 +80,7 @@ Run the app:
 
 ## Maintenance
 
-I am using Sentry to log erorrs, which may occur during users interaction with deployed app.
+I am using Sentry to log erorrs which may occur during users' interaction with deployed app.
 
 ## Screenshots:
 
